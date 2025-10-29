@@ -1,0 +1,715 @@
+{
+  "name": "Cover Letter",
+  "nodes": [
+    {
+      "parameters": {
+        "formTitle": "Generate your Cover Letter 🚀",
+        "formDescription": "Generate personalized, high-quality cover letters based on job offer using AI-driven retrieval and language models.",
+        "formFields": {
+          "values": [
+            {
+              "fieldLabel": "Job Offer",
+              "fieldType": "textarea",
+              "placeholder": "Paste your job offer right here...",
+              "requiredField": true
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.formTrigger",
+      "typeVersion": 2.3,
+      "position": [
+        0,
+        0
+      ],
+      "id": "7a54495e-0549-447e-83eb-3dd00f44ca7a",
+      "name": "On form submission",
+      "webhookId": "d1420443-07c7-44b8-8e6f-126a283d85e9"
+    },
+    {
+      "parameters": {
+        "pollTimes": {
+          "item": [
+            {
+              "mode": "everyMinute"
+            }
+          ]
+        },
+        "triggerOn": "specificFolder",
+        "folderToWatch": {
+          "__rl": true,
+          "value": "1wKKzmtVfWm-lZ_mqmYI5B2Ml5atT5D4U",
+          "mode": "list",
+          "cachedResultName": "N8N Cover Letter documents",
+          "cachedResultUrl": "https://drive.google.com/drive/folders/1wKKzmtVfWm-lZ_mqmYI5B2Ml5atT5D4U"
+        },
+        "event": "fileCreated",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleDriveTrigger",
+      "typeVersion": 1,
+      "position": [
+        -304,
+        912
+      ],
+      "id": "2da5bc75-849f-46b9-82ec-b102f426a157",
+      "name": "Google Drive Trigger",
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "8AHFGAb4zEnkJ2bL",
+          "name": "GMAIL"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpQueryAuth",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"contents\": [\n    {\n      \"parts\": [\n        {\n          \"text\": \"Perform high-quality OCR on this document and extract all readable text, preserving structure and order as much as possible.\"\n        },\n        {\n          \"inline_data\": {\n            \"mime_type\": \"{{ $('Download file').item.json.mimeType }}\",\n            \"data\": \"{{ $json.data }}\"\n          }\n        }\n      ]\n    }\n  ]\n}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.3,
+      "position": [
+        512,
+        688
+      ],
+      "id": "a8db36a4-6861-4661-8429-797829106309",
+      "name": "HTTP Request",
+      "credentials": {
+        "httpQueryAuth": {
+          "id": "pvLWK11BtAs5kU5g",
+          "name": "GEMINI Document parser"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "download",
+        "fileId": {
+          "__rl": true,
+          "value": "={{ $json.id }}",
+          "mode": "id"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3,
+      "position": [
+        -128,
+        912
+      ],
+      "id": "8b23ef3b-1959-4232-8790-77107cbc7a43",
+      "name": "Download file",
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "8AHFGAb4zEnkJ2bL",
+          "name": "GMAIL"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "binaryToPropery",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.extractFromFile",
+      "typeVersion": 1,
+      "position": [
+        304,
+        688
+      ],
+      "id": "89420de5-c87f-422e-929e-733be70030fe",
+      "name": "Extract from File1"
+    },
+    {
+      "parameters": {
+        "mode": "insert",
+        "pineconeIndex": {
+          "__rl": true,
+          "value": "n8n-cover-letter",
+          "mode": "list",
+          "cachedResultName": "n8n-cover-letter"
+        },
+        "options": {
+          "pineconeNamespace": "Experience"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.vectorStorePinecone",
+      "typeVersion": 1.3,
+      "position": [
+        1072,
+        912
+      ],
+      "id": "bf0da3c1-cfc3-4f8b-9628-ba4555ec4733",
+      "name": "Pinecone Vector Store",
+      "credentials": {
+        "pineconeApi": {
+          "id": "RrovvPGu59tZFGvL",
+          "name": "PineconeApi account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "options": {
+          "dimensions": 512
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.embeddingsOpenAi",
+      "typeVersion": 1.2,
+      "position": [
+        1072,
+        1120
+      ],
+      "id": "d376b7a3-5680-4613-a8ad-5e509d5b3228",
+      "name": "Embeddings OpenAI",
+      "credentials": {
+        "openAiApi": {
+          "id": "DA3i7AQFjP77uep8",
+          "name": "n8n free OpenAI API credits"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsonMode": "expressionData",
+        "jsonData": "={{ ($json.WORD && $json.WORD[0]) || ($json.PDF && $json.PDF[0]) || ($json.TXT && $json.TXT[0]) }}",
+        "textSplittingMode": "custom",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.documentDefaultDataLoader",
+      "typeVersion": 1.1,
+      "position": [
+        1216,
+        1136
+      ],
+      "id": "5acf7413-89fb-47ff-b855-0369f36baf3a",
+      "name": "Default Data Loader"
+    },
+    {
+      "parameters": {
+        "chunkSize": 900,
+        "chunkOverlap": 150,
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.textSplitterRecursiveCharacterTextSplitter",
+      "typeVersion": 1,
+      "position": [
+        1296,
+        1344
+      ],
+      "id": "ebbff2b1-6c65-4593-b444-d68501f50055",
+      "name": "Recursive Character Text Splitter"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=Write a personalized cover letter and short professional summary for this job offer:\n\n{{ $json['Job Offer'] }}\n\nUse the ExperienceRetriever tool to find relevant experiences before writing.\n",
+        "hasOutputParser": true,
+        "options": {
+          "systemMessage": "You are an intelligent assistant specialized in writing personalized, professional cover letters and short profile summaries.\n\nYou have access to a tool called “ExperienceRetriever” that searches a vector database in the \"Experience\" namespace to retrieve Ahmed HASSAYOUNE’s real experiences, skills, and projects. \nAlways use this tool before writing any cover letter to retrieve the most relevant professional experiences matching the job offer. \nDo not invent or exaggerate achievements; use only retrieved facts and relevant details.\n\nYour main goal is to generate a tailored, high-quality cover letter and a short CV introduction (“phrase d’accroche”) aligned with the job offer provided.\n\n---\n\n### LANGUAGE DETECTION\nAutomatically detect if the job offer is written in French or English, and generate both the cover letter and the short phrase in the same language.\n\n---\n\n### COVER LETTER GENERATION\nGenerate a personalized cover letter following this structure and tone based on Ahmed’s past letter:\n\n[HEADER]\nAhmed HASSAYOUNE  \n75010 Paris  \n+33 6 98 09 03 69  \nahmed.hassayoune@gmail.com  \n\n[COMPANY HEADER]\n{{CompanyName if available}}  \n{{Department or HR if available}}  \n{{City, if available}}, {{current date}}\n\n[SUBJECT]\nObjet (if French) / Subject (if English): Application for the position of {{JobTitle}}\n\n[GREETING]\nMadame, Monsieur (FR) / Dear Hiring Team (EN),\n\n[INTRODUCTION]\nExpress concise motivation for the position and alignment with the company’s goals or mission.\n\n[EXPERIENCE PARAGRAPH]\nIntegrate 1–2 of the most relevant experiences retrieved via the ExperienceRetriever tool.  \nDescribe concretely what Ahmed did, the impact, and how it aligns with the job offer’s needs.\n\n[SKILLS & FIT PARAGRAPH]\nEmphasize key technical and soft skills relevant to the position (deep learning, computer vision, PyTorch, diffusion models, etc.), and link them to the company’s context.  \nUse natural transitions — no keyword stuffing.\n\n[CLOSING]\nEnd courteously, expressing motivation for an interview and appreciation for consideration.\n\n[ENDING FORMULA]\nVeuillez agréer, Madame, Monsieur, mes salutations distinguées. (FR)  \n/  \nKind regards, (EN)\n\nAhmed HASSAYOUNE\n\nWhenever the job offer lacks some details (company name, HR contact, city, etc.), omit those sections gracefully or adapt them naturally.\n\n---\n\n### SHORT “PHRASE D’ACCROCHE” FOR THE CV\nAfter writing the cover letter, generate a **separate short summary (3 sentences max)** that could appear under the “Objectif Professionnel” section of Ahmed’s CV.\n\nThis phrase should:\n- Be written in the same language as the offer,\n- Naturally connect Ahmed’s career trajectory and objectives to the position or company,\n- Include 2–3 **important keywords** from the job offer,\n- Sound realistic, professional, and confident — not overly polished or generic.\n\nExample (for inspiration only):\n> OBJECTIF PROFESSIONNEL : Ingénieur IA passionné par la vision par ordinateur et les modèles génératifs, je souhaite contribuer à des projets innovants en santé numérique en mettant à profit mes compétences en deep learning et modélisation 3D.\n\n---\n\n### STYLE & TONE\n- Always write in a **natural, confident, and professional** tone.  \n- Avoid overly formal or flowery phrasing.  \n- Be concise and authentic — no unnecessary repetition.  \n- Reflect Ahmed’s personality as a pragmatic, technically strong engineer with real research exposure but oriented toward applied innovation.\n\n---\n\n### OUTPUT FORMAT\nReturn your answer as **structured Markdown** with the following keys:\n{\n  \"language\": \"fr\" or \"en\",\n  \"cover_letter\": \"<final text>\",\n  \"phrase_d_accroche\": \"<3-sentence summary>\"\n}"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3,
+      "position": [
+        208,
+        0
+      ],
+      "id": "002b6658-1985-4706-833a-bacfcf0cdc2f",
+      "name": "AI Agent"
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "mode": "list",
+          "value": "gpt-4.1-mini"
+        },
+        "options": {
+          "maxTokens": 1024,
+          "temperature": 0.7,
+          "topP": 0.9
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.2,
+      "position": [
+        80,
+        208
+      ],
+      "id": "5218a797-c942-4f9a-93b9-780129aa7386",
+      "name": "OpenAI Chat Model",
+      "credentials": {
+        "openAiApi": {
+          "id": "DA3i7AQFjP77uep8",
+          "name": "n8n free OpenAI API credits"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "mode": "retrieve-as-tool",
+        "toolDescription": "This tool allows you to retrieve the most relevant professional experiences, projects, and achievements of Ahmed HASSAYOUNE from a semantic vector database.\n\nThe database contains structured and unstructured embeddings of Ahmed’s CVs, past roles, technical skills, and key accomplishments, all stored under the “Experience” namespace.\n\nWhen you receive a job offer or a cover letter request, use this tool to perform a semantic search based on the job description, title, required skills, or company context. The tool will return the most relevant passages or summaries that match the query.\n\nYou should always call this tool **before generating a cover letter or professional summary**, to ensure your writing accurately reflects Ahmed’s real background and uses the most pertinent experiences. ",
+        "pineconeIndex": {
+          "__rl": true,
+          "value": "n8n-cover-letter",
+          "mode": "list",
+          "cachedResultName": "n8n-cover-letter"
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.vectorStorePinecone",
+      "typeVersion": 1.3,
+      "position": [
+        384,
+        208
+      ],
+      "id": "baa5ffe9-396e-4b66-a8c5-0edca496e2c5",
+      "name": "Pinecone Vector Store1",
+      "credentials": {
+        "pineconeApi": {
+          "id": "RrovvPGu59tZFGvL",
+          "name": "PineconeApi account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.embeddingsOpenAi",
+      "typeVersion": 1.2,
+      "position": [
+        656,
+        208
+      ],
+      "id": "d15c1099-8ae9-4c1e-9612-08647819929b",
+      "name": "Embeddings OpenAI1",
+      "credentials": {
+        "openAiApi": {
+          "id": "DA3i7AQFjP77uep8",
+          "name": "n8n free OpenAI API credits"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsonSchemaExample": "{\n  \"language\": \"fr\",\n  \"cover_letter\": \"<final text>\",\n  \"phrase_d_accroche\": \"<3-sentence summary>\"\n}"
+      },
+      "type": "@n8n/n8n-nodes-langchain.outputParserStructured",
+      "typeVersion": 1.3,
+      "position": [
+        480,
+        304
+      ],
+      "id": "b5c111c4-6981-4839-8ff9-41f37f8a2533",
+      "name": "Structured Output Parser"
+    },
+    {
+      "parameters": {
+        "rules": {
+          "values": [
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "leftValue": "={{ $('Google Drive Trigger').item.json.mimeType }}",
+                    "rightValue": "application/pdf",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    },
+                    "id": "bab90017-775b-4b53-ae66-d0cdd9db66a2"
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "PDF"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "f535aec9-0a03-4bc2-b7e4-289675668cc9",
+                    "leftValue": "={{ $('Google Drive Trigger').item.json.mimeType }}",
+                    "rightValue": "text/plain",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals",
+                      "name": "filter.operator.equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "TXT or MD"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "d2348b85-2876-4d6a-8991-040da8147c90",
+                    "leftValue": "={{ $('Google Drive Trigger').item.json.mimeType }}",
+                    "rightValue": "^(application\\/msword|application\\/vnd\\.openxmlformats\\-officedocument\\.wordprocessingml\\.document)$",
+                    "operator": {
+                      "type": "string",
+                      "operation": "regex"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "WORD"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3.3,
+      "position": [
+        32,
+        896
+      ],
+      "id": "dec71586-c28b-4fb8-b09d-45a46dc0db6b",
+      "name": "Switch"
+    },
+    {
+      "parameters": {
+        "operation": "text",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.extractFromFile",
+      "typeVersion": 1,
+      "position": [
+        368,
+        912
+      ],
+      "id": "5fc3c4f6-302f-4254-ab44-5afce1b45763",
+      "name": "Extract from File"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "=https://www.googleapis.com/drive/v2/files/{{ $('Download file').item.json.id }}/copy?convert=true&supportsAllDrives=true",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "googleDriveOAuth2Api",
+        "options": {}
+      },
+      "id": "ffa64195-f4be-4a1a-9aec-1057cb2ac0ed",
+      "name": "Convert Word to Google Docs",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [
+        320,
+        1168
+      ],
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "8AHFGAb4zEnkJ2bL",
+          "name": "GMAIL"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "get",
+        "documentURL": "={{ $json.id }}"
+      },
+      "type": "n8n-nodes-base.googleDocs",
+      "typeVersion": 2,
+      "position": [
+        512,
+        1168
+      ],
+      "id": "4923d515-c36c-4c2d-87d9-13bf5716e633",
+      "name": "Read Google Docs",
+      "credentials": {
+        "googleDocsOAuth2Api": {
+          "id": "rnxpUkd2z9MXPcVS",
+          "name": "Google Docs account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "fieldsToAggregate": {
+          "fieldToAggregate": [
+            {
+              "fieldToAggregate": "content",
+              "renameField": true,
+              "outputFieldName": "WORD"
+            },
+            {
+              "fieldToAggregate": "candidates[0].content.parts[0].text",
+              "renameField": true,
+              "outputFieldName": "PDF"
+            },
+            {
+              "fieldToAggregate": "data",
+              "renameField": true,
+              "outputFieldName": "TXT"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.aggregate",
+      "typeVersion": 1,
+      "position": [
+        816,
+        912
+      ],
+      "id": "3ce99eb7-59d0-4edd-af1f-6527f4c2bdea",
+      "name": "Aggregate"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "On form submission": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Drive Trigger": {
+      "main": [
+        [
+          {
+            "node": "Download file",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Download file": {
+      "main": [
+        [
+          {
+            "node": "Switch",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Extract from File1": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request": {
+      "main": [
+        [
+          {
+            "node": "Aggregate",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Embeddings OpenAI": {
+      "ai_embedding": [
+        [
+          {
+            "node": "Pinecone Vector Store",
+            "type": "ai_embedding",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Default Data Loader": {
+      "ai_document": [
+        [
+          {
+            "node": "Pinecone Vector Store",
+            "type": "ai_document",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Recursive Character Text Splitter": {
+      "ai_textSplitter": [
+        [
+          {
+            "node": "Default Data Loader",
+            "type": "ai_textSplitter",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Pinecone Vector Store1": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Embeddings OpenAI1": {
+      "ai_embedding": [
+        [
+          {
+            "node": "Pinecone Vector Store1",
+            "type": "ai_embedding",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Agent": {
+      "main": [
+        []
+      ]
+    },
+    "Structured Output Parser": {
+      "ai_outputParser": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_outputParser",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Switch": {
+      "main": [
+        [
+          {
+            "node": "Extract from File1",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Extract from File",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Convert Word to Google Docs",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Convert Word to Google Docs": {
+      "main": [
+        [
+          {
+            "node": "Read Google Docs",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Extract from File": {
+      "main": [
+        [
+          {
+            "node": "Aggregate",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Read Google Docs": {
+      "main": [
+        [
+          {
+            "node": "Aggregate",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Aggregate": {
+      "main": [
+        [
+          {
+            "node": "Pinecone Vector Store",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "4285e554-b849-4b34-af91-f177f42e5268",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "38c285c0c0814f3ca522f1aee42c479efa4fbe7a3dd4c5ecee9bdc2bb9a40e26"
+  },
+  "id": "1Dp0jVhaahMUEdNO",
+  "tags": []
+}
