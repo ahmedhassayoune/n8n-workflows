@@ -3,32 +3,6 @@
   "nodes": [
     {
       "parameters": {
-        "formTitle": "Generate your Cover Letter 🚀",
-        "formDescription": "Generate personalized, high-quality cover letters based on job offer using AI-driven retrieval and language models.",
-        "formFields": {
-          "values": [
-            {
-              "fieldLabel": "Job Offer",
-              "fieldType": "textarea",
-              "placeholder": "Paste your job offer right here...",
-              "requiredField": true
-            }
-          ]
-        },
-        "options": {}
-      },
-      "type": "n8n-nodes-base.formTrigger",
-      "typeVersion": 2.3,
-      "position": [
-        0,
-        0
-      ],
-      "id": "7a54495e-0549-447e-83eb-3dd00f44ca7a",
-      "name": "On form submission",
-      "webhookId": "d1420443-07c7-44b8-8e6f-126a283d85e9"
-    },
-    {
-      "parameters": {
         "pollTimes": {
           "item": [
             {
@@ -213,7 +187,7 @@
         "text": "=Write a personalized cover letter and short professional summary for this job offer:\n\n{{ $json['Job Offer'] }}\n\nUse the ExperienceRetriever tool to find relevant experiences before writing.\n",
         "hasOutputParser": true,
         "options": {
-          "systemMessage": "You are an intelligent assistant specialized in writing personalized, professional cover letters and short profile summaries.\n\nYou have access to a tool called “ExperienceRetriever” that searches a vector database in the \"Experience\" namespace to retrieve Ahmed HASSAYOUNE’s real experiences, skills, and projects. \nAlways use this tool before writing any cover letter to retrieve the most relevant professional experiences matching the job offer. \nDo not invent or exaggerate achievements; use only retrieved facts and relevant details.\n\nYour main goal is to generate a tailored, high-quality cover letter and a short CV introduction (“phrase d’accroche”) aligned with the job offer provided.\n\n---\n\n### LANGUAGE DETECTION\nAutomatically detect if the job offer is written in French or English, and generate both the cover letter and the short phrase in the same language.\n\n---\n\n### COVER LETTER GENERATION\nGenerate a personalized cover letter following this structure and tone based on Ahmed’s past letter:\n\n[HEADER]\nAhmed HASSAYOUNE  \n75010 Paris  \n+33 6 98 09 03 69  \nahmed.hassayoune@gmail.com  \n\n[COMPANY HEADER]\n{{CompanyName if available}}  \n{{Department or HR if available}}  \n{{City, if available}}, {{current date}}\n\n[SUBJECT]\nObjet (if French) / Subject (if English): Application for the position of {{JobTitle}}\n\n[GREETING]\nMadame, Monsieur (FR) / Dear Hiring Team (EN),\n\n[INTRODUCTION]\nExpress concise motivation for the position and alignment with the company’s goals or mission.\n\n[EXPERIENCE PARAGRAPH]\nIntegrate 1–2 of the most relevant experiences retrieved via the ExperienceRetriever tool.  \nDescribe concretely what Ahmed did, the impact, and how it aligns with the job offer’s needs.\n\n[SKILLS & FIT PARAGRAPH]\nEmphasize key technical and soft skills relevant to the position (deep learning, computer vision, PyTorch, diffusion models, etc.), and link them to the company’s context.  \nUse natural transitions — no keyword stuffing.\n\n[CLOSING]\nEnd courteously, expressing motivation for an interview and appreciation for consideration.\n\n[ENDING FORMULA]\nVeuillez agréer, Madame, Monsieur, mes salutations distinguées. (FR)  \n/  \nKind regards, (EN)\n\nAhmed HASSAYOUNE\n\nWhenever the job offer lacks some details (company name, HR contact, city, etc.), omit those sections gracefully or adapt them naturally.\n\n---\n\n### SHORT “PHRASE D’ACCROCHE” FOR THE CV\nAfter writing the cover letter, generate a **separate short summary (3 sentences max)** that could appear under the “Objectif Professionnel” section of Ahmed’s CV.\n\nThis phrase should:\n- Be written in the same language as the offer,\n- Naturally connect Ahmed’s career trajectory and objectives to the position or company,\n- Include 2–3 **important keywords** from the job offer,\n- Sound realistic, professional, and confident — not overly polished or generic.\n\nExample (for inspiration only):\n> OBJECTIF PROFESSIONNEL : Ingénieur IA passionné par la vision par ordinateur et les modèles génératifs, je souhaite contribuer à des projets innovants en santé numérique en mettant à profit mes compétences en deep learning et modélisation 3D.\n\n---\n\n### STYLE & TONE\n- Always write in a **natural, confident, and professional** tone.  \n- Avoid overly formal or flowery phrasing.  \n- Be concise and authentic — no unnecessary repetition.  \n- Reflect Ahmed’s personality as a pragmatic, technically strong engineer with real research exposure but oriented toward applied innovation.\n\n---\n\n### OUTPUT FORMAT\nReturn your answer as **structured Markdown** with the following keys:\n{\n  \"language\": \"fr\" or \"en\",\n  \"cover_letter\": \"<final text>\",\n  \"phrase_d_accroche\": \"<3-sentence summary>\"\n}"
+          "systemMessage": "You are an intelligent assistant specialized in writing personalized, professional cover letters and short profile summaries.\n\nYou have access to a tool called “ExperienceRetriever” that searches a vector database in the \"Experience\" namespace to retrieve Ahmed HASSAYOUNE’s real experiences, skills, and projects. \nAlways use this tool before writing any cover letter to retrieve the most relevant professional experiences matching the job offer. \nDo not invent or exaggerate achievements; use only retrieved facts and relevant details.\n\nYour main goal is to generate a tailored, high-quality cover letter and a short CV introduction (“phrase d’accroche”) aligned with the job offer provided.\n\n---\n\n### LANGUAGE DETECTION\nAutomatically detect if the job offer is written in French or English, and generate both the cover letter and the short phrase in the same language.\n\n---\n\n### COVER LETTER GENERATION\nGenerate a personalized cover letter following this structure and tone based on Ahmed’s past letter:\n\n[HEADER]\nAhmed HASSAYOUNE  \n75010 Paris  \n+33 6 98 09 03 69  \nahmed.hassayoune@gmail.com  \n\n[COMPANY HEADER]\n{{CompanyName if available}}  \n{{Department or HR if available}}  \n{{City, if available}}, {{current date}}\n\n[SUBJECT]\nObjet (if French) / Subject (if English): Application for the position of {{JobTitle}}\n\n[GREETING]\nMadame, Monsieur (FR) / Dear Hiring Team (EN),\n\n[INTRODUCTION]\nExpress concise motivation for the position and alignment with the company’s goals or mission.\n\n[EXPERIENCE PARAGRAPH]\nIntegrate 1–2 of the most relevant experiences retrieved via the ExperienceRetriever tool.  \nDescribe concretely what Ahmed did, the impact, and how it aligns with the job offer’s needs.\n\n[SKILLS & FIT PARAGRAPH]\nEmphasize key technical and soft skills relevant to the position (deep learning, computer vision, PyTorch, diffusion models, etc.), and link them to the company’s context.  \nUse natural transitions — no keyword stuffing.\n\n[CLOSING]\nEnd courteously, expressing motivation for an interview and appreciation for consideration.\n\n[ENDING FORMULA]\nVeuillez agréer, Madame, Monsieur, mes salutations distinguées. (FR)  \n/  \nKind regards, (EN)\n\nAhmed HASSAYOUNE\n\nWhenever the job offer lacks some details (company name, HR contact, city, etc.), omit those sections gracefully or adapt them naturally.\n\n---\n\n### SHORT “PHRASE D’ACCROCHE” FOR THE CV\nAfter writing the cover letter, generate a **separate short summary (3 sentences max)** that could appear under the “Objectif Professionnel” section of Ahmed’s CV.\n\nThis phrase should:\n- Be written in the same language as the offer,\n- Naturally connect Ahmed’s career trajectory and objectives to the position or company,\n- Include 2–3 **important keywords** from the job offer,\n- Sound realistic, professional, and confident — not overly polished or generic.\n\nExample (for inspiration only):\n> OBJECTIF PROFESSIONNEL : Ingénieur IA passionné par la vision par ordinateur et les modèles génératifs, je souhaite contribuer à des projets innovants en santé numérique en mettant à profit mes compétences en deep learning et modélisation 3D.\n\n---\n\n### STYLE & TONE\n- Always write in a **natural, confident, and professional** tone.  \n- Avoid overly formal or flowery phrasing.  \n- Be concise and authentic — no unnecessary repetition.  \n- Reflect Ahmed’s personality as a pragmatic, technically strong engineer with real research exposure but oriented toward applied innovation.\n\n---\n\n### OUTPUT FORMAT\nReturn your answer as **structured JSON** with the following titles:\n{\n  \"language\": \"FR\" or \"EN\",\n  \"cover_letter\": \"<final text>\",\n  \"phrase_d_accroche\": \"<3-sentence summary>\"\n}"
         }
       },
       "type": "@n8n/n8n-nodes-langchain.agent",
@@ -268,7 +242,7 @@
       "type": "@n8n/n8n-nodes-langchain.vectorStorePinecone",
       "typeVersion": 1.3,
       "position": [
-        384,
+        224,
         208
       ],
       "id": "baa5ffe9-396e-4b66-a8c5-0edca496e2c5",
@@ -287,8 +261,8 @@
       "type": "@n8n/n8n-nodes-langchain.embeddingsOpenAi",
       "typeVersion": 1.2,
       "position": [
-        656,
-        208
+        352,
+        336
       ],
       "id": "d15c1099-8ae9-4c1e-9612-08647819929b",
       "name": "Embeddings OpenAI1",
@@ -298,19 +272,6 @@
           "name": "n8n free OpenAI API credits"
         }
       }
-    },
-    {
-      "parameters": {
-        "jsonSchemaExample": "{\n  \"language\": \"fr\",\n  \"cover_letter\": \"<final text>\",\n  \"phrase_d_accroche\": \"<3-sentence summary>\"\n}"
-      },
-      "type": "@n8n/n8n-nodes-langchain.outputParserStructured",
-      "typeVersion": 1.3,
-      "position": [
-        480,
-        304
-      ],
-      "id": "b5c111c4-6981-4839-8ff9-41f37f8a2533",
-      "name": "Structured Output Parser"
     },
     {
       "parameters": {
@@ -490,21 +451,66 @@
       ],
       "id": "3ce99eb7-59d0-4edd-af1f-6527f4c2bdea",
       "name": "Aggregate"
+    },
+    {
+      "parameters": {
+        "respondWith": "text",
+        "responseBody": "=<div style=\"font-family: Arial, sans-serif; max-width: 750px; margin: 40px auto; padding: 30px; background-color: #f9f9fb; color: #333; border-radius: 10px; box-shadow: 0 3px 8px rgba(0,0,0,0.08);\">\n  <h1 style=\"color: #f16f55; text-align: center; margin-bottom: 30px;\">Generated Cover Letter</h1>\n\n  <div style=\"background-color: #ffffff; border-radius: 8px; padding: 20px 25px; margin-bottom: 20px; box-shadow: 0 1px 3px rgba(0,0,0,0.05);\">\n    <h2 style=\"color: #f16f55; margin-top: 0;\">Language</h2>\n    <p style=\"margin: 8px 0 0 0; font-size: 15px;\">{{ $json.output.language }}</p>\n  </div>\n\n  <div style=\"background-color: #ffffff; border-radius: 8px; padding: 20px 25px; margin-bottom: 20px; box-shadow: 0 1px 3px rgba(0,0,0,0.05);\">\n    <h2 style=\"color: #f16f55; margin-top: 0;\">Position Sought</h2>\n    <p style=\"margin: 8px 0 0 0; font-size: 15px; line-height: 1.5;\">{{ $json.output.phrase_d_accroche }}</p>\n  </div>\n\n  <div style=\"background-color: #ffffff; border-radius: 8px; padding: 20px 25px; box-shadow: 0 1px 3px rgba(0,0,0,0.05);\">\n    <h2 style=\"color: #f16f55; margin-top: 0;\">Cover Letter</h2>\n    <pre style=\"white-space: pre-wrap; word-break: break-word; font-size: 15px; line-height: 1.6; margin: 8px 0 0 0; font-family: inherit;\">{{ $json.output.cover_letter }}</pre>\n  </div>\n</div>",
+        "options": {}
+      },
+      "id": "114448a2-bb9a-495e-9fe7-89705a4774be",
+      "name": "Respond to Webhook",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1,
+      "position": [
+        544,
+        0
+      ]
+    },
+    {
+      "parameters": {
+        "jsonSchemaExample": "{\n  \"language\": \"FR\",\n  \"cover_letter\": \"<final text>\",\n  \"phrase_d_accroche\": \"<3-sentence summary>\"\n}"
+      },
+      "type": "@n8n/n8n-nodes-langchain.outputParserStructured",
+      "typeVersion": 1.3,
+      "position": [
+        512,
+        320
+      ],
+      "id": "db0f3f30-729e-4773-a150-a284c347e6d2",
+      "name": "Structured Output Parser"
+    },
+    {
+      "parameters": {
+        "path": "bfa72daa-98a5-41f5-b6f6-f4013838ba58",
+        "formTitle": "Generate your Cover Letter 🚀",
+        "formDescription": "Generate personalized, high-quality cover letters based on job offer using AI-driven retrieval and language models.",
+        "formFields": {
+          "values": [
+            {
+              "fieldLabel": "Job Offer",
+              "fieldType": "textarea",
+              "placeholder": "Paste your job offer right here...",
+              "requiredField": true
+            }
+          ]
+        },
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "id": "93c0d138-6158-4a77-a559-ab227e67e489",
+      "name": "Creation Form1",
+      "type": "n8n-nodes-base.formTrigger",
+      "typeVersion": 2,
+      "position": [
+        16,
+        0
+      ],
+      "webhookId": "bfa72daa-98a5-41f5-b6f6-f4013838ba58"
     }
   ],
   "pinData": {},
   "connections": {
-    "On form submission": {
-      "main": [
-        [
-          {
-            "node": "AI Agent",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
     "Google Drive Trigger": {
       "main": [
         [
@@ -617,15 +623,10 @@
     },
     "AI Agent": {
       "main": [
-        []
-      ]
-    },
-    "Structured Output Parser": {
-      "ai_outputParser": [
         [
           {
-            "node": "AI Agent",
-            "type": "ai_outputParser",
+            "node": "Respond to Webhook",
+            "type": "main",
             "index": 0
           }
         ]
@@ -699,13 +700,35 @@
           }
         ]
       ]
+    },
+    "Structured Output Parser": {
+      "ai_outputParser": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_outputParser",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Creation Form1": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
     }
   },
   "active": true,
   "settings": {
     "executionOrder": "v1"
   },
-  "versionId": "4285e554-b849-4b34-af91-f177f42e5268",
+  "versionId": "5384e1d0-9b40-4f2f-ae54-869176da123f",
   "meta": {
     "templateCredsSetupCompleted": true,
     "instanceId": "38c285c0c0814f3ca522f1aee42c479efa4fbe7a3dd4c5ecee9bdc2bb9a40e26"
