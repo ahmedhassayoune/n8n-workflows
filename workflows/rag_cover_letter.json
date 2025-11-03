@@ -145,8 +145,8 @@
       "name": "Embeddings OpenAI",
       "credentials": {
         "openAiApi": {
-          "id": "DA3i7AQFjP77uep8",
-          "name": "n8n free OpenAI API credits"
+          "id": "Ygh8ay3Y85pFWQFC",
+          "name": "OpenAi account"
         }
       }
     },
@@ -187,7 +187,7 @@
         "text": "=Write a personalized cover letter and short professional summary for this job offer:\n\n{{ $json['Job Offer'] }}\n\nUse the ExperienceRetriever tool to find relevant experiences before writing.\n",
         "hasOutputParser": true,
         "options": {
-          "systemMessage": "You are an intelligent assistant specialized in writing personalized, professional cover letters and short profile summaries.\n\nYou have access to a tool called “ExperienceRetriever” that searches a vector database in the \"Experience\" namespace to retrieve Ahmed HASSAYOUNE’s real experiences, skills, and projects. \nAlways use this tool before writing any cover letter to retrieve the most relevant professional experiences matching the job offer. \nDo not invent or exaggerate achievements; use only retrieved facts and relevant details.\n\nYour main goal is to generate a tailored, high-quality cover letter and a short CV introduction (“phrase d’accroche”) aligned with the job offer provided.\n\n---\n\n### LANGUAGE DETECTION\nAutomatically detect if the job offer is written in French or English, and generate both the cover letter and the short phrase in the same language.\n\n---\n\n### COVER LETTER GENERATION\nGenerate a personalized cover letter following this structure and tone based on Ahmed’s past letter:\n\n[HEADER]\nAhmed HASSAYOUNE  \n75010 Paris  \n+33 6 98 09 03 69  \nahmed.hassayoune@gmail.com  \n\n[COMPANY HEADER]\n{{CompanyName if available}}  \n{{Department or HR if available}}  \n{{City, if available}}, {{current date}}\n\n[SUBJECT]\nObjet (if French) / Subject (if English): Application for the position of {{JobTitle}}\n\n[GREETING]\nMadame, Monsieur (FR) / Dear Hiring Team (EN),\n\n[INTRODUCTION]\nExpress concise motivation for the position and alignment with the company’s goals or mission.\n\n[EXPERIENCE PARAGRAPH]\nIntegrate 1–2 of the most relevant experiences retrieved via the ExperienceRetriever tool.  \nDescribe concretely what Ahmed did, the impact, and how it aligns with the job offer’s needs.\n\n[SKILLS & FIT PARAGRAPH]\nEmphasize key technical and soft skills relevant to the position (deep learning, computer vision, PyTorch, diffusion models, etc.), and link them to the company’s context.  \nUse natural transitions — no keyword stuffing.\n\n[CLOSING]\nEnd courteously, expressing motivation for an interview and appreciation for consideration.\n\n[ENDING FORMULA]\nVeuillez agréer, Madame, Monsieur, mes salutations distinguées. (FR)  \n/  \nKind regards, (EN)\n\nAhmed HASSAYOUNE\n\nWhenever the job offer lacks some details (company name, HR contact, city, etc.), omit those sections gracefully or adapt them naturally.\n\n---\n\n### SHORT “PHRASE D’ACCROCHE” FOR THE CV\nAfter writing the cover letter, generate a **separate short summary (3 sentences max)** that could appear under the “Objectif Professionnel” section of Ahmed’s CV.\n\nThis phrase should:\n- Be written in the same language as the offer,\n- Naturally connect Ahmed’s career trajectory and objectives to the position or company,\n- Include 2–3 **important keywords** from the job offer,\n- Sound realistic, professional, and confident — not overly polished or generic.\n\nExample (for inspiration only):\n> OBJECTIF PROFESSIONNEL : Ingénieur IA passionné par la vision par ordinateur et les modèles génératifs, je souhaite contribuer à des projets innovants en santé numérique en mettant à profit mes compétences en deep learning et modélisation 3D.\n\n---\n\n### STYLE & TONE\n- Always write in a **natural, confident, and professional** tone.  \n- Avoid overly formal or flowery phrasing.  \n- Be concise and authentic — no unnecessary repetition.  \n- Reflect Ahmed’s personality as a pragmatic, technically strong engineer with real research exposure but oriented toward applied innovation.\n\n---\n\n### OUTPUT FORMAT\nReturn your answer as **structured JSON** with the following titles:\n{\n  \"language\": \"FR\" or \"EN\",\n  \"cover_letter\": \"<final text>\",\n  \"phrase_d_accroche\": \"<3-sentence summary>\"\n}"
+          "systemMessage": "=You are an intelligent assistant specialized in writing **concise, professional cover letters** and short profile summaries.\n\nYou have access to a tool called **“ExperienceRetriever”** that searches a vector database in the \"Experience\" namespace to retrieve Ahmed HASSAYOUNE’s real experiences, skills, and projects.\nAlways use this tool before writing any cover letter to retrieve the most relevant professional experiences matching the job offer.\nDo **not** invent or exaggerate achievements; use only retrieved facts and relevant details.\n\nYour main goal is to generate a **tailored, high-quality cover letter** and a short CV introduction (“phrase d’accroche”) aligned with the job offer provided.\n\n### LANGUAGE DETECTION\n\nAutomatically detect if the job offer is written in French or English, and generate both the cover letter and the short phrase in the same language.\n\n### COVER LETTER GENERATION\n\nGenerate a **concise, structured cover letter** following this template and tone inspired by Ahmed’s previous letters:\n\n**[HEADER]**\nAhmed HASSAYOUNE\n75010 Paris\n+33 6 98 09 03 69\n[ahmed.hassayoune@gmail.com](mailto:ahmed.hassayoune@gmail.com)\n\n**[COMPANY HEADER]**\n<CompanyName if available>\n<Department or HR if available>\n<City, if available>, date month year {{$now}}\n\n**[SUBJECT]**\nObjet (FR) / Subject (EN): Application for the position of <JobTitle>\n\n**[GREETING]**\nMadame, Monsieur (FR) / Dear Hiring Team (EN),\n\n**[INTRODUCTION – 1 paragraph]**\n\n* Concisely express motivation for the position.\n* Show alignment with the company’s goals or mission.\n* 30-40 words max / 1–2 sentences max.\n\n**[EXPERIENCE PARAGRAPH – 1 paragraph]**\n\n* Integrate 1–2 of the most relevant company experiences retrieved via ExperienceRetriever.\n* Mention the company\n* Describe concretely what Ahmed did, the impact, and relevance to the job.\n* Keep this short and readable\n* 70-80 words max / 3 sentences max.\n\n**[SKILLS & FIT PARAGRAPH – 1 paragraph]**\n\n* Highlight key technical and soft skills aligned with the role.\n* Show how Ahmed’s skills (deep learning, PyTorch, diffusion models, 3D modeling, etc.) are useful for the company.\n* Keep natural, concise, and authentic * 25-35 words max / 2-3 sentences max.\n\n**[CLOSING – 1 paragraph]**\n\n* End, express interest in an interview, and thank them appreciation for consideration.\n* 15-20 words max / 1 sentence max.\n\n**[ENDING FORMULA]**\nVeuillez agréer, Madame, Monsieur, mes salutations distinguées. (FR)\n/\nKind regards, (EN)\n\nAhmed HASSAYOUNE\n\n> **Important:** Keep the cover letter short (maximum ~4 paragraphs, 10–12 sentences, 210 words), professional, confident, and natural. Avoid repetition or flowery language.\n\n### SHORT “PHRASE D’ACCROCHE” FOR THE CV\n\n* Written in the same language as the job offer.\n* Connect Ahmed’s career trajectory and objectives to the position/company.\n* Include 2–3 **keywords** from the job offer.\n* Sound realistic, professional, and confident.\n* Concise and actionable.\n* 30-35 words max / 2-3 sentences max.\n\nExample (for inspiration only):\n> OBJECTIF PROFESSIONNEL : Ingénieur en IA spécialisé en modélisation 3D et deep learning, je maîtrise PyTorch, TensorFlow et les Vision-Language Models. Je souhaite rejoindre l’équipe AI World Twin pour concevoir des solutions innovantes pour les environnements industriels.\n\n### STYLE & TONE\n\n* Natural, confident, professional.\n* Authentic and concise — do **not** overdo formality or length and avoid flowery phrasing.\n* Reflect Ahmed as a pragmatic, technically strong engineer, with real R&D experience, oriented toward applied innovation.\n\n### OUTPUT FORMAT\n\nReturn your answer as **structured JSON**:\n\n```json\n{\n  \"language\": \"FR\" or \"EN\",\n  \"cover_letter\": \"<final text>\",\n  \"phrase_d_accroche\": \"<3-sentence summary>\"\n}\n```"
         }
       },
       "type": "@n8n/n8n-nodes-langchain.agent",
@@ -203,11 +203,11 @@
       "parameters": {
         "model": {
           "__rl": true,
+          "value": "gpt-4.1-mini",
           "mode": "list",
-          "value": "gpt-4.1-mini"
+          "cachedResultName": "gpt-4.1-mini"
         },
         "options": {
-          "maxTokens": 1024,
           "temperature": 0.7,
           "topP": 0.9
         }
@@ -222,54 +222,29 @@
       "name": "OpenAI Chat Model",
       "credentials": {
         "openAiApi": {
-          "id": "DA3i7AQFjP77uep8",
-          "name": "n8n free OpenAI API credits"
+          "id": "Ygh8ay3Y85pFWQFC",
+          "name": "OpenAi account"
         }
       }
     },
     {
       "parameters": {
-        "mode": "retrieve-as-tool",
-        "toolDescription": "This tool allows you to retrieve the most relevant professional experiences, projects, and achievements of Ahmed HASSAYOUNE from a semantic vector database.\n\nThe database contains structured and unstructured embeddings of Ahmed’s CVs, past roles, technical skills, and key accomplishments, all stored under the “Experience” namespace.\n\nWhen you receive a job offer or a cover letter request, use this tool to perform a semantic search based on the job description, title, required skills, or company context. The tool will return the most relevant passages or summaries that match the query.\n\nYou should always call this tool **before generating a cover letter or professional summary**, to ensure your writing accurately reflects Ahmed’s real background and uses the most pertinent experiences. ",
-        "pineconeIndex": {
-          "__rl": true,
-          "value": "n8n-cover-letter",
-          "mode": "list",
-          "cachedResultName": "n8n-cover-letter"
-        },
-        "options": {}
-      },
-      "type": "@n8n/n8n-nodes-langchain.vectorStorePinecone",
-      "typeVersion": 1.3,
-      "position": [
-        224,
-        208
-      ],
-      "id": "baa5ffe9-396e-4b66-a8c5-0edca496e2c5",
-      "name": "Pinecone Vector Store1",
-      "credentials": {
-        "pineconeApi": {
-          "id": "RrovvPGu59tZFGvL",
-          "name": "PineconeApi account"
+        "options": {
+          "dimensions": 512
         }
-      }
-    },
-    {
-      "parameters": {
-        "options": {}
       },
       "type": "@n8n/n8n-nodes-langchain.embeddingsOpenAi",
       "typeVersion": 1.2,
       "position": [
-        352,
-        336
+        224,
+        368
       ],
       "id": "d15c1099-8ae9-4c1e-9612-08647819929b",
       "name": "Embeddings OpenAI1",
       "credentials": {
         "openAiApi": {
-          "id": "DA3i7AQFjP77uep8",
-          "name": "n8n free OpenAI API credits"
+          "id": "Ygh8ay3Y85pFWQFC",
+          "name": "OpenAi account"
         }
       }
     },
@@ -475,7 +450,7 @@
       "typeVersion": 1.3,
       "position": [
         512,
-        320
+        208
       ],
       "id": "db0f3f30-729e-4773-a150-a284c347e6d2",
       "name": "Structured Output Parser"
@@ -507,6 +482,35 @@
         0
       ],
       "webhookId": "bfa72daa-98a5-41f5-b6f6-f4013838ba58"
+    },
+    {
+      "parameters": {
+        "mode": "retrieve-as-tool",
+        "toolDescription": "This tool allows you to retrieve the most relevant professional experiences, projects, and achievements of Ahmed HASSAYOUNE from a semantic vector database.\n\nThe database contains structured and unstructured embeddings of Ahmed’s CVs, past roles, technical skills, and key accomplishments, all stored under the “Experience” namespace.\n\nWhen you receive a job offer or a cover letter request, use this tool to perform a semantic search based on the job description, title, required skills, or company context. The tool will return the most relevant passages or summaries that match the query.\n\nYou should always call this tool **before generating a cover letter or professional summary**, to ensure your writing accurately reflects Ahmed’s real background and uses the most pertinent experiences. ",
+        "pineconeIndex": {
+          "__rl": true,
+          "value": "n8n-cover-letter",
+          "mode": "list",
+          "cachedResultName": "n8n-cover-letter"
+        },
+        "options": {
+          "pineconeNamespace": "Experience"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.vectorStorePinecone",
+      "typeVersion": 1.3,
+      "position": [
+        224,
+        208
+      ],
+      "id": "baa5ffe9-396e-4b66-a8c5-0edca496e2c5",
+      "name": "Experience Retriever",
+      "credentials": {
+        "pineconeApi": {
+          "id": "RrovvPGu59tZFGvL",
+          "name": "PineconeApi account"
+        }
+      }
     }
   ],
   "pinData": {},
@@ -599,22 +603,11 @@
         ]
       ]
     },
-    "Pinecone Vector Store1": {
-      "ai_tool": [
-        [
-          {
-            "node": "AI Agent",
-            "type": "ai_tool",
-            "index": 0
-          }
-        ]
-      ]
-    },
     "Embeddings OpenAI1": {
       "ai_embedding": [
         [
           {
-            "node": "Pinecone Vector Store1",
+            "node": "Experience Retriever",
             "type": "ai_embedding",
             "index": 0
           }
@@ -722,13 +715,29 @@
           }
         ]
       ]
+    },
+    "Experience Retriever": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Pinecone Vector Store": {
+      "main": [
+        []
+      ]
     }
   },
-  "active": true,
+  "active": false,
   "settings": {
     "executionOrder": "v1"
   },
-  "versionId": "5384e1d0-9b40-4f2f-ae54-869176da123f",
+  "versionId": "4f7ae915-fbfb-4731-abfd-375066d77cd7",
   "meta": {
     "templateCredsSetupCompleted": true,
     "instanceId": "38c285c0c0814f3ca522f1aee42c479efa4fbe7a3dd4c5ecee9bdc2bb9a40e26"
