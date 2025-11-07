@@ -1,0 +1,565 @@
+{
+  "name": "Job Scraper",
+  "nodes": [
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        -48,
+        0
+      ],
+      "id": "be7fc78b-33cb-4f15-ae95-7012303e1407",
+      "name": "When clicking ‘Execute workflow’"
+    },
+    {
+      "parameters": {
+        "jsCode": "var mockData = [\n  {\n    \"source\": \"wttj\",\n    \"source_ref\": \"job_12345\",\n    \"title\": \"Computer Vision Engineer\",\n    \"company\": \"MedAI Diagnostics\",\n    \"location\": \"Paris, France\",\n    \"posted_date\": \"2025-11-05\",\n    \"salary\": \"45k–60k € / year\",\n    \"job_description\": \"You will develop and optimize image analysis algorithms for detection and segmentation of anomalies in medical imaging modalities (CT/MRI).\",\n    \"profile_skills\": [\n      \"Python\",\n      \"PyTorch\",\n      \"Segmentation\",\n      \"Deep Learning\",\n      \"Computer Vision\"\n    ],\n    \"apply_url\": \"https://www.welcometothejungle.com/jobs/12345/apply\",\n    \"raw_url\": \"https://www.welcometothejungle.com/jobs/12345\",\n    \"scraped_at\": \"2025-11-07 07:59:00\",\n    \"notified\": false\n  },\n  {\n    \"source\": \"hellowork\",\n    \"source_ref\": \"987654321\",\n    \"title\": \"R&D Engineer - AI for Medical Imaging\",\n    \"company\": \"NeuroTech Solutions\",\n    \"location\": \"Remote, Europe\",\n    \"posted_date\": \"2025-11-06\",\n    \"salary\": null,\n    \"job_description\": \"Participate in research and development of AI models for brain image segmentation and anomaly detection. Collaboration with clinicians expected.\",\n    \"profile_skills\": [\n      \"Python\",\n      \"TensorFlow\",\n      \"Numpy\",\n      \"Biomedical Imaging\",\n      \"Docker\"\n    ],\n    \"apply_url\": \"https://www.hellowork.com/offres/ai-research-engineer-987654321\",\n    \"raw_url\": \"https://www.hellowork.com/jobs/987654321\",\n    \"scraped_at\": \"2025-11-07 07:59:00\",\n    \"notified\": false\n  },\n  {\n    \"source\": \"linkedin\",\n    \"source_ref\": \"urn:li:job:123987456\",\n    \"title\": \"Machine Learning Engineer – Healthcare\",\n    \"company\": \"BioSense AI\",\n    \"location\": \"Lyon, France (Hybrid)\",\n    \"posted_date\": \"2025-11-04\",\n    \"salary\": \"Competitive\",\n    \"job_description\": \"Building scalable ML pipelines for patient data analytics, clinical decision support, and predictive diagnostics.\",\n    \"profile_skills\": [\n      \"Machine Learning\",\n      \"MLOps\",\n      \"AWS\",\n      \"Data Engineering\",\n      \"SQL\"\n    ],\n    \"apply_url\": \"https://linkedin.com/jobs/view/123987456\",\n    \"raw_url\": \"https://linkedin.com/jobs/view/123987456\",\n    \"scraped_at\": \"2025-11-07 07:59:00\",\n    \"notified\": false\n  }\n]\n\nreturn mockData"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        160,
+        0
+      ],
+      "id": "d8cb29ff-1d69-4b08-829b-43d418401c56",
+      "name": "Mock data"
+    },
+    {
+      "parameters": {
+        "jsCode": "const crypto = require('crypto');\nfor (const item of $input.all()) {\n  const base = item.json.source + '|' + item.json.source_ref;\n  item.json.id = crypto.createHash('sha256').update(base).digest('hex');\n}\nreturn $input.all();"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        368,
+        0
+      ],
+      "id": "c8466a41-4bc3-42be-a148-1d0d5c895f12",
+      "name": "Compute jobs UID",
+      "notesInFlow": true,
+      "notes": "Create id as a deterministic hash based on `source` and `source_ref` fields."
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "1k3yCKYihEUJQNI4ZtD0rgB-XIZbN-xaZfJ-DsFxl3ts",
+          "mode": "list",
+          "cachedResultName": "Jobs Tracker",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1k3yCKYihEUJQNI4ZtD0rgB-XIZbN-xaZfJ-DsFxl3ts/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 714513980,
+          "mode": "list",
+          "cachedResultName": "Jobs Tracker",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1k3yCKYihEUJQNI4ZtD0rgB-XIZbN-xaZfJ-DsFxl3ts/edit#gid=714513980"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        576,
+        0
+      ],
+      "id": "d1291944-a3ac-4a31-8af0-d45cf60a0812",
+      "name": "Fetch all jobs",
+      "alwaysOutputData": true,
+      "executeOnce": true
+    },
+    {
+      "parameters": {
+        "jsCode": "var ids = $input.all().map(item => item.json.ID);\nreturn $('Compute jobs UID').all().filter(item => !ids.includes(item.json.id));"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        784,
+        0
+      ],
+      "id": "18779ce5-72a9-459e-b9ee-d601a8238e60",
+      "name": "Filter out duplicate jobs",
+      "executeOnce": false,
+      "alwaysOutputData": true
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "37bc1ca9-9783-4488-9c08-a488e5e5cb39",
+              "leftValue": "={{ $json }}",
+              "rightValue": "",
+              "operator": {
+                "type": "object",
+                "operation": "notEmpty",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        976,
+        0
+      ],
+      "id": "1d809943-4700-476f-9096-17eeea0a0890",
+      "name": "If output not empty"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "be54350d-9e49-4078-a5e0-c2a93fde7c78",
+              "name": "ID",
+              "value": "={{ $json.id }}",
+              "type": "string"
+            },
+            {
+              "id": "e5332fdd-9f67-45e3-bb03-30e04147b504",
+              "name": "Source",
+              "value": "={{ $json.source }}",
+              "type": "string"
+            },
+            {
+              "id": "88c9933d-e9cd-4ac9-99b8-d50346c10349",
+              "name": "Source Ref",
+              "value": "={{ $json.source_ref }}",
+              "type": "string"
+            },
+            {
+              "id": "556445db-5841-4dbe-8225-c8eeac877edd",
+              "name": "Title",
+              "value": "={{ $json.title }}",
+              "type": "string"
+            },
+            {
+              "id": "7fa1fae0-f35e-4ee3-93b8-c79a2976d56a",
+              "name": "Company",
+              "value": "={{ $json.company }}",
+              "type": "string"
+            },
+            {
+              "id": "496fcb3a-aae2-40ab-a834-72b451ffd2d8",
+              "name": "Location",
+              "value": "={{ $json.location }}",
+              "type": "string"
+            },
+            {
+              "id": "577b547c-644c-4b3a-a48e-563d625d4141",
+              "name": "Posted Date",
+              "value": "={{ $json.posted_date }}",
+              "type": "string"
+            },
+            {
+              "id": "4b019684-8010-48f9-9595-3eb4b857e334",
+              "name": "Salary",
+              "value": "={{ $json.salary }}",
+              "type": "string"
+            },
+            {
+              "id": "5fffe7d0-001f-4718-8147-ec0785a3d176",
+              "name": "Job Description",
+              "value": "={{ $json.job_description }}",
+              "type": "string"
+            },
+            {
+              "id": "a2fe2543-9cbd-4494-adb1-b38187614d8e",
+              "name": "Profile Skills",
+              "value": "={{ $json.profile_skills.join(', ') }}",
+              "type": "string"
+            },
+            {
+              "id": "07f72a0a-40d2-4c50-a64b-283689f14eee",
+              "name": "Apply URL",
+              "value": "={{ $json.apply_url }}",
+              "type": "string"
+            },
+            {
+              "id": "747ff4ed-608e-48f1-a727-ce69635c165a",
+              "name": "Raw URL",
+              "value": "={{ $json.raw_url }}",
+              "type": "string"
+            },
+            {
+              "id": "a3bda115-d181-42ba-9700-580e671518fd",
+              "name": "Scraped At",
+              "value": "={{ $json.scraped_at }}",
+              "type": "string"
+            },
+            {
+              "id": "a5908515-1563-4bab-afb8-6c73c6791f31",
+              "name": "Notified",
+              "value": "={{ $json.notified }}",
+              "type": "boolean"
+            },
+            {
+              "id": "8947b9f5-83df-4ffa-9f14-5d5f4509c022",
+              "name": "Application Status",
+              "value": "Not Applied",
+              "type": "string"
+            },
+            {
+              "id": "31c96051-0d2e-42f8-9350-0c11b55d323f",
+              "name": "Decision Status",
+              "value": "Not Applied",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        160,
+        224
+      ],
+      "id": "5c4141c4-535e-4ba1-a380-5e4616204563",
+      "name": "Format fields",
+      "notes": "Format fields for database and add following missing fields : \"Application Status\" and \"Decision Status\""
+    },
+    {
+      "parameters": {
+        "operation": "append",
+        "documentId": {
+          "__rl": true,
+          "value": "1k3yCKYihEUJQNI4ZtD0rgB-XIZbN-xaZfJ-DsFxl3ts",
+          "mode": "list",
+          "cachedResultName": "Jobs Tracker",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1k3yCKYihEUJQNI4ZtD0rgB-XIZbN-xaZfJ-DsFxl3ts/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 714513980,
+          "mode": "list",
+          "cachedResultName": "Jobs Tracker",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1k3yCKYihEUJQNI4ZtD0rgB-XIZbN-xaZfJ-DsFxl3ts/edit#gid=714513980"
+        },
+        "columns": {
+          "mappingMode": "autoMapInputData",
+          "value": {
+            "ID": "={{ $('Loop Over Items').item.json.id }}",
+            "Source": "={{ $('Loop Over Items').item.json.source }}",
+            "Source Ref": "={{ $('Loop Over Items').item.json.source_ref }}",
+            "Title": "={{ $('Loop Over Items').item.json.title }}",
+            "Company": "={{ $('Loop Over Items').item.json.company }}"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "ID",
+              "displayName": "ID",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Source",
+              "displayName": "Source",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Source Ref",
+              "displayName": "Source Ref",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Title",
+              "displayName": "Title",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Company",
+              "displayName": "Company",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Application Status",
+              "displayName": "Application Status",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Decision Status",
+              "displayName": "Decision Status",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Location",
+              "displayName": "Location",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Posted Date",
+              "displayName": "Posted Date",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Salary",
+              "displayName": "Salary",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Job Description",
+              "displayName": "Job Description",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Profile Skills",
+              "displayName": "Profile Skills",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Apply URL",
+              "displayName": "Apply URL",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Raw URL",
+              "displayName": "Raw URL",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Scraped At",
+              "displayName": "Scraped At",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Notified",
+              "displayName": "Notified",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {
+          "cellFormat": "USER_ENTERED"
+        }
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        368,
+        224
+      ],
+      "id": "2cf78519-c4a1-43d3-816b-c9fc9d06683f",
+      "name": "Append row(s) in sheet"
+    },
+    {
+      "parameters": {
+        "jsCode": "let jobs = $input.all().map(item => item.json);\n\nlet emailBody = 'Hello,\\n\\nHere are the new job opportunities today:\\n\\n';\n\njobs.forEach((job, index) => {\n  emailBody += `${index+1}) ${job.Title} — ${job.Company} — ${job.Location} — Posted: ${job['Posted Date']}\\n`;\n  emailBody += `    Skills: ${job['Profile Skills']}\\n`;\n  emailBody += `    Apply here: ${job['Apply URL']}\\n\\n`;\n});\n\nemailBody += `Total new positions: ${jobs.length}\\n`;\n\nreturn [{ json: { body: emailBody, nb_positions: jobs.length } }];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        368,
+        384
+      ],
+      "id": "887a46f6-9358-4e20-8c9c-8761505ccdd2",
+      "name": "Format email body"
+    },
+    {
+      "parameters": {
+        "sendTo": "ahmed.hassayoune@hotmail.fr",
+        "subject": "=New Jobs Alert — {{ $json.nb_positions }} positions — {{ $now.format('dd/MM/yyyy') }}",
+        "emailType": "text",
+        "message": "={{ $json.body }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.1,
+      "position": [
+        576,
+        384
+      ],
+      "id": "b0359293-4666-45bd-b00e-f0d1700245b9",
+      "name": "Send mail",
+      "webhookId": "aacb2fc6-6c1c-4fad-b693-f2f22c40dec4",
+      "executeOnce": true
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "When clicking ‘Execute workflow’": {
+      "main": [
+        [
+          {
+            "node": "Mock data",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Mock data": {
+      "main": [
+        [
+          {
+            "node": "Compute jobs UID",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Compute jobs UID": {
+      "main": [
+        [
+          {
+            "node": "Fetch all jobs",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Fetch all jobs": {
+      "main": [
+        [
+          {
+            "node": "Filter out duplicate jobs",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Filter out duplicate jobs": {
+      "main": [
+        [
+          {
+            "node": "If output not empty",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If output not empty": {
+      "main": [
+        [
+          {
+            "node": "Format fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Format fields": {
+      "main": [
+        [
+          {
+            "node": "Append row(s) in sheet",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Format email body",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Format email body": {
+      "main": [
+        [
+          {
+            "node": "Send mail",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "ea3344c9-a852-4fc2-bfba-c078b2ebdb67",
+  "meta": {
+    "instanceId": "38c285c0c0814f3ca522f1aee42c479efa4fbe7a3dd4c5ecee9bdc2bb9a40e26"
+  },
+  "id": "9qL8lNXkjX6z3sEj",
+  "tags": []
+}
