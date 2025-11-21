@@ -6,39 +6,24 @@
       "type": "n8n-nodes-base.manualTrigger",
       "typeVersion": 1,
       "position": [
-        -48,
+        0,
         0
       ],
-      "id": "be7fc78b-33cb-4f15-ae95-7012303e1407",
+      "id": "2dd7d748-e6dc-4143-b0e8-56f676c77ec4",
       "name": "When clicking ‘Execute workflow’"
     },
     {
       "parameters": {
-        "jsCode": "var mockData = [\n  {\n    \"source\": \"wttj\",\n    \"source_ref\": \"job_12345\",\n    \"title\": \"Computer Vision Engineer\",\n    \"company\": \"MedAI Diagnostics\",\n    \"location\": \"Paris, France\",\n    \"posted_date\": \"2025-11-05\",\n    \"salary\": \"45k–60k € / year\",\n    \"job_description\": \"You will develop and optimize image analysis algorithms for detection and segmentation of anomalies in medical imaging modalities (CT/MRI).\",\n    \"profile_skills\": [\n      \"Python\",\n      \"PyTorch\",\n      \"Segmentation\",\n      \"Deep Learning\",\n      \"Computer Vision\"\n    ],\n    \"apply_url\": \"https://www.welcometothejungle.com/jobs/12345/apply\",\n    \"raw_url\": \"https://www.welcometothejungle.com/jobs/12345\",\n    \"scraped_at\": \"2025-11-07 07:59:00\",\n    \"notified\": false\n  },\n  {\n    \"source\": \"hellowork\",\n    \"source_ref\": \"987654321\",\n    \"title\": \"R&D Engineer - AI for Medical Imaging\",\n    \"company\": \"NeuroTech Solutions\",\n    \"location\": \"Remote, Europe\",\n    \"posted_date\": \"2025-11-06\",\n    \"salary\": null,\n    \"job_description\": \"Participate in research and development of AI models for brain image segmentation and anomaly detection. Collaboration with clinicians expected.\",\n    \"profile_skills\": [\n      \"Python\",\n      \"TensorFlow\",\n      \"Numpy\",\n      \"Biomedical Imaging\",\n      \"Docker\"\n    ],\n    \"apply_url\": \"https://www.hellowork.com/offres/ai-research-engineer-987654321\",\n    \"raw_url\": \"https://www.hellowork.com/jobs/987654321\",\n    \"scraped_at\": \"2025-11-07 07:59:00\",\n    \"notified\": false\n  },\n  {\n    \"source\": \"linkedin\",\n    \"source_ref\": \"urn:li:job:123987456\",\n    \"title\": \"Machine Learning Engineer – Healthcare\",\n    \"company\": \"BioSense AI\",\n    \"location\": \"Lyon, France (Hybrid)\",\n    \"posted_date\": \"2025-11-04\",\n    \"salary\": \"Competitive\",\n    \"job_description\": \"Building scalable ML pipelines for patient data analytics, clinical decision support, and predictive diagnostics.\",\n    \"profile_skills\": [\n      \"Machine Learning\",\n      \"MLOps\",\n      \"AWS\",\n      \"Data Engineering\",\n      \"SQL\"\n    ],\n    \"apply_url\": \"https://linkedin.com/jobs/view/123987456\",\n    \"raw_url\": \"https://linkedin.com/jobs/view/123987456\",\n    \"scraped_at\": \"2025-11-07 07:59:00\",\n    \"notified\": false\n  }\n]\n\nreturn mockData"
+        "jsCode": "var mockData = [\n  {\n    \"source\": \"wttj\",\n    \"source_ref\": \"job_12345\",\n    \"title\": \"Computer Vision Engineer\",\n    \"company\": \"MedAI Diagnostics\",\n    \"location\": \"Paris, France\",\n    \"posted_date\": \"2025-11-05\",\n    \"salary\": \"45k–60k € / year\",\n    \"job_description\": \"You will develop and optimize image analysis algorithms for detection and segmentation of anomalies in medical imaging modalities (CT/MRI).\",\n    \"profile_skills\": [\n      \"Python\",\n      \"PyTorch\",\n      \"Segmentation\",\n      \"Deep Learning\",\n      \"Computer Vision\"\n    ],\n    \"apply_url\": \"https://www.welcometothejungle.com/jobs/12345/apply\",\n    \"raw_url\": \"https://www.welcometothejungle.com/jobs/12345\",\n    \"scraped_at\": \"2025-11-07 07:59:00\"\n  },\n  {\n    \"source\": \"hellowork\",\n    \"source_ref\": \"987654321\",\n    \"title\": \"R&D Engineer - AI for Medical Imaging\",\n    \"company\": \"NeuroTech Solutions\",\n    \"location\": \"Remote, Europe\",\n    \"posted_date\": \"2025-11-06\",\n    \"salary\": null,\n    \"job_description\": \"Participate in research and development of AI models for brain image segmentation and anomaly detection. Collaboration with clinicians expected.\",\n    \"profile_skills\": [\n      \"Python\",\n      \"TensorFlow\",\n      \"Numpy\",\n      \"Biomedical Imaging\",\n      \"Docker\"\n    ],\n    \"apply_url\": \"https://www.hellowork.com/offres/ai-research-engineer-987654321\",\n    \"raw_url\": \"https://www.hellowork.com/jobs/987654321\",\n    \"scraped_at\": \"2025-11-07 07:59:00\"\n  },\n  {\n    \"source\": \"linkedin\",\n    \"source_ref\": \"urn:li:job:123987456\",\n    \"title\": \"Machine Learning Engineer – Healthcare\",\n    \"company\": \"BioSense AI\",\n    \"location\": \"Lyon, France (Hybrid)\",\n    \"posted_date\": \"2025-11-04\",\n    \"salary\": \"Competitive\",\n    \"job_description\": \"Building scalable ML pipelines for patient data analytics, clinical decision support, and predictive diagnostics.\",\n    \"profile_skills\": [\n      \"Machine Learning\",\n      \"MLOps\",\n      \"AWS\",\n      \"Data Engineering\",\n      \"SQL\"\n    ],\n    \"apply_url\": \"https://linkedin.com/jobs/view/123987456\",\n    \"raw_url\": \"https://linkedin.com/jobs/view/123987456\",\n    \"scraped_at\": \"2025-11-07 07:59:00\"\n  }\n]\n\nreturn mockData"
       },
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        160,
+        208,
         0
       ],
-      "id": "d8cb29ff-1d69-4b08-829b-43d418401c56",
+      "id": "423fcca3-e931-4f2d-baed-52f2e009fcb5",
       "name": "Mock data"
-    },
-    {
-      "parameters": {
-        "jsCode": "const crypto = require('crypto');\nfor (const item of $input.all()) {\n  const base = item.json.source + '|' + item.json.source_ref;\n  item.json.id = crypto.createHash('sha256').update(base).digest('hex');\n}\nreturn $input.all();"
-      },
-      "type": "n8n-nodes-base.code",
-      "typeVersion": 2,
-      "position": [
-        368,
-        0
-      ],
-      "id": "c8466a41-4bc3-42be-a148-1d0d5c895f12",
-      "name": "Compute jobs UID",
-      "notesInFlow": true,
-      "notes": "Create id as a deterministic hash based on `source` and `source_ref` fields."
     },
     {
       "parameters": {
@@ -61,13 +46,19 @@
       "type": "n8n-nodes-base.googleSheets",
       "typeVersion": 4.7,
       "position": [
-        576,
+        624,
         0
       ],
-      "id": "d1291944-a3ac-4a31-8af0-d45cf60a0812",
+      "id": "e01dd43c-687b-432f-a002-1a83ba5b9787",
       "name": "Fetch all jobs",
       "alwaysOutputData": true,
-      "executeOnce": true
+      "executeOnce": true,
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "ro4IZ27OUnA3y0Qr",
+          "name": "Google Sheets account"
+        }
+      }
     },
     {
       "parameters": {
@@ -76,10 +67,10 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        784,
+        832,
         0
       ],
-      "id": "18779ce5-72a9-459e-b9ee-d601a8238e60",
+      "id": "09fa96f7-0968-46e5-b825-23237744d28c",
       "name": "Filter out duplicate jobs",
       "executeOnce": false,
       "alwaysOutputData": true
@@ -112,10 +103,10 @@
       "type": "n8n-nodes-base.if",
       "typeVersion": 2.2,
       "position": [
-        976,
+        1024,
         0
       ],
-      "id": "1d809943-4700-476f-9096-17eeea0a0890",
+      "id": "5b5ea0a3-9f21-4071-9e7a-3da968ca52ea",
       "name": "If output not empty"
     },
     {
@@ -201,12 +192,6 @@
               "type": "string"
             },
             {
-              "id": "a5908515-1563-4bab-afb8-6c73c6791f31",
-              "name": "Notified",
-              "value": "={{ $json.notified }}",
-              "type": "boolean"
-            },
-            {
               "id": "8947b9f5-83df-4ffa-9f14-5d5f4509c022",
               "name": "Application Status",
               "value": "Not Applied",
@@ -225,10 +210,10 @@
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.4,
       "position": [
-        160,
+        208,
         224
       ],
-      "id": "5c4141c4-535e-4ba1-a380-5e4616204563",
+      "id": "ea3ae79c-8eb5-4d67-aef1-0219965b095a",
       "name": "Format fields",
       "notes": "Format fields for database and add following missing fields : \"Application Status\" and \"Decision Status\""
     },
@@ -417,11 +402,17 @@
       "type": "n8n-nodes-base.googleSheets",
       "typeVersion": 4.7,
       "position": [
-        368,
+        416,
         224
       ],
-      "id": "2cf78519-c4a1-43d3-816b-c9fc9d06683f",
-      "name": "Append row(s) in sheet"
+      "id": "91431955-f02f-4f64-b7de-90d9f5c78467",
+      "name": "Append row(s) in sheet",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "ro4IZ27OUnA3y0Qr",
+          "name": "Google Sheets account"
+        }
+      }
     },
     {
       "parameters": {
@@ -430,10 +421,10 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        368,
+        416,
         384
       ],
-      "id": "887a46f6-9358-4e20-8c9c-8761505ccdd2",
+      "id": "4048d140-a46f-46c1-bfa8-6471d9f4e0bb",
       "name": "Format email body"
     },
     {
@@ -447,13 +438,144 @@
       "type": "n8n-nodes-base.gmail",
       "typeVersion": 2.1,
       "position": [
-        576,
+        624,
         384
       ],
-      "id": "b0359293-4666-45bd-b00e-f0d1700245b9",
+      "id": "f8e81ff0-2cdd-4b12-beaa-df20400d7de6",
       "name": "Send mail",
       "webhookId": "aacb2fc6-6c1c-4fad-b693-f2f22c40dec4",
-      "executeOnce": true
+      "executeOnce": true,
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "JpZlrCbgOly9sBXq",
+          "name": "Gmail account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "type": "SHA256",
+        "value": "={{ $json.source }}|{{ $json.source_ref }}",
+        "dataPropertyName": "id"
+      },
+      "type": "n8n-nodes-base.crypto",
+      "typeVersion": 1,
+      "position": [
+        416,
+        0
+      ],
+      "id": "876c5b5b-b341-46be-961b-65b80f5d9424",
+      "name": "Compute jobs UID"
+    },
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "triggerAtHour": 7,
+              "triggerAtMinute": 45
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        -48,
+        864
+      ],
+      "id": "fe7e928e-12e6-49cf-b0cb-3e7fbc4278ec",
+      "name": "Schedule Trigger"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "171f1833-162c-484b-8d7f-66d39f607906",
+              "name": "geoId",
+              "value": "104246759",
+              "type": "string"
+            },
+            {
+              "id": "995dd304-e1b0-4f75-bf81-26c709da6e87",
+              "name": "keywords",
+              "value": "[   \"AI\",   \"Machine Learning\",   \"Research\",   \"R&D\",   \"Data Scientist\",   \"Computer Vision\" ]",
+              "type": "array"
+            },
+            {
+              "id": "11f9465a-679d-4af0-98e3-6876e306984f",
+              "name": "f_TPR",
+              "value": "r86400",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        208,
+        736
+      ],
+      "id": "32080647-0131-46fa-abc5-7c17a49e1358",
+      "name": "Edit Fields"
+    },
+    {
+      "parameters": {
+        "jsCode": "var urls = [];\n\nfor (const keyword of $input.first().json.keywords) {\n  var url = 'https://www.linkedin.com/jobs/search/?' \n    + 'keywords=' + encodeURIComponent(keyword)\n    + '&geoId=' + encodeURIComponent($input.first().json.geoId)\n    + '&f_TPR=' + encodeURIComponent($input.first().json.f_TPR);\n\n  urls.push(url);\n}\n\nreturn [\n  {\n    json: {\n      urls: urls\n    }\n  }\n];\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        416,
+        736
+      ],
+      "id": "62c951eb-d45d-4f24-84ff-f30cac7faabe",
+      "name": "Code in JavaScript"
+    },
+    {
+      "parameters": {
+        "operation": "scrape-js",
+        "url": "={{ $json.url }}",
+        "retryNum": 2,
+        "geo": "fr",
+        "blockImages": true,
+        "blockMedia": true,
+        "viewport": "{\n  \"width\": 1920,\n  \"height\": 1080,\n  \"deviceScaleFactor\": 1,\n  \"isMobile\": false,\n  \"hasTouch\": false,\n  \"isLandscape\": false\n}"
+      },
+      "type": "n8n-nodes-scrapeninja.scrapeNinja",
+      "typeVersion": 1,
+      "position": [
+        816,
+        736
+      ],
+      "id": "b6b3ebde-5e83-4e8c-89e2-c074d6215707",
+      "name": "ScrapeNinja",
+      "executeOnce": true,
+      "credentials": {
+        "scrapeNinjaApi": {
+          "id": "eXMN9AmERBVbRbgn",
+          "name": "ScrapeNinja account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "fieldToSplitOut": "urls",
+        "options": {
+          "destinationFieldName": "url"
+        }
+      },
+      "type": "n8n-nodes-base.splitOut",
+      "typeVersion": 1,
+      "position": [
+        624,
+        736
+      ],
+      "id": "7b4e1a3c-8762-485f-8042-d01a9d3a3a0c",
+      "name": "Split Out"
     }
   ],
   "pinData": {},
@@ -474,17 +596,6 @@
         [
           {
             "node": "Compute jobs UID",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Compute jobs UID": {
-      "main": [
-        [
-          {
-            "node": "Fetch all jobs",
             "type": "main",
             "index": 0
           }
@@ -550,16 +661,66 @@
           }
         ]
       ]
+    },
+    "Compute jobs UID": {
+      "main": [
+        [
+          {
+            "node": "Fetch all jobs",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Schedule Trigger": {
+      "main": [
+        []
+      ]
+    },
+    "Edit Fields": {
+      "main": [
+        [
+          {
+            "node": "Code in JavaScript",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code in JavaScript": {
+      "main": [
+        [
+          {
+            "node": "Split Out",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Split Out": {
+      "main": [
+        [
+          {
+            "node": "ScrapeNinja",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
     }
   },
   "active": false,
   "settings": {
     "executionOrder": "v1"
   },
-  "versionId": "ea3344c9-a852-4fc2-bfba-c078b2ebdb67",
+  "versionId": "74b72d78-0745-4838-bf70-ffe8d062de90",
   "meta": {
-    "instanceId": "38c285c0c0814f3ca522f1aee42c479efa4fbe7a3dd4c5ecee9bdc2bb9a40e26"
+    "templateCredsSetupCompleted": true,
+    "instanceId": "b87ba4d1e29db53fa7e2e59cf2c63f059ab024634f7886ba268fdfa300de1550"
   },
-  "id": "9qL8lNXkjX6z3sEj",
+  "id": "HNPNVTcxBtcoF5iX",
   "tags": []
 }
