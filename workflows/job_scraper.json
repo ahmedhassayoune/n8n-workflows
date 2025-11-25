@@ -814,7 +814,7 @@
             },
             {
               "key": "Profile Skills|multi_select",
-              "multiSelectValue": "={{ $json.profileSkills }}"
+              "multiSelectValue": "={{ $json.profileSkills.join(', ') }}"
             },
             {
               "key": "Application URL|url",
@@ -1029,7 +1029,25 @@
       "name": "Prepare for Fields for LLM"
     }
   ],
-  "pinData": {},
+  "pinData": {
+    "Schedule Trigger": [
+      {
+        "json": {
+          "timestamp": "2025-11-25T08:30:01.014+01:00",
+          "Readable date": "November 25th 2025, 8:30:01 am",
+          "Readable time": "8:30:01 am",
+          "Day of week": "Tuesday",
+          "Year": "2025",
+          "Month": "November",
+          "Day of month": "25",
+          "Hour": "08",
+          "Minute": "30",
+          "Second": "01",
+          "Timezone": "Europe/Paris (UTC+01:00)"
+        }
+      }
+    ]
+  },
   "connections": {
     "Schedule Trigger": {
       "main": [
@@ -1480,7 +1498,7 @@
   "settings": {
     "executionOrder": "v1"
   },
-  "versionId": "b2d7567c-44c8-4f0e-8f78-de9d9d19b92b",
+  "versionId": "5999d767-0cc3-4047-9be4-c752c52243ba",
   "meta": {
     "templateCredsSetupCompleted": true,
     "instanceId": "b87ba4d1e29db53fa7e2e59cf2c63f059ab024634f7886ba268fdfa300de1550"
