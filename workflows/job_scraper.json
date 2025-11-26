@@ -83,7 +83,7 @@
       "typeVersion": 2,
       "position": [
         1984,
-        1432
+        1440
       ],
       "id": "f00ccb0c-4b11-4670-b8b0-d91125c9e49d",
       "name": "Parse HTML"
@@ -321,7 +321,7 @@
       "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
       "typeVersion": 1.3,
       "position": [
-        2280,
+        2288,
         1152
       ],
       "id": "f6b291fe-cc5b-47d6-8997-b4d740a76f79",
@@ -510,7 +510,7 @@
       "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
       "typeVersion": 1.3,
       "position": [
-        4200,
+        4208,
         960
       ],
       "id": "d18cdd53-cf3f-48b7-8619-a5bf01356e5c",
@@ -677,32 +677,6 @@
     },
     {
       "parameters": {
-        "jsCode": "const minDelay = 1000; // 1 seconds\nconst maxDelay = 4000; // 4 seconds\n\nfunction sleep(ms) {\n  return new Promise(resolve => setTimeout(resolve, ms));\n}\n\n// Random delay\nconst delay = Math.floor(Math.random() * (maxDelay - minDelay + 1)) + minDelay;\nawait sleep(delay);\n\n\n// Return original items so that the workflow can continue\nreturn $input.all();"
-      },
-      "type": "n8n-nodes-base.code",
-      "typeVersion": 2,
-      "position": [
-        1536,
-        1312
-      ],
-      "id": "be16503d-7e85-4e70-9eba-c443cf995720",
-      "name": "Random Wait #1"
-    },
-    {
-      "parameters": {
-        "jsCode": "const minDelay = 1000; // 1 seconds\nconst maxDelay = 4000; // 4 seconds\n\nfunction sleep(ms) {\n  return new Promise(resolve => setTimeout(resolve, ms));\n}\n\n// Random delay\nconst delay = Math.floor(Math.random() * (maxDelay - minDelay + 1)) + minDelay;\nawait sleep(delay);\n\n\n// Return original items so that the workflow can continue\nreturn $input.all();"
-      },
-      "type": "n8n-nodes-base.code",
-      "typeVersion": 2,
-      "position": [
-        3008,
-        736
-      ],
-      "id": "9d8812e4-234f-4ef8-a757-65b8248c0c3b",
-      "name": "Random Wait #2"
-    },
-    {
-      "parameters": {
         "compare": "selectedFields",
         "fieldsToCompare": "id",
         "options": {}
@@ -740,110 +714,6 @@
       "name": "Fetch Database Jobs",
       "executeOnce": true,
       "alwaysOutputData": true,
-      "credentials": {
-        "notionApi": {
-          "id": "srAX2Tl74sFUy1TX",
-          "name": "Notion account"
-        }
-      }
-    },
-    {
-      "parameters": {
-        "resource": "databasePage",
-        "databaseId": {
-          "__rl": true,
-          "value": "27df3836-d045-800b-8837-df75fbebe01f",
-          "mode": "list",
-          "cachedResultName": "Job Apply Tracker",
-          "cachedResultUrl": "https://www.notion.so/27df3836d045800b8837df75fbebe01f"
-        },
-        "title": "={{ $json.company }}",
-        "propertiesUi": {
-          "propertyValues": [
-            {
-              "key": "ID|rich_text",
-              "textContent": "={{ $json.id }}"
-            },
-            {
-              "key": "Job ID|rich_text",
-              "textContent": "={{ $json.jobId }}"
-            },
-            {
-              "key": "Source|select",
-              "selectValue": "={{ $json.source }}"
-            },
-            {
-              "key": "Job Title|rich_text",
-              "textContent": "={{ $json.title }}"
-            },
-            {
-              "key": "Location|rich_text",
-              "textContent": "={{ $json.location }}"
-            },
-            {
-              "key": "Salary|rich_text",
-              "textContent": "={{ $json.salary }}"
-            },
-            {
-              "key": "Job Description Summary|rich_text",
-              "textContent": "={{ $json.descriptionSummary }}"
-            },
-            {
-              "key": "Job Description|rich_text",
-              "richText": true,
-              "text": {
-                "text": [
-                  {
-                    "text": "={{ $json.description.slice(0, 2000) }}",
-                    "annotationUi": {}
-                  },
-                  {
-                    "text": "={{ $json.description.slice(2000, 4000) }}",
-                    "annotationUi": {}
-                  },
-                  {
-                    "text": "={{ $json.description.slice(4000, 6000) }}",
-                    "annotationUi": {}
-                  },
-                  {
-                    "text": "={{ $json.description.slice(6000, 8000) }}",
-                    "annotationUi": {}
-                  }
-                ]
-              }
-            },
-            {
-              "key": "Profile Skills|multi_select",
-              "multiSelectValue": "={{ $json.profileSkills.join(', ') }}"
-            },
-            {
-              "key": "Application URL|url",
-              "urlValue": "={{ $json.url }}"
-            },
-            {
-              "key": "Scraped At|date",
-              "date": "={{ $json.scrapedAt }}"
-            },
-            {
-              "key": "Application Status|status",
-              "statusValue": "=Not applied"
-            },
-            {
-              "key": "Decision Status|status",
-              "statusValue": "=Not applied"
-            }
-          ]
-        },
-        "options": {}
-      },
-      "type": "n8n-nodes-base.notion",
-      "typeVersion": 2.2,
-      "position": [
-        3232,
-        928
-      ],
-      "id": "17354661-6cb5-4ae0-af53-869740484a4e",
-      "name": "Create a database page",
       "credentials": {
         "notionApi": {
           "id": "srAX2Tl74sFUy1TX",
@@ -1027,6 +897,136 @@
       ],
       "id": "0cac9146-aaee-42f2-8c2b-fee45d9dbc43",
       "name": "Prepare for Fields for LLM"
+    },
+    {
+      "parameters": {
+        "max": 4
+      },
+      "type": "n8n-nodes-random-wait.randomWait",
+      "typeVersion": 1,
+      "position": [
+        1536,
+        1312
+      ],
+      "id": "9073a04b-3135-4b2b-a256-c2caefcf8c25",
+      "name": "Random Wait #1"
+    },
+    {
+      "parameters": {
+        "max": 4
+      },
+      "type": "n8n-nodes-random-wait.randomWait",
+      "typeVersion": 1,
+      "position": [
+        3008,
+        736
+      ],
+      "id": "515dc5ba-44c2-4f7f-9443-b18617fa51e2",
+      "name": "Random Wait #2"
+    },
+    {
+      "parameters": {
+        "resource": "databasePage",
+        "databaseId": {
+          "__rl": true,
+          "value": "27df3836-d045-800b-8837-df75fbebe01f",
+          "mode": "list",
+          "cachedResultName": "Job Apply Tracker",
+          "cachedResultUrl": "https://www.notion.so/27df3836d045800b8837df75fbebe01f"
+        },
+        "title": "={{ $json.company }}",
+        "propertiesUi": {
+          "propertyValues": [
+            {
+              "key": "ID|rich_text",
+              "textContent": "={{ $json.id }}"
+            },
+            {
+              "key": "Job ID|rich_text",
+              "textContent": "={{ $json.jobId }}"
+            },
+            {
+              "key": "Source|select",
+              "selectValue": "={{ $json.source }}"
+            },
+            {
+              "key": "Job Title|rich_text",
+              "textContent": "={{ $json.title }}"
+            },
+            {
+              "key": "Location|rich_text",
+              "textContent": "={{ $json.location }}"
+            },
+            {
+              "key": "Salary|rich_text",
+              "textContent": "={{ $json.salary }}"
+            },
+            {
+              "key": "Job Description Summary|rich_text",
+              "textContent": "={{ $json.descriptionSummary }}"
+            },
+            {
+              "key": "Job Description|rich_text",
+              "richText": true,
+              "text": {
+                "text": [
+                  {
+                    "text": "={{ $json.description.slice(0, 2000) }}",
+                    "annotationUi": {}
+                  },
+                  {
+                    "text": "={{ $json.description.slice(2000, 4000) }}",
+                    "annotationUi": {}
+                  },
+                  {
+                    "text": "={{ $json.description.slice(4000, 6000) }}",
+                    "annotationUi": {}
+                  },
+                  {
+                    "text": "={{ $json.description.slice(6000, 8000) }}",
+                    "annotationUi": {}
+                  }
+                ]
+              }
+            },
+            {
+              "key": "Profile Skills|multi_select",
+              "multiSelectValue": "={{ $json.profileSkills.join(', ') }}"
+            },
+            {
+              "key": "Application URL|url",
+              "urlValue": "={{ $json.url }}"
+            },
+            {
+              "key": "Scraped At|date",
+              "date": "={{ $json.scrapedAt }}"
+            },
+            {
+              "key": "Application Status|status",
+              "statusValue": "=Not applied"
+            },
+            {
+              "key": "Decision Status|status",
+              "statusValue": "=Not applied"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.notion",
+      "typeVersion": 2.2,
+      "position": [
+        3232,
+        928
+      ],
+      "id": "17354661-6cb5-4ae0-af53-869740484a4e",
+      "name": "Insert Job Pages",
+      "credentials": {
+        "notionApi": {
+          "id": "srAX2Tl74sFUy1TX",
+          "name": "Notion account"
+        }
+      }
     }
   ],
   "pinData": {
@@ -1411,28 +1411,6 @@
         ]
       ]
     },
-    "Random Wait #1": {
-      "main": [
-        [
-          {
-            "node": "Linkedin GET",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Random Wait #2": {
-      "main": [
-        [
-          {
-            "node": "Scrap Offer Description",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
     "Remove Duplicates": {
       "main": [
         [
@@ -1470,7 +1448,7 @@
       "main": [
         [
           {
-            "node": "Create a database page",
+            "node": "Insert Job Pages",
             "type": "main",
             "index": 0
           },
@@ -1492,13 +1470,35 @@
           }
         ]
       ]
+    },
+    "Random Wait #1": {
+      "main": [
+        [
+          {
+            "node": "Linkedin GET",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Random Wait #2": {
+      "main": [
+        [
+          {
+            "node": "Scrap Offer Description",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
     }
   },
   "active": true,
   "settings": {
     "executionOrder": "v1"
   },
-  "versionId": "5999d767-0cc3-4047-9be4-c752c52243ba",
+  "versionId": "b6fbe6c9-f0a6-42ee-b117-a296a0a20ec1",
   "meta": {
     "templateCredsSetupCompleted": true,
     "instanceId": "b87ba4d1e29db53fa7e2e59cf2c63f059ab024634f7886ba268fdfa300de1550"
