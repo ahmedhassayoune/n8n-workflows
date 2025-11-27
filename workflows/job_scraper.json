@@ -77,13 +77,13 @@
     },
     {
       "parameters": {
-        "jsCode": "const cheerio = require('cheerio');\n\nconst html = $input.first().json.data;\nconst $$ = cheerio.load(html);\n\nconst jobs = [];\n$$('.base-search-card').each((i, el) => {\n    const card = $$(el);\n\n    // Full job link\n    const link = card.find('a.base-card__full-link').attr('href') || null;\n\n    // Extract job ID from link (LinkedIn format always ends with ...-<id>?)\n    let jobId = null;\n    if (link) {\n        const match = link.match(/-(\\d+)(?:\\?|$)/);\n        jobId = match ? match[1] : null;\n    }\n\n    // Job title\n    const jobTitle = card.find('.base-search-card__title').text().trim() ||\n                     card.find('span.sr-only').text().trim() ||\n                     null;\n\n    // Company name\n    const companyName = card.find('.base-search-card__subtitle a').text().trim() ||\n                        card.find('.base-search-card__subtitle').text().trim() ||\n                        null;\n\n    jobs.push({\n        jobId,\n        jobTitle,\n        companyName,\n        link\n    });\n});\n\nconst url = $('Loop Over Scrolls').last().json.url;\n\nreturn [{ json: { url, jobs } }];\n"
+        "jsCode": "const cheerio = require('cheerio');\n\nfunction parseRelativeDate(text) {\n    const now = new Date();\n    const lower = text.toLowerCase();\n\n    const m = lower.match(/(\\d+)\\s*(minute|hour|day)s?\\s*ago/);\n    if (!m) return null;\n\n    const value = parseInt(m[1], 10);\n    const unit = m[2];\n\n    const d = new Date(now);\n\n    if (unit === \"minute\") d.setMinutes(now.getMinutes() - value);\n    if (unit === \"hour\")   d.setHours(now.getHours() - value);\n    if (unit === \"day\")    d.setDate(now.getDate() - value);\n\n    return d.toISOString();\n}\n\nfunction todayDate() {\n    const d = new Date();\n    d.setHours(0, 0, 0, 0);\n    return d.toISOString();\n}\n\n\nconst html = $input.first().json.data;\nconst $$ = cheerio.load(html);\n\nconst jobs = [];\n$$('.base-search-card').each((i, el) => {\n    const card = $$(el);\n\n    // Full job link\n    const link = card.find('a.base-card__full-link').attr('href') || null;\n\n    // Job ID from link\n    let jobId = null;\n    if (link) {\n        const match = link.match(/-(\\d+)(?:\\?|$)/);\n        jobId = match ? match[1] : null;\n    }\n\n    // Job title\n    const jobTitle =\n        card.find('.base-search-card__title').text().trim() ||\n        card.find('span.sr-only').text().trim() ||\n        null;\n\n    // Company name\n    const companyName =\n        card.find('.base-search-card__subtitle a').text().trim() ||\n        card.find('.base-search-card__subtitle').text().trim() ||\n        null;\n\n    // Extract the <time> element\n    const postedText = card.find('time').text().trim();\n    let postedAt = parseRelativeDate(postedText);\n\n    if (!postedAt) postedAt = todayDate();\n\n    jobs.push({\n        jobId,\n        jobTitle,\n        companyName,\n        link,\n        postedAt\n    });\n});\n\nconst url = $('Loop Over Scrolls').last().json.url;\n\nreturn [{ json: { url, jobs } }];\n"
       },
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
         1984,
-        1440
+        1432
       ],
       "id": "f00ccb0c-4b11-4670-b8b0-d91125c9e49d",
       "name": "Parse HTML"
@@ -285,28 +285,6 @@
     },
     {
       "parameters": {
-        "promptType": "define",
-        "text": "=Candidate Profile:\n- Recent graduate (Junior roles or 0-3 years experience roles)\n- Fields: Computer Vision, Image Processing, AI, Machine Learning, Deep Learning, Medical Imaging, Pathology Image, R&D\n- Preferred sectors: Healthcare, Pathology, but open to any sector offering the above fields\n- Also acceptable roles: Data Scientist, Consultant in AI/ML fields\n- Examples of companies: Gleamer, Bioptimus, Sonio, Owkins, Whitelab, Raidium, GE Healthcare, Idemia, HuggingFace, GoPro, Thales, Dassault, SocgenAI, AWS, Datadog, IBM Consulting...\n\nInstructions:\n1. Examine each job in the provided list.\n2. Filter out any jobs that are obviously unrelated to the candidate’s fields or locations.\n3. Keep jobs that match the profile.\n4. Output ONLY a JSON array containing the `id` of each matching job.  \n   - No explanations  \n   - No markdown  \n   - No leading or trailing quotes  \n   - Output MUST be valid JSON.\n\nInput jobs:\n{{ JSON.stringify($json[\"jobs\"]) }}",
-        "messages": {
-          "messageValues": [
-            {
-              "message": "=You are a job filter assistant. Your role is to read a list of job offers and return only those that match the candidate’s profile.  Always output a JSON format string with array ids of kept jobs.  Do not add explanations or commentary."
-            }
-          ]
-        },
-        "batching": {}
-      },
-      "type": "@n8n/n8n-nodes-langchain.chainLlm",
-      "typeVersion": 1.7,
-      "position": [
-        2208,
-        928
-      ],
-      "id": "3a74821a-f31e-469e-b847-c590b806a5ba",
-      "name": "Basic LLM Chain"
-    },
-    {
-      "parameters": {
         "model": {
           "__rl": true,
           "mode": "list",
@@ -321,7 +299,7 @@
       "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
       "typeVersion": 1.3,
       "position": [
-        2288,
+        2280,
         1152
       ],
       "id": "f6b291fe-cc5b-47d6-8997-b4d740a76f79",
@@ -359,6 +337,12 @@
               "id": "e8f69fe0-c017-418b-946a-9eba7b6f6217",
               "name": "link",
               "value": "={{ $json.link }}",
+              "type": "string"
+            },
+            {
+              "id": "a9a50474-8307-4611-bc6e-ac16eb5bfd92",
+              "name": "postedAt",
+              "value": "={{ $json.postedAt }}",
               "type": "string"
             }
           ]
@@ -412,6 +396,12 @@
               "id": "5497e7db-ce9c-4a06-8571-3bb3636e1935",
               "name": "link",
               "value": "={{ $json.link }}",
+              "type": "string"
+            },
+            {
+              "id": "e55e5fd5-1bdf-46d5-9c78-0f660c959f1f",
+              "name": "postedAt",
+              "value": "={{ $json.postedAt }}",
               "type": "string"
             }
           ]
@@ -482,21 +472,6 @@
     },
     {
       "parameters": {
-        "promptType": "define",
-        "text": "=You are a job data extractor. Your task is to convert the given job posting data into a strict JSON with the following fields (example):\n\n{\n    \"source\": \"linkedin\",\n    \"title\": \"Computer Vision Engineer\",\n    \"company\": \"MedAI Diagnostics\",\n    \"location\": \"Paris, France\",\n    \"salary\": \"45k–60k € / year\",\n    \"job_description_summary\": \"You will develop and optimize image analysis algorithms for detection and segmentation of anomalies in medical imaging modalities (CT/MRI).\",\n    \"profile_skills\": [\n      \"Python\",\n      \"PyTorch\",\n      \"Segmentation\",\n      \"Deep Learning\",\n      \"Computer Vision\"\n    ],\n    \"url\": \"https://www.welcometothejungle.com/jobs/12345\",\n    \"scraped_at\": \"2025-11-07 07:59:00\"\n}\n\nRules:\n1. Extract information only from the input.\n2. If a field is not present, leave it as an empty string \"\" for strings, or an empty array [] for lists.\n3. Job description summary must be 3 sentences max.\n4. Dates should be in ISO format YYYY-MM-DD HH:MM:SS if including time.\n5. Skills should be a concise list of relevant keywords extracted from the job description.\n6. Preserve the field names exactly as shown. Output must be valid JSON ONLY, nothing else: \n   - No explanations  \n   - No markdown  \n   - No leading or trailing quotes  \n   - Output MUST be valid JSON.\n\nCurrent date is: {{ $now }}\n\nHere is the job posting data:\n{{ JSON.stringify($json) }}",
-        "batching": {}
-      },
-      "type": "@n8n/n8n-nodes-langchain.chainLlm",
-      "typeVersion": 1.7,
-      "position": [
-        4128,
-        736
-      ],
-      "id": "50e22b0c-88ae-4f24-bb31-7c02d17e10c2",
-      "name": "Basic LLM Chain1"
-    },
-    {
-      "parameters": {
         "model": {
           "__rl": true,
           "mode": "list",
@@ -510,7 +485,7 @@
       "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
       "typeVersion": 1.3,
       "position": [
-        4208,
+        4200,
         960
       ],
       "id": "d18cdd53-cf3f-48b7-8619-a5bf01356e5c",
@@ -542,13 +517,13 @@
             {
               "id": "acf1f5a8-c848-46ae-b7f9-9522a179a9f2",
               "name": "id",
-              "value": "={{ $('Prepare for Fields for LLM').item.json.id }}",
+              "value": "={{ $('Prepare Fields for LLM').item.json.id }}",
               "type": "string"
             },
             {
               "id": "258a7ed9-a57e-488d-94e6-b8d8b09283cd",
               "name": "source",
-              "value": "={{ $('Prepare for Fields for LLM').item.json.source }}",
+              "value": "={{ $('Prepare Fields for LLM').item.json.source }}",
               "type": "string"
             },
             {
@@ -560,7 +535,7 @@
             {
               "id": "e65d201f-7042-4502-9d02-59a20328d7c7",
               "name": "company",
-              "value": "={{ $('Prepare for Fields for LLM').item.json.companyName }}",
+              "value": "={{ $('Prepare Fields for LLM').item.json.companyName }}",
               "type": "string"
             },
             {
@@ -584,7 +559,7 @@
             {
               "id": "449c046f-690c-42de-a51c-bec2208736fe",
               "name": "description",
-              "value": "={{ $('Prepare for Fields for LLM').item.json.jobDescription }}",
+              "value": "={{ $('Prepare Fields for LLM').item.json.jobDescription }}",
               "type": "string"
             },
             {
@@ -608,7 +583,13 @@
             {
               "id": "6f0f55ed-7099-451a-b0f8-2b6d58e1e035",
               "name": "jobId",
-              "value": "={{ $('Prepare for Fields for LLM').item.json.jobId }}",
+              "value": "={{ $('Prepare Fields for LLM').item.json.jobId }}",
+              "type": "string"
+            },
+            {
+              "id": "d66f97ba-29b1-4f12-a5a5-6ea843151ece",
+              "name": "postedAt",
+              "value": "={{ $('Loop Over Selected Offers').item.json.postedAt }}",
               "type": "string"
             }
           ]
@@ -825,6 +806,12 @@
               "name": "company",
               "value": "={{ $json.company }}",
               "type": "string"
+            },
+            {
+              "id": "94dde140-23d9-4c7f-8607-c63633ba78a5",
+              "name": "postedAt",
+              "value": "={{ $json.postedAt }}",
+              "type": "string"
             }
           ]
         },
@@ -838,65 +825,6 @@
       ],
       "id": "059c0f0b-4994-4666-a125-09df52633e8b",
       "name": "Prepare Fields for Notion"
-    },
-    {
-      "parameters": {
-        "assignments": {
-          "assignments": [
-            {
-              "id": "88ff3797-284e-406c-b43d-38cb184cc1b5",
-              "name": "id",
-              "value": "={{ $('Loop Over Selected Offers').item.json.id }}",
-              "type": "string"
-            },
-            {
-              "id": "3dbb242b-77db-4ef3-b2b5-4e848b3fd51c",
-              "name": "source",
-              "value": "={{ $('Loop Over Selected Offers').item.json.source }}",
-              "type": "string"
-            },
-            {
-              "id": "0b3ace1e-cdf8-465c-8818-0feb06f4cc0c",
-              "name": "jobId",
-              "value": "={{ $('Loop Over Selected Offers').item.json.jobId }}",
-              "type": "string"
-            },
-            {
-              "id": "65e77fd6-ee01-4f64-b8b5-ac060ab40d00",
-              "name": "jobTitle",
-              "value": "={{ $('Loop Over Selected Offers').item.json.jobTitle }}",
-              "type": "string"
-            },
-            {
-              "id": "f6549c5e-691c-4779-864b-54922904fe26",
-              "name": "companyName",
-              "value": "={{ $('Loop Over Selected Offers').item.json.companyName }}",
-              "type": "string"
-            },
-            {
-              "id": "91843d03-6a48-4a30-a93b-67b166caeab9",
-              "name": "link",
-              "value": "={{ $('Loop Over Selected Offers').item.json.link }}",
-              "type": "string"
-            },
-            {
-              "id": "f40fd591-db89-4e68-8dc8-a6301a4b4ebc",
-              "name": "jobDescription",
-              "value": "={{ $json.jobDescription }}",
-              "type": "string"
-            }
-          ]
-        },
-        "options": {}
-      },
-      "type": "n8n-nodes-base.set",
-      "typeVersion": 3.4,
-      "position": [
-        3904,
-        736
-      ],
-      "id": "0cac9146-aaee-42f2-8c2b-fee45d9dbc43",
-      "name": "Prepare for Fields for LLM"
     },
     {
       "parameters": {
@@ -1008,6 +936,10 @@
             {
               "key": "Decision Status|status",
               "statusValue": "=Not applied"
+            },
+            {
+              "key": "Posted At|date",
+              "date": "={{ $json.postedAt }}"
             }
           ]
         },
@@ -1027,6 +959,102 @@
           "name": "Notion account"
         }
       }
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "88ff3797-284e-406c-b43d-38cb184cc1b5",
+              "name": "id",
+              "value": "={{ $('Loop Over Selected Offers').item.json.id }}",
+              "type": "string"
+            },
+            {
+              "id": "3dbb242b-77db-4ef3-b2b5-4e848b3fd51c",
+              "name": "source",
+              "value": "={{ $('Loop Over Selected Offers').item.json.source }}",
+              "type": "string"
+            },
+            {
+              "id": "0b3ace1e-cdf8-465c-8818-0feb06f4cc0c",
+              "name": "jobId",
+              "value": "={{ $('Loop Over Selected Offers').item.json.jobId }}",
+              "type": "string"
+            },
+            {
+              "id": "65e77fd6-ee01-4f64-b8b5-ac060ab40d00",
+              "name": "jobTitle",
+              "value": "={{ $('Loop Over Selected Offers').item.json.jobTitle }}",
+              "type": "string"
+            },
+            {
+              "id": "f6549c5e-691c-4779-864b-54922904fe26",
+              "name": "companyName",
+              "value": "={{ $('Loop Over Selected Offers').item.json.companyName }}",
+              "type": "string"
+            },
+            {
+              "id": "91843d03-6a48-4a30-a93b-67b166caeab9",
+              "name": "link",
+              "value": "={{ $('Loop Over Selected Offers').item.json.link }}",
+              "type": "string"
+            },
+            {
+              "id": "f40fd591-db89-4e68-8dc8-a6301a4b4ebc",
+              "name": "jobDescription",
+              "value": "={{ $json.jobDescription }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        3904,
+        736
+      ],
+      "id": "0cac9146-aaee-42f2-8c2b-fee45d9dbc43",
+      "name": "Prepare Fields for LLM"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=You are a job data extractor. Your task is to convert the given job posting data into a strict JSON with the following fields (example):\n\n{\n    \"source\": \"linkedin\",\n    \"title\": \"Computer Vision Engineer\",\n    \"company\": \"MedAI Diagnostics\",\n    \"location\": \"Paris, France\",\n    \"salary\": \"45k–60k € / year\",\n    \"job_description_summary\": \"You will develop and optimize image analysis algorithms for detection and segmentation of anomalies in medical imaging modalities (CT/MRI).\",\n    \"profile_skills\": [\n      \"Python\",\n      \"PyTorch\",\n      \"Segmentation\",\n      \"Deep Learning\",\n      \"Computer Vision\"\n    ],\n    \"url\": \"https://www.welcometothejungle.com/jobs/12345\",\n    \"scraped_at\": \"2025-11-07 07:59:00\"\n}\n\nRules:\n1. Extract information only from the input.\n2. If a field is not present, leave it as an empty string \"\" for strings, or an empty array [] for lists.\n3. Job description summary must be 3 sentences max.\n4. Dates should be in ISO format YYYY-MM-DD HH:MM:SS if including time.\n5. Skills should be a concise list of relevant keywords extracted from the job description.\n6. Preserve the field names exactly as shown. Output must be valid JSON ONLY, nothing else: \n   - No explanations  \n   - No markdown  \n   - No leading or trailing quotes  \n   - Output MUST be valid JSON.\n\nCurrent date is: {{ $now }}\n\nHere is the job posting data:\n{{ JSON.stringify($json) }}",
+        "batching": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.chainLlm",
+      "typeVersion": 1.7,
+      "position": [
+        4128,
+        736
+      ],
+      "id": "50e22b0c-88ae-4f24-bb31-7c02d17e10c2",
+      "name": "LLM Job Data Extractor"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=Candidate Profile:\n- Recent graduate (Junior roles or 0-3 years experience roles)\n- Fields: Computer Vision, Image Processing, AI, Machine Learning, Deep Learning, Medical Imaging, Pathology Image, R&D\n- Preferred sectors: Healthcare, Pathology, but open to any sector offering the above fields\n- Also acceptable roles: Data Scientist, Consultant in AI/ML fields\n- Examples of companies: Gleamer, Bioptimus, Sonio, Owkins, Whitelab, Raidium, GE Healthcare, Idemia, HuggingFace, GoPro, Thales, Dassault, SocgenAI, AWS, Datadog, IBM Consulting...\n\nInstructions:\n1. Examine each job in the provided list.\n2. Filter out any jobs that are obviously unrelated to the candidate’s fields or locations.\n3. Keep jobs that match the profile.\n4. Output ONLY a JSON array containing the `id` of each matching job.  \n   - No explanations  \n   - No markdown  \n   - No leading or trailing quotes  \n   - Output MUST be valid JSON.\n\nInput jobs:\n{{ JSON.stringify($json[\"jobs\"]) }}",
+        "messages": {
+          "messageValues": [
+            {
+              "message": "=You are a job filter assistant. Your role is to read a list of job offers and return only those that match the candidate’s profile.  Always output a JSON format string with array ids of kept jobs.  Do not add explanations or commentary."
+            }
+          ]
+        },
+        "batching": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.chainLlm",
+      "typeVersion": 1.7,
+      "position": [
+        2208,
+        928
+      ],
+      "id": "3a74821a-f31e-469e-b847-c590b806a5ba",
+      "name": "LLM Mass Job Filterer"
     }
   ],
   "pinData": {
@@ -1243,7 +1271,7 @@
       "main": [
         [
           {
-            "node": "Basic LLM Chain",
+            "node": "LLM Mass Job Filterer",
             "type": "main",
             "index": 0
           }
@@ -1254,19 +1282,8 @@
       "ai_languageModel": [
         [
           {
-            "node": "Basic LLM Chain",
+            "node": "LLM Mass Job Filterer",
             "type": "ai_languageModel",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Basic LLM Chain": {
-      "main": [
-        [
-          {
-            "node": "Keep Selected Offers",
-            "type": "main",
             "index": 0
           }
         ]
@@ -1331,18 +1348,7 @@
       "main": [
         [
           {
-            "node": "Prepare for Fields for LLM",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Basic LLM Chain1": {
-      "main": [
-        [
-          {
-            "node": "Parse JSON",
+            "node": "Prepare Fields for LLM",
             "type": "main",
             "index": 0
           }
@@ -1353,7 +1359,7 @@
       "ai_languageModel": [
         [
           {
-            "node": "Basic LLM Chain1",
+            "node": "LLM Job Data Extractor",
             "type": "ai_languageModel",
             "index": 0
           }
@@ -1460,17 +1466,6 @@
         ]
       ]
     },
-    "Prepare for Fields for LLM": {
-      "main": [
-        [
-          {
-            "node": "Basic LLM Chain1",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
     "Random Wait #1": {
       "main": [
         [
@@ -1492,13 +1487,46 @@
           }
         ]
       ]
+    },
+    "Prepare Fields for LLM": {
+      "main": [
+        [
+          {
+            "node": "LLM Job Data Extractor",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "LLM Job Data Extractor": {
+      "main": [
+        [
+          {
+            "node": "Parse JSON",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "LLM Mass Job Filterer": {
+      "main": [
+        [
+          {
+            "node": "Keep Selected Offers",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
     }
   },
   "active": true,
   "settings": {
     "executionOrder": "v1"
   },
-  "versionId": "b6fbe6c9-f0a6-42ee-b117-a296a0a20ec1",
+  "versionId": "94484030-6046-4d72-b311-20ef74521c79",
   "meta": {
     "templateCredsSetupCompleted": true,
     "instanceId": "b87ba4d1e29db53fa7e2e59cf2c63f059ab024634f7886ba268fdfa300de1550"
