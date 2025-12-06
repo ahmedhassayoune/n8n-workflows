@@ -18,7 +18,7 @@
       "typeVersion": 1.2,
       "position": [
         -480,
-        1408
+        1296
       ],
       "id": "fe7e928e-12e6-49cf-b0cb-3e7fbc4278ec",
       "name": "Schedule Trigger"
@@ -32,7 +32,7 @@
       "typeVersion": 4.3,
       "position": [
         416,
-        1360
+        1248
       ],
       "id": "e4780d92-bd6e-42b1-ab93-4c1c7ffc7634",
       "name": "Initial request"
@@ -45,7 +45,7 @@
       "typeVersion": 2,
       "position": [
         640,
-        1360
+        1248
       ],
       "id": "b17e147c-0325-42cc-8911-b67345bd9384",
       "name": "Extract Offers Count"
@@ -58,7 +58,7 @@
       "typeVersion": 2,
       "position": [
         864,
-        1360
+        1248
       ],
       "id": "ac701b78-1883-438f-9181-f468069e8900",
       "name": "Prepare Scroll URLs"
@@ -72,7 +72,7 @@
       "typeVersion": 4.3,
       "position": [
         1760,
-        1312
+        1200
       ],
       "id": "2b720079-626e-429c-ba34-93b4387e65b2",
       "name": "Linkedin GET"
@@ -85,7 +85,7 @@
       "typeVersion": 2,
       "position": [
         1984,
-        1440
+        1312
       ],
       "id": "f00ccb0c-4b11-4670-b8b0-d91125c9e49d",
       "name": "Parse HTML"
@@ -98,7 +98,7 @@
       "typeVersion": 2,
       "position": [
         1760,
-        1120
+        1008
       ],
       "id": "e3ec90ca-5d5b-4b29-87e9-e3883a85128b",
       "name": "Set Reset to True"
@@ -111,7 +111,7 @@
       "typeVersion": 2,
       "position": [
         -32,
-        1408
+        1296
       ],
       "id": "62c951eb-d45d-4f24-84ff-f30cac7faabe",
       "name": "Prepare URLs"
@@ -124,7 +124,7 @@
       "typeVersion": 3,
       "position": [
         192,
-        1408
+        1296
       ],
       "id": "2893bbbd-8950-4254-b3a2-903535b614c1",
       "name": "Loop Over URLs"
@@ -139,7 +139,7 @@
       "typeVersion": 3,
       "position": [
         1088,
-        1360
+        1248
       ],
       "id": "f3449b67-e568-4e44-8eda-4b2e3217f441",
       "name": "Loop Over Scrolls"
@@ -152,7 +152,7 @@
       "typeVersion": 2,
       "position": [
         1312,
-        1312
+        1200
       ],
       "id": "66a68306-d161-4910-b67f-6407b64f27bc",
       "name": "Set Reset to False"
@@ -174,7 +174,7 @@
       "typeVersion": 1,
       "position": [
         1312,
-        1120
+        1008
       ],
       "id": "cc3407da-9e1c-45be-a032-2cf030bb383d",
       "name": "Aggregate Scroll Jobs"
@@ -221,7 +221,7 @@
       "typeVersion": 3.4,
       "position": [
         -256,
-        1408
+        1296
       ],
       "id": "32080647-0131-46fa-abc5-7c17a49e1358",
       "name": "Set Query Params"
@@ -235,7 +235,7 @@
       "typeVersion": 1,
       "position": [
         416,
-        928
+        816
       ],
       "id": "3047eb98-7308-4185-b697-50e3bd223a6b",
       "name": "Split Out"
@@ -250,7 +250,7 @@
       "typeVersion": 1,
       "position": [
         864,
-        928
+        816
       ],
       "id": "3043e920-7842-4f17-8a82-39883a9427c2",
       "name": "Compute ID"
@@ -263,7 +263,7 @@
       "typeVersion": 2,
       "position": [
         1536,
-        928
+        816
       ],
       "id": "7c03a69a-ef0f-4abc-ab0d-50d6168b0e9d",
       "name": "Filter Out Duplicates",
@@ -280,7 +280,7 @@
       "typeVersion": 1,
       "position": [
         1984,
-        928
+        816
       ],
       "id": "7ed1a970-49d8-4458-ad84-b51eea5a135c",
       "name": "Aggregate"
@@ -302,7 +302,7 @@
       "typeVersion": 1.3,
       "position": [
         2288,
-        1152
+        1040
       ],
       "id": "f6b291fe-cc5b-47d6-8997-b4d740a76f79",
       "name": "OpenAI Chat Model",
@@ -355,7 +355,7 @@
       "typeVersion": 3.4,
       "position": [
         1760,
-        928
+        816
       ],
       "id": "b22ece5c-51d8-4d06-8103-f32dde3dab88",
       "name": "Keep Important Fields"
@@ -414,7 +414,7 @@
       "typeVersion": 3.4,
       "position": [
         640,
-        928
+        816
       ],
       "id": "5f4774eb-9683-42ad-b318-7025a957f255",
       "name": "Add Source + ID Fields"
@@ -427,7 +427,7 @@
       "typeVersion": 2,
       "position": [
         2560,
-        928
+        816
       ],
       "id": "64a498a0-f392-4d36-8391-40aace2c3cda",
       "name": "Keep Selected Offers"
@@ -441,20 +441,20 @@
       "typeVersion": 4.3,
       "position": [
         3232,
-        736
+        544
       ],
       "id": "aa11ceeb-f74a-42c5-8498-2f3a1ddc2fa1",
       "name": "Scrap Offer Description"
     },
     {
       "parameters": {
-        "jsCode": "const cheerio = require('cheerio');\n\nconst html = $input.first().json.data\nconst $$ = cheerio.load(html);\n\n// 1. Extract the JSON-LD script (LinkedIn job pages always include this)\nlet description = \"\";\n\n$$('script[type=\"application/ld+json\"]').each((i, el) => {\n    try {\n        const json = JSON.parse($$(el).contents().text());\n\n        // When the script contains a JobPosting\n        if (json['@type'] === 'JobPosting' && json.description) {\n            description = json.description;\n        }\n    } catch (e) {\n        // ignore parsing errors from other scripts\n    }\n});\n\n// 2. Clean HTML entities + line breaks\nif (description) {\n    // Remove HTML tags but keep line breaks\n    description = description\n        .replace(/<br\\s*\\/?>/gi, \"\\n\")\n        .replace(/<\\/?[^>]+>/g, \"\")\n        .trim();\n}\n\n// 3. Return in n8n format\nreturn [\n    {\n        json: {\n            jobDescription: description || null,\n        }\n    }\n];\n"
+        "jsCode": "const cheerio = require('cheerio');\n\nconst html = $input.first().json.data\nconst $$ = cheerio.load(html);\n\n// 1. Extract the JSON-LD script (LinkedIn job pages always include this)\nlet description = \"\";\n\n$$('script[type=\"application/ld+json\"]').each((_, el) => {\n    try {\n        const json = JSON.parse($$(el).contents().text());\n\n        // When the script contains a JobPosting\n        if (json['@type'] === 'JobPosting' && json.description) {\n            description = json.description;\n        }\n    } catch (e) {\n        // ignore parsing errors from other scripts\n    }\n});\n\n// Fallback to HTML description if JSON-LD missing\nif (!description) {\n    description = $$('.description__text.description__text--rich').html();\n}\n\n// 2. Clean HTML entities + line breaks\nif (description) {\n    // Remove HTML tags but keep line breaks\n    description = description\n        .replace(/<br\\s*\\/?>/gi, \"\\n\")\n        .replace(/<\\/?[^>]+>/g, \"\")\n        .trim();\n}\n\n// 3. Return in n8n format\nreturn [\n    {\n        json: {\n            jobDescription: description || null,\n        }\n    }\n];\n"
       },
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
         3456,
-        736
+        544
       ],
       "id": "9e79dcfd-c56a-4826-8575-34d37665c419",
       "name": "Parse Job Description"
@@ -466,8 +466,8 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        3680,
-        736
+        3904,
+        1104
       ],
       "id": "2d9d4be9-d0f1-4df0-a1b8-4d376f6fed47",
       "name": "Decode and Convert HTML"
@@ -487,8 +487,8 @@
       "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
       "typeVersion": 1.3,
       "position": [
-        4208,
-        960
+        4432,
+        1328
       ],
       "id": "d18cdd53-cf3f-48b7-8619-a5bf01356e5c",
       "name": "OpenAI Chat Model1",
@@ -506,8 +506,8 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        4480,
-        736
+        4704,
+        1104
       ],
       "id": "ced0e9a5-d38b-40c4-b441-0b47ba2aea40",
       "name": "Parse JSON"
@@ -601,8 +601,8 @@
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.4,
       "position": [
-        4704,
-        928
+        4928,
+        1184
       ],
       "id": "0c126893-0256-4cda-94cf-bb38e999f6c4",
       "name": "Complete Job Fields"
@@ -614,8 +614,8 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        3232,
-        1120
+        3456,
+        928
       ],
       "id": "0cf254cf-33c8-464a-9fe4-034a07da8691",
       "name": "Format Email Body"
@@ -631,8 +631,8 @@
       "type": "n8n-nodes-base.gmail",
       "typeVersion": 2.1,
       "position": [
-        3456,
-        1120
+        3680,
+        928
       ],
       "id": "628e0ed6-d409-4d05-8503-b73794863e72",
       "name": "Send Mail",
@@ -653,7 +653,7 @@
       "typeVersion": 3,
       "position": [
         2784,
-        928
+        816
       ],
       "id": "77a20908-d3ec-40b1-9cf7-25618bb1e9c0",
       "name": "Loop Over Selected Offers"
@@ -668,7 +668,7 @@
       "typeVersion": 2,
       "position": [
         1088,
-        928
+        816
       ],
       "id": "33a4170b-e852-419c-837a-eab9eda686d1",
       "name": "Remove Duplicates"
@@ -691,7 +691,7 @@
       "typeVersion": 2.2,
       "position": [
         1312,
-        928
+        816
       ],
       "id": "127518d6-1e37-4ffd-8a7f-b79cfc883382",
       "name": "Fetch Database Jobs",
@@ -728,7 +728,7 @@
       "typeVersion": 3.4,
       "position": [
         1536,
-        1120
+        1008
       ],
       "id": "e13a5705-59ae-4ad0-b77a-373d9e8c68a9",
       "name": "Add Origin URL"
@@ -822,8 +822,8 @@
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.4,
       "position": [
-        3008,
-        1024
+        3232,
+        832
       ],
       "id": "059c0f0b-4994-4666-a125-09df52633e8b",
       "name": "Prepare Fields for Notion"
@@ -836,7 +836,7 @@
       "typeVersion": 1,
       "position": [
         1536,
-        1312
+        1200
       ],
       "id": "9073a04b-3135-4b2b-a256-c2caefcf8c25",
       "name": "Random Wait #1"
@@ -849,7 +849,7 @@
       "typeVersion": 1,
       "position": [
         3008,
-        736
+        544
       ],
       "id": "515dc5ba-44c2-4f7f-9443-b18617fa51e2",
       "name": "Random Wait #2"
@@ -950,8 +950,8 @@
       "type": "n8n-nodes-base.notion",
       "typeVersion": 2.2,
       "position": [
-        3232,
-        928
+        3456,
+        736
       ],
       "id": "17354661-6cb5-4ae0-af53-869740484a4e",
       "name": "Insert Job Pages",
@@ -1015,8 +1015,8 @@
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.4,
       "position": [
-        3904,
-        736
+        4128,
+        1104
       ],
       "id": "0cac9146-aaee-42f2-8c2b-fee45d9dbc43",
       "name": "Prepare Fields for LLM"
@@ -1030,8 +1030,8 @@
       "type": "@n8n/n8n-nodes-langchain.chainLlm",
       "typeVersion": 1.7,
       "position": [
-        4128,
-        736
+        4352,
+        1104
       ],
       "id": "50e22b0c-88ae-4f24-bb31-7c02d17e10c2",
       "name": "LLM Job Data Extractor"
@@ -1053,10 +1053,95 @@
       "typeVersion": 1.7,
       "position": [
         2208,
-        928
+        816
       ],
       "id": "3a74821a-f31e-469e-b847-c590b806a5ba",
       "name": "LLM Mass Job Filterer"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "4688afaa-7778-4e7c-a564-5fea8bbfc4a4",
+              "leftValue": "={{ $json }}",
+              "rightValue": "",
+              "operator": {
+                "type": "object",
+                "operation": "notEmpty",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.filter",
+      "typeVersion": 2.2,
+      "position": [
+        3008,
+        832
+      ],
+      "id": "cbb9037c-23c7-4a2f-923e-f6a2faa29c2f",
+      "name": "Filter out empty objects"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "85c5d2df-8589-4e66-bd2d-b5fae830671d",
+              "leftValue": "={{ $json.jobDescription }}",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "notExists",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        3680,
+        544
+      ],
+      "id": "b3c85867-a4ea-44de-bc05-c25d5570b352",
+      "name": "If",
+      "alwaysOutputData": false
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": []
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        3904,
+        816
+      ],
+      "id": "83e9ce46-4e99-4061-b357-cd74df4f745f",
+      "name": "Empty Object"
     }
   ],
   "pinData": {},
@@ -1321,7 +1406,7 @@
       "main": [
         [
           {
-            "node": "Decode and Convert HTML",
+            "node": "If",
             "type": "main",
             "index": 0
           }
@@ -1387,7 +1472,7 @@
       "main": [
         [
           {
-            "node": "Prepare Fields for Notion",
+            "node": "Filter out empty objects",
             "type": "main",
             "index": 0
           }
@@ -1504,13 +1589,53 @@
           }
         ]
       ]
+    },
+    "Filter out empty objects": {
+      "main": [
+        [
+          {
+            "node": "Prepare Fields for Notion",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If": {
+      "main": [
+        [
+          {
+            "node": "Empty Object",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Decode and Convert HTML",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Empty Object": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Selected Offers",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
     }
   },
   "active": true,
   "settings": {
     "executionOrder": "v1"
   },
-  "versionId": "f18e0002-1e6c-4caf-b7f2-df30f5ec1b6d",
+  "versionId": "62e60e86-8a1b-4c94-9fc4-363a74ccd787",
   "meta": {
     "templateCredsSetupCompleted": true,
     "instanceId": "b87ba4d1e29db53fa7e2e59cf2c63f059ab024634f7886ba268fdfa300de1550"
