@@ -334,18 +334,6 @@
               "name": "companyName",
               "value": "={{ $json.companyName }}",
               "type": "string"
-            },
-            {
-              "id": "e8f69fe0-c017-418b-946a-9eba7b6f6217",
-              "name": "link",
-              "value": "={{ $json.link }}",
-              "type": "string"
-            },
-            {
-              "id": "a9a50474-8307-4611-bc6e-ac16eb5bfd92",
-              "name": "postedAt",
-              "value": "={{ $json.postedAt }}",
-              "type": "string"
             }
           ]
         },
@@ -1039,11 +1027,11 @@
     {
       "parameters": {
         "promptType": "define",
-        "text": "=Candidate Profile:\n- Recent graduate (Junior roles or 0-3 years experience roles)\n- Fields: Computer Vision, Image Processing, AI, Machine Learning, Deep Learning, Medical Imaging, Pathology Image, R&D\n- Preferred sectors: Healthcare, Pathology, but open to any sector offering the above fields\n- Also acceptable roles: Data Scientist, Consultant in AI/ML fields\n- Examples of companies: Gleamer, Bioptimus, Sonio, Owkins, Whitelab, Raidium, GE Healthcare, Idemia, HuggingFace, GoPro, Thales, Dassault, SocgenAI, AWS, Datadog, IBM Consulting...\n\nInstructions:\n1. Examine each job in the provided list.\n2. Filter out any jobs that are obviously unrelated to the candidate’s fields or locations.\n3. Keep jobs that match the profile.\n4. Output ONLY a JSON array containing the `id` of each matching job.  \n   - No explanations  \n   - No markdown  \n   - No leading or trailing quotes  \n   - Output MUST be valid JSON.\n\nInput jobs:\n{{ JSON.stringify($json[\"jobs\"]) }}",
+        "text": "=Analyze the following job offers and filter them according to the candidate profile.\n\nTASK:\n1. Review each job's title and company\n2. Determine if it matches the candidate's experience level and technical fields\n3. When in doubt, INCLUDE the job (better to over-include than miss opportunities)\n4. Return ONLY the array of matching job IDs as valid JSON\n\nINPUT JOBS:\n{{ JSON.stringify($json[\"jobs\"]) }}\n\nOUTPUT (JSON array only):",
         "messages": {
           "messageValues": [
             {
-              "message": "=You are a job filter assistant. Your role is to read a list of job offers and return only those that match the candidate’s profile.  Always output a JSON format string with array ids of kept jobs.  Do not add explanations or commentary."
+              "message": "=You are a job filter assistant. Your role is to analyze job offers and return only those matching the candidate's profile.\n\nCANDIDATE PROFILE:\nExperience Level: Junior (0-2 years) or recent graduate positions\nCore Fields: Computer Vision, Image Processing, AI, Machine Learning, Deep Learning, Medical Imaging, Pathology Imaging, R&D\nPreferred Sectors: Healthcare, Medical/Pathology (but open to all sectors if fields match)\nAlso Consider: Data Scientist, AI/ML Consultant roles\nExample Target Companies: Gleamer, Bioptimus, Sonio, Owkin, Whitelab, Raidium, GE Healthcare, Idemia, HuggingFace, GoPro, Thales, Dassault, SocgenAI, AWS, Datadog, IBM Consulting\n\nFILTERING CRITERIA:\n✓ INCLUDE if:\n- Job is junior-level OR experience requirement ≤2 years OR explicitly mentions graduates/entry-level\n- Role involves any core fields (CV, image processing, AI/ML, deep learning, medical imaging, pathology)\n- Data Scientist or AI/ML Consultant positions matching the technical profile\n- R&D roles in relevant technical domains\n\n✗ EXCLUDE if:\n- Requires 5+ years of experience (unless clearly junior-friendly)\n- Completely unrelated fields (e.g., pure finance, HR, sales, marketing without AI component)\n- Senior/Lead/Principal positions explicitly requiring extensive experience\n\nOUTPUT FORMAT:\nReturn ONLY a valid JSON array of matching job IDs.\nFormat: [\"id1\", \"id2\", \"id3\"]\nNo markdown formatting, no explanations, no code blocks, no extra text."
             }
           ]
         },
@@ -1635,7 +1623,7 @@
   "settings": {
     "executionOrder": "v1"
   },
-  "versionId": "62e60e86-8a1b-4c94-9fc4-363a74ccd787",
+  "versionId": "3770cd91-7b45-45b7-a8f5-4061589012d8",
   "meta": {
     "templateCredsSetupCompleted": true,
     "instanceId": "b87ba4d1e29db53fa7e2e59cf2c63f059ab024634f7886ba268fdfa300de1550"
