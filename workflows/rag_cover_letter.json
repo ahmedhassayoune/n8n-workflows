@@ -24,15 +24,15 @@
       "type": "n8n-nodes-base.googleDriveTrigger",
       "typeVersion": 1,
       "position": [
-        -304,
+        -320,
         912
       ],
-      "id": "2da5bc75-849f-46b9-82ec-b102f426a157",
+      "id": "59a83caa-1ea4-43af-8f43-5479d309eb7f",
       "name": "Google Drive Trigger",
       "credentials": {
         "googleDriveOAuth2Api": {
-          "id": "8AHFGAb4zEnkJ2bL",
-          "name": "GMAIL"
+          "id": "2ZRHC5vpPDQwpjFz",
+          "name": "Google Drive account"
         }
       }
     },
@@ -50,15 +50,15 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.3,
       "position": [
-        512,
+        496,
         688
       ],
-      "id": "a8db36a4-6861-4661-8429-797829106309",
+      "id": "8d9dafc0-c085-4626-951e-148e6f4967d3",
       "name": "HTTP Request",
       "credentials": {
         "httpQueryAuth": {
-          "id": "pvLWK11BtAs5kU5g",
-          "name": "GEMINI Document parser"
+          "id": "6kmUBIiTjMvZWft6",
+          "name": "Query Auth account"
         }
       }
     },
@@ -75,15 +75,15 @@
       "type": "n8n-nodes-base.googleDrive",
       "typeVersion": 3,
       "position": [
-        -128,
+        -144,
         912
       ],
-      "id": "8b23ef3b-1959-4232-8790-77107cbc7a43",
+      "id": "d47554d2-f592-4be7-bc5a-14aa2ed88fac",
       "name": "Download file",
       "credentials": {
         "googleDriveOAuth2Api": {
-          "id": "8AHFGAb4zEnkJ2bL",
-          "name": "GMAIL"
+          "id": "2ZRHC5vpPDQwpjFz",
+          "name": "Google Drive account"
         }
       }
     },
@@ -95,10 +95,10 @@
       "type": "n8n-nodes-base.extractFromFile",
       "typeVersion": 1,
       "position": [
-        304,
+        288,
         688
       ],
-      "id": "89420de5-c87f-422e-929e-733be70030fe",
+      "id": "6ce5e6a9-afcf-4584-921c-0e71b8194b53",
       "name": "Extract from File1"
     },
     {
@@ -117,14 +117,14 @@
       "type": "@n8n/n8n-nodes-langchain.vectorStorePinecone",
       "typeVersion": 1.3,
       "position": [
-        1072,
+        1056,
         912
       ],
-      "id": "bf0da3c1-cfc3-4f8b-9628-ba4555ec4733",
+      "id": "b82c0984-4761-4f37-ad4b-a6e58d229051",
       "name": "Pinecone Vector Store",
       "credentials": {
         "pineconeApi": {
-          "id": "RrovvPGu59tZFGvL",
+          "id": "zhvBSXRw7HRwZVKJ",
           "name": "PineconeApi account"
         }
       }
@@ -138,14 +138,14 @@
       "type": "@n8n/n8n-nodes-langchain.embeddingsOpenAi",
       "typeVersion": 1.2,
       "position": [
-        1072,
+        1056,
         1120
       ],
-      "id": "d376b7a3-5680-4613-a8ad-5e509d5b3228",
+      "id": "547e9bee-7dda-403c-9e46-3018a61c4283",
       "name": "Embeddings OpenAI",
       "credentials": {
         "openAiApi": {
-          "id": "Ygh8ay3Y85pFWQFC",
+          "id": "Gei4rHdr8BlDkSEk",
           "name": "OpenAi account"
         }
       }
@@ -160,10 +160,10 @@
       "type": "@n8n/n8n-nodes-langchain.documentDefaultDataLoader",
       "typeVersion": 1.1,
       "position": [
-        1216,
+        1200,
         1136
       ],
-      "id": "5acf7413-89fb-47ff-b855-0369f36baf3a",
+      "id": "db88e065-bfbe-4612-828d-73ab32b694da",
       "name": "Default Data Loader"
     },
     {
@@ -175,28 +175,28 @@
       "type": "@n8n/n8n-nodes-langchain.textSplitterRecursiveCharacterTextSplitter",
       "typeVersion": 1,
       "position": [
-        1296,
+        1280,
         1344
       ],
-      "id": "ebbff2b1-6c65-4593-b444-d68501f50055",
+      "id": "dc39c383-336f-40c3-9697-4a1f6bd4f1a3",
       "name": "Recursive Character Text Splitter"
     },
     {
       "parameters": {
         "promptType": "define",
-        "text": "=Write a personalized cover letter and short professional summary for this job offer:\n\n{{ $json['Job Offer'] }}\n\nUse the ExperienceRetriever tool to find relevant experiences before writing.\n",
+        "text": "=Write a personalized cover letter and short professional summary for this job offer:\n\n{{ $json['Job Offer'] }}",
         "hasOutputParser": true,
         "options": {
-          "systemMessage": "=You are an intelligent assistant specialized in writing **concise, professional cover letters** and short profile summaries.\n\nYou have access to a tool called **“ExperienceRetriever”** that searches a vector database in the \"Experience\" namespace to retrieve Ahmed HASSAYOUNE’s real experiences, skills, and projects.\nAlways use this tool before writing any cover letter to retrieve the most relevant professional experiences matching the job offer.\nDo **not** invent or exaggerate achievements; use only retrieved facts and relevant details.\n\nYour main goal is to generate a **tailored, high-quality cover letter** and a short CV introduction (“phrase d’accroche”) aligned with the job offer provided.\n\n### LANGUAGE DETECTION\n\nAutomatically detect if the job offer is written in French or English, and generate both the cover letter and the short phrase in the same language.\n\n### COVER LETTER GENERATION\n\nGenerate a **concise, structured cover letter** following this template and tone inspired by Ahmed’s previous letters:\n\n**[HEADER]**\nAhmed HASSAYOUNE\n75010 Paris\n+33 6 98 09 03 69\n[ahmed.hassayoune@gmail.com](mailto:ahmed.hassayoune@gmail.com)\n\n**[COMPANY HEADER]**\n<CompanyName if available>\n<Department or HR if available>\n<City, if available>, date month year {{$now}}\n\n**[SUBJECT]**\nObjet (FR) / Subject (EN): Application for the position of <JobTitle>\n\n**[GREETING]**\nMadame, Monsieur (FR) / Dear Hiring Team (EN),\n\n**[INTRODUCTION – 1 paragraph]**\n\n* Concisely express motivation for the position.\n* Show alignment with the company’s goals or mission.\n* 30-40 words max / 1–2 sentences max.\n\n**[EXPERIENCE PARAGRAPH – 1 paragraph]**\n\n* Integrate 1–2 of the most relevant company experiences retrieved via ExperienceRetriever.\n* Mention the company\n* Describe concretely what Ahmed did, the impact, and relevance to the job.\n* Keep this short and readable\n* 70-80 words max / 3 sentences max.\n\n**[SKILLS & FIT PARAGRAPH – 1 paragraph]**\n\n* Highlight key technical and soft skills aligned with the role.\n* Show how Ahmed’s skills (deep learning, PyTorch, diffusion models, 3D modeling, etc.) are useful for the company.\n* Keep natural, concise, and authentic * 25-35 words max / 2-3 sentences max.\n\n**[CLOSING – 1 paragraph]**\n\n* End, express interest in an interview, and thank them appreciation for consideration.\n* 15-20 words max / 1 sentence max.\n\n**[ENDING FORMULA]**\nVeuillez agréer, Madame, Monsieur, mes salutations distinguées. (FR)\n/\nKind regards, (EN)\n\nAhmed HASSAYOUNE\n\n> **Important:** Keep the cover letter short (maximum ~4 paragraphs, 10–12 sentences, 210 words), professional, confident, and natural. Avoid repetition or flowery language.\n\n### SHORT “PHRASE D’ACCROCHE” FOR THE CV\n\n* Written in the same language as the job offer.\n* Connect Ahmed’s career trajectory and objectives to the position/company.\n* Include 2–3 **keywords** from the job offer.\n* Sound realistic, professional, and confident.\n* Concise and actionable.\n* 30-35 words max / 2-3 sentences max.\n\nExample (for inspiration only):\n> OBJECTIF PROFESSIONNEL : Ingénieur en IA spécialisé en modélisation 3D et deep learning, je maîtrise PyTorch, TensorFlow et les Vision-Language Models. Je souhaite rejoindre l’équipe AI World Twin pour concevoir des solutions innovantes pour les environnements industriels.\n\n### STYLE & TONE\n\n* Natural, confident, professional.\n* Authentic and concise — do **not** overdo formality or length and avoid flowery phrasing.\n* Reflect Ahmed as a pragmatic, technically strong engineer, with real R&D experience, oriented toward applied innovation.\n\n### OUTPUT FORMAT\n\nReturn your answer as **structured JSON**:\n\n```json\n{\n  \"language\": \"EN\" or \"FR\",\n  \"cover_letter\": \"<final text>\",\n  \"phrase_d_accroche\": \"<3-sentence summary>\"\n}\n```"
+          "systemMessage": "=You are an intelligent assistant specialized in writing **concise, professional cover letters** and short profile summaries.\n\n## Core Rules\n\n1. **Always use ExperienceRetriever first** to fetch Ahmed's real experiences, skills, and projects from the vector database (\"Experience\" namespace)\n2. **Never invent or exaggerate** — use only retrieved facts\n3. **Detect language** from the job offer (French/English) and respond in the same language\n4. **Be concise** — follow strict word limits for each section\n\n---\n\n## Cover Letter Structure\n\n**[HEADER]**\n```\nAhmed HASSAYOUNE\n75010 Paris\n+33 6 98 09 03 69\nahmed.hassayoune@gmail.com\n\n[Company Name]\n[Department/HR]\n[City], [Current Date]\n\nSubject: Application for [Job Title] (ref: [Ref Number if available])\n\n[Greeting: \"Madame, Monsieur,\" (FR) / \"Dear Hiring Team,\" (EN)]\n```\n\n**[BODY (4 paragraphs max, ~200 words total)]**\n\n1. **Introduction** (30-40 words, 1-2 sentences)\n   - Concisely express motivation for the position\n   - Show alignment with company mission\n\n2. **Experience** (70-80 words, ~3 sentences)\n   - Highlight 1-2 most relevant experiences from ExperienceRetriever\n   - Include company names, concrete achievements, the impact, and relevance to the job.\n   - Connect directly to job requirements\n   - Keep this short and readable\n\n3. **Skills & Fit** (25-35 words, 2-3 sentences)\n   - List key technical/soft skills matching the role\n   - Show practical value to the company\n   - Keep natural, concise, and authentic\n\n4. **Closing** (15-20 words, 1 sentence)\n   - Express interest in an interview\n   - Thank them for consideration\n\n**Sign-off:**\n- FR: \"Veuillez agréer, Madame, Monsieur, mes salutations distinguées.\"\n- EN: \"Kind regards,\"\n- Ahmed HASSAYOUNE\n\n> **Important:** Keep the cover letter short (maximum ~4 paragraphs, 10–12 sentences, 210 words), professional, confident, and natural. Avoid repetition or flowery language.\n\n---\n\n## CV Profile Summary (\"Phrase d'accroche\")\n\n- **Same language** as job offer\n- **30-35 words, 2-3 sentences**\n- Include 2-3 keywords from the job description\n- Professional, confident, and actionable tone\n- Connect Ahmed's background to the specific role\n\nExample (for inspiration only):\n> OBJECTIF PROFESSIONNEL : Ingénieur en IA spécialisé en modélisation 3D et deep learning, je maîtrise PyTorch, TensorFlow et les Vision-Language Models. Je souhaite rejoindre l’équipe AI World Twin pour concevoir des solutions innovantes pour les environnements industriels.\n\n---\n\n## Style Guidelines\n\n- **Natural and confident** — avoid flowery or overly formal language\n- **Pragmatic engineer voice** — emphasize real R&D experience and applied innovation\n- **No repetition or filler**\n\n---\n\n## Output Format\n\nReturn as JSON:\n```json\n{\n  \"language\": \"FR\" | \"EN\",\n  \"cover_letter\": \"<complete formatted letter>\",\n  \"phrase_d_accroche\": \"<profile summary>\"\n}\n```"
         }
       },
       "type": "@n8n/n8n-nodes-langchain.agent",
       "typeVersion": 3,
       "position": [
-        208,
+        192,
         0
       ],
-      "id": "002b6658-1985-4706-833a-bacfcf0cdc2f",
+      "id": "30dcf0e6-8f5c-4543-b522-4be608466a6d",
       "name": "AI Agent"
     },
     {
@@ -215,14 +215,14 @@
       "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
       "typeVersion": 1.2,
       "position": [
-        80,
+        64,
         208
       ],
-      "id": "5218a797-c942-4f9a-93b9-780129aa7386",
+      "id": "61e3ee67-cfab-4b6a-bec1-4cdcdf1fe70d",
       "name": "OpenAI Chat Model",
       "credentials": {
         "openAiApi": {
-          "id": "Ygh8ay3Y85pFWQFC",
+          "id": "Gei4rHdr8BlDkSEk",
           "name": "OpenAi account"
         }
       }
@@ -236,14 +236,14 @@
       "type": "@n8n/n8n-nodes-langchain.embeddingsOpenAi",
       "typeVersion": 1.2,
       "position": [
-        224,
+        208,
         368
       ],
-      "id": "d15c1099-8ae9-4c1e-9612-08647819929b",
+      "id": "06a24fad-e58d-4d11-ad78-0b73a228a7f3",
       "name": "Embeddings OpenAI1",
       "credentials": {
         "openAiApi": {
-          "id": "Ygh8ay3Y85pFWQFC",
+          "id": "Gei4rHdr8BlDkSEk",
           "name": "OpenAi account"
         }
       }
@@ -332,10 +332,10 @@
       "type": "n8n-nodes-base.switch",
       "typeVersion": 3.3,
       "position": [
-        32,
+        16,
         896
       ],
-      "id": "dec71586-c28b-4fb8-b09d-45a46dc0db6b",
+      "id": "2f576eae-e085-4b5b-87c4-5918db144ea9",
       "name": "Switch"
     },
     {
@@ -346,10 +346,10 @@
       "type": "n8n-nodes-base.extractFromFile",
       "typeVersion": 1,
       "position": [
-        368,
+        352,
         912
       ],
-      "id": "5fc3c4f6-302f-4254-ab44-5afce1b45763",
+      "id": "fd547353-486b-4e85-a919-c6c2dac70082",
       "name": "Extract from File"
     },
     {
@@ -360,18 +360,18 @@
         "nodeCredentialType": "googleDriveOAuth2Api",
         "options": {}
       },
-      "id": "ffa64195-f4be-4a1a-9aec-1057cb2ac0ed",
+      "id": "00d4c8c5-f234-40a1-98ba-6480c2b246ea",
       "name": "Convert Word to Google Docs",
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.1,
       "position": [
-        320,
+        304,
         1168
       ],
       "credentials": {
         "googleDriveOAuth2Api": {
-          "id": "8AHFGAb4zEnkJ2bL",
-          "name": "GMAIL"
+          "id": "2ZRHC5vpPDQwpjFz",
+          "name": "Google Drive account"
         }
       }
     },
@@ -383,14 +383,14 @@
       "type": "n8n-nodes-base.googleDocs",
       "typeVersion": 2,
       "position": [
-        512,
+        496,
         1168
       ],
-      "id": "4923d515-c36c-4c2d-87d9-13bf5716e633",
+      "id": "1b179192-b108-412a-aba1-05c351de819f",
       "name": "Read Google Docs",
       "credentials": {
         "googleDocsOAuth2Api": {
-          "id": "rnxpUkd2z9MXPcVS",
+          "id": "LaeEo8vNYQeGILMG",
           "name": "Google Docs account"
         }
       }
@@ -421,10 +421,10 @@
       "type": "n8n-nodes-base.aggregate",
       "typeVersion": 1,
       "position": [
-        816,
+        800,
         912
       ],
-      "id": "3ce99eb7-59d0-4edd-af1f-6527f4c2bdea",
+      "id": "c3954de7-01bf-473e-b17b-82787124c139",
       "name": "Aggregate"
     },
     {
@@ -433,12 +433,12 @@
         "responseBody": "=<div style=\"font-family: Arial, sans-serif; max-width: 750px; margin: 40px auto; padding: 30px; background-color: #f9f9fb; color: #333; border-radius: 10px; box-shadow: 0 3px 8px rgba(0,0,0,0.08);\">\n  <h1 style=\"color: #f16f55; text-align: center; margin-bottom: 30px;\">Generated Cover Letter</h1>\n\n  <div style=\"background-color: #ffffff; border-radius: 8px; padding: 20px 25px; margin-bottom: 20px; box-shadow: 0 1px 3px rgba(0,0,0,0.05);\">\n    <h2 style=\"color: #f16f55; margin-top: 0;\">Language</h2>\n    <p style=\"margin: 8px 0 0 0; font-size: 15px;\">{{ $json.output.language }}</p>\n  </div>\n\n  <div style=\"background-color: #ffffff; border-radius: 8px; padding: 20px 25px; margin-bottom: 20px; box-shadow: 0 1px 3px rgba(0,0,0,0.05);\">\n    <h2 style=\"color: #f16f55; margin-top: 0;\">Position Sought</h2>\n    <p style=\"margin: 8px 0 0 0; font-size: 15px; line-height: 1.5;\">{{ $json.output.phrase_d_accroche }}</p>\n  </div>\n\n  <div style=\"background-color: #ffffff; border-radius: 8px; padding: 20px 25px; box-shadow: 0 1px 3px rgba(0,0,0,0.05);\">\n    <h2 style=\"color: #f16f55; margin-top: 0;\">Cover Letter</h2>\n    <pre style=\"white-space: pre-wrap; word-break: break-word; font-size: 15px; line-height: 1.6; margin: 8px 0 0 0; font-family: inherit;\">{{ $json.output.cover_letter }}</pre>\n  </div>\n</div>",
         "options": {}
       },
-      "id": "114448a2-bb9a-495e-9fe7-89705a4774be",
+      "id": "08f6b119-eb48-460a-a65a-310ef5da6ff8",
       "name": "Respond to Webhook",
       "type": "n8n-nodes-base.respondToWebhook",
       "typeVersion": 1,
       "position": [
-        544,
+        528,
         0
       ]
     },
@@ -449,10 +449,10 @@
       "type": "@n8n/n8n-nodes-langchain.outputParserStructured",
       "typeVersion": 1.3,
       "position": [
-        512,
+        496,
         208
       ],
-      "id": "db0f3f30-729e-4773-a150-a284c347e6d2",
+      "id": "f2cfe986-4532-4fda-b42e-f370f809b65a",
       "name": "Structured Output Parser"
     },
     {
@@ -473,12 +473,12 @@
         "responseMode": "responseNode",
         "options": {}
       },
-      "id": "93c0d138-6158-4a77-a559-ab227e67e489",
+      "id": "f97696e2-bb76-49c8-9040-6e5b2ec525dc",
       "name": "Creation Form1",
       "type": "n8n-nodes-base.formTrigger",
       "typeVersion": 2,
       "position": [
-        16,
+        0,
         0
       ],
       "webhookId": "bfa72daa-98a5-41f5-b6f6-f4013838ba58"
@@ -500,14 +500,14 @@
       "type": "@n8n/n8n-nodes-langchain.vectorStorePinecone",
       "typeVersion": 1.3,
       "position": [
-        224,
+        208,
         208
       ],
-      "id": "baa5ffe9-396e-4b66-a8c5-0edca496e2c5",
+      "id": "3372d962-c1fc-41de-bad1-a5e586b59538",
       "name": "Experience Retriever",
       "credentials": {
         "pineconeApi": {
-          "id": "RrovvPGu59tZFGvL",
+          "id": "zhvBSXRw7HRwZVKJ",
           "name": "PineconeApi account"
         }
       }
@@ -726,22 +726,17 @@
           }
         ]
       ]
-    },
-    "Pinecone Vector Store": {
-      "main": [
-        []
-      ]
     }
   },
   "active": true,
   "settings": {
     "executionOrder": "v1"
   },
-  "versionId": "6a78f9cd-fc92-4e6c-8c37-6a5f1f78d2f5",
+  "versionId": "5652ec9c-4842-4565-b3db-21274ad344de",
   "meta": {
     "templateCredsSetupCompleted": true,
-    "instanceId": "38c285c0c0814f3ca522f1aee42c479efa4fbe7a3dd4c5ecee9bdc2bb9a40e26"
+    "instanceId": "b87ba4d1e29db53fa7e2e59cf2c63f059ab024634f7886ba268fdfa300de1550"
   },
-  "id": "1Dp0jVhaahMUEdNO",
+  "id": "p6qcEnxC7feoTFlE",
   "tags": []
 }
