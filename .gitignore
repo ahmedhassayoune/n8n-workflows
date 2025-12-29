@@ -1,0 +1,68 @@
+# =========================
+# OS files
+# =========================
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Windows
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# =========================
+# Editors & IDEs
+# =========================
+# VS Code
+.vscode/
+*.code-workspace
+
+# JetBrains
+.idea/
+*.iml
+
+# Vim
+*.swp
+*.swo
+*~
+
+# =========================
+# Logs & temp files
+# =========================
+*.log
+*.tmp
+*.temp
+*.bak
+
+# =========================
+# Environment / secrets
+# =========================
+.env
+.env.*
+!.env.example
+
+# =========================
+# Node / Python (safe defaults)
+# =========================
+node_modules/
+__pycache__/
+*.pyc
+.venv/
+venv/
+
+# =========================
+# Build / cache
+# =========================
+dist/
+build/
+.cache/
+
+# =========================
+# JSON tooling / scraping outputs
+# (keep configs, ignore generated data)
+# =========================
+workflows/**/*.output.json
+workflows/**/*.result.json
+workflows/**/*.cache.json
+
