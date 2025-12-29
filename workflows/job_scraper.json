@@ -491,11 +491,11 @@
             {
               "id": "44accb1c-bef9-43be-b112-612d7f5564bf",
               "name": "title",
-              "value": "={{ $json.title }}",
+              "value": "={{ $('Prepare Fields for LLM').item.json.jobTitle }}",
               "type": "string"
             },
             {
-              "id": "e65d201f-7042-4502-9d02-59a20328d7c7",
+              "id": "5f8d385e-1d20-4730-93ff-2a8cba0cc35f",
               "name": "company",
               "value": "={{ $('Prepare Fields for LLM').item.json.companyName }}",
               "type": "string"
@@ -515,7 +515,7 @@
             {
               "id": "2323bc9d-5480-448c-973d-d344d829a71f",
               "name": "descriptionSummary",
-              "value": "={{ $json.job_description_summary }}",
+              "value": "={{ $json.descriptionSummary }}",
               "type": "string"
             },
             {
@@ -527,19 +527,19 @@
             {
               "id": "10158004-1ac5-494d-8391-904d9d610ed4",
               "name": "profileSkills",
-              "value": "={{ $json.profile_skills }}",
+              "value": "={{ $json.profileSkills }}",
               "type": "array"
             },
             {
               "id": "e754048f-ed7d-4ab5-bf3f-a789948b449d",
               "name": "url",
-              "value": "={{ $json.url }}",
+              "value": "={{ $('Prepare Fields for LLM').item.json.link }}",
               "type": "string"
             },
             {
               "id": "b69ca61f-9d19-4e6b-ad93-4299b302baca",
               "name": "scrapedAt",
-              "value": "={{ $json.scraped_at }}",
+              "value": "={{ $now.toFormat('yyyy-MM-dd HH:mm:ss') }}",
               "type": "string"
             },
             {
@@ -552,6 +552,12 @@
               "id": "d66f97ba-29b1-4f12-a5a5-6ea843151ece",
               "name": "postedAt",
               "value": "={{ $('Loop Over Selected Offers').item.json.postedAt }}",
+              "type": "string"
+            },
+            {
+              "id": "921f5fe6-640a-4ab1-96bc-93158166d066",
+              "name": "experience",
+              "value": "={{ $json.experience || \"\" }}",
               "type": "string"
             }
           ]
@@ -774,6 +780,12 @@
               "name": "postedAt",
               "value": "={{ $json.postedAt }}",
               "type": "string"
+            },
+            {
+              "id": "b4930145-a7c5-4443-80a8-570c12e96d38",
+              "name": "experience",
+              "value": "={{ $json.experience }}",
+              "type": "string"
             }
           ]
         },
@@ -902,6 +914,10 @@
             {
               "key": "Posted At|date",
               "date": "={{ $json.postedAt }}"
+            },
+            {
+              "key": "Experience|rich_text",
+              "textContent": "={{ $json.experience }}"
             }
           ]
         },
@@ -984,7 +1000,7 @@
     {
       "parameters": {
         "promptType": "define",
-        "text": "=You are a job data extractor. Your task is to convert the given job posting data into a strict JSON with the following fields (example):\n\n{\n    \"source\": \"linkedin\",\n    \"title\": \"Computer Vision Engineer\",\n    \"company\": \"MedAI Diagnostics\",\n    \"location\": \"Paris, France\",\n    \"salary\": \"45k–60k € / year\",\n    \"job_description_summary\": \"You will develop and optimize image analysis algorithms for detection and segmentation of anomalies in medical imaging modalities (CT/MRI).\",\n    \"profile_skills\": [\n      \"Python\",\n      \"PyTorch\",\n      \"Segmentation\",\n      \"Deep Learning\",\n      \"Computer Vision\"\n    ],\n    \"url\": \"https://www.welcometothejungle.com/jobs/12345\",\n    \"scraped_at\": \"2025-11-07 07:59:00\"\n}\n\nRules:\n1. Extract information only from the input.\n2. If a field is not present, leave it as an empty string \"\" for strings, or an empty array [] for lists.\n3. Job description summary must be 3 sentences max.\n4. Dates should be in ISO format YYYY-MM-DD HH:MM:SS if including time.\n5. Skills must be:\n   - Atomic keywords only\n   - One concept per entry\n   - No commas inside a skill string\n   - No parentheses containing comma-separated values\n6. If a skill mentions multiple technologies, split them into separate skills.\n   - Example: \"Cloud (AWS, GCP, Azure)\" → [\"Cloud\", \"AWS\", \"GCP\", \"Azure\"]\n7. Preserve the field names exactly as shown.\n8. Output must be valid JSON ONLY:\n   - No explanations\n   - No markdown\n   - No leading or trailing quotes\n   - Output MUST be valid JSON.\n\nCurrent date is: {{ $now }}\n\nHere is the job posting data:\n{{ JSON.stringify($json) }}",
+        "text": "=You are a job data extractor. Your task is to convert the given job posting data into a strict JSON with the following fields (example):\n{\n    \"location\": \"Paris, France\",\n    \"salary\": \"45k–60k € / year\",\n    \"descriptionSummary\": \"You will develop and optimize image analysis algorithms for detection and segmentation of anomalies in medical imaging modalities (CT/MRI).\",\n    \"profileSkills\": [\n      \"Python\",\n      \"PyTorch\",\n      \"Segmentation\",\n      \"Deep Learning\",\n      \"Computer Vision\"\n    ],\n    \"experience\": \"3-5 years\"\n}\n\nRules:\n1. Extract information only from the input.\n2. If a field is not present, leave it as an empty string \"\" for strings, or an empty array [] for lists.\n3. descriptionSummary must be 3 sentences max.\n4. profileSkills must be:\n   - Atomic keywords only\n   - One concept per entry\n   - No commas inside a skill string\n   - No parentheses containing comma-separated values\n5. If a skill mentions multiple technologies, split them into separate skills.\n   - Example: \"Cloud (AWS, GCP, Azure)\" → [\"Cloud\", \"AWS\", \"GCP\", \"Azure\"]\n6. experience field: Include ONLY if the job posting explicitly mentions required experience (e.g., \"3 years\", \"5+ years\", \"Senior level\").\n7. Preserve the field names exactly as shown.\n8. Output must be valid JSON ONLY:\n   - No explanations\n   - No markdown\n   - No leading or trailing quotes\n   - Output MUST be valid JSON.\n\nCurrent date is: {{ $now }}\n\nHere is the job posting data:\n{{ JSON.stringify($json) }}",
         "batching": {}
       },
       "type": "@n8n/n8n-nodes-langchain.chainLlm",
@@ -1712,7 +1728,7 @@
   "settings": {
     "executionOrder": "v1"
   },
-  "versionId": "8ceba946-befd-425e-b1fe-50cf4d157631",
+  "versionId": "12839460-04aa-48f5-a071-3b4f5a7ad9eb",
   "meta": {
     "templateCredsSetupCompleted": true,
     "instanceId": "b87ba4d1e29db53fa7e2e59cf2c63f059ab024634f7886ba268fdfa300de1550"
