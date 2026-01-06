@@ -608,7 +608,7 @@
     {
       "parameters": {
         "sendTo": "ahmed.hassayoune@hotmail.fr",
-        "subject": "=New Jobs Alert — {{ $json.nb_positions }} positions — {{ $now.format('dd/MM/yyyy') }}",
+        "subject": "=[LINKEDIN] New Jobs Alert — {{ $json.nb_positions }} positions — {{ $now.format('dd/MM/yyyy') }}",
         "emailType": "text",
         "message": "={{ $json.body }}",
         "options": {}
@@ -1747,7 +1747,7 @@
   "settings": {
     "executionOrder": "v1"
   },
-  "versionId": "06641086-e149-4620-8fcc-7cd69151b49e",
+  "versionId": "7c68bceb-bce6-4406-97ac-d8e347bf48a9",
   "meta": {
     "templateCredsSetupCompleted": true,
     "instanceId": "b87ba4d1e29db53fa7e2e59cf2c63f059ab024634f7886ba268fdfa300de1550"
