@@ -25,7 +25,7 @@
       "typeVersion": 1,
       "position": [
         -320,
-        912
+        848
       ],
       "id": "59a83caa-1ea4-43af-8f43-5479d309eb7f",
       "name": "Google Drive Trigger",
@@ -50,8 +50,8 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.3,
       "position": [
-        496,
-        688
+        576,
+        656
       ],
       "id": "8d9dafc0-c085-4626-951e-148e6f4967d3",
       "name": "HTTP Request",
@@ -75,8 +75,8 @@
       "type": "n8n-nodes-base.googleDrive",
       "typeVersion": 3,
       "position": [
-        -144,
-        912
+        -96,
+        848
       ],
       "id": "d47554d2-f592-4be7-bc5a-14aa2ed88fac",
       "name": "Download file",
@@ -95,8 +95,8 @@
       "type": "n8n-nodes-base.extractFromFile",
       "typeVersion": 1,
       "position": [
-        288,
-        688
+        352,
+        656
       ],
       "id": "6ce5e6a9-afcf-4584-921c-0e71b8194b53",
       "name": "Extract from File1"
@@ -118,7 +118,7 @@
       "typeVersion": 1.3,
       "position": [
         1056,
-        912
+        848
       ],
       "id": "b82c0984-4761-4f37-ad4b-a6e58d229051",
       "name": "Pinecone Vector Store",
@@ -138,8 +138,8 @@
       "type": "@n8n/n8n-nodes-langchain.embeddingsOpenAi",
       "typeVersion": 1.2,
       "position": [
-        1056,
-        1120
+        1024,
+        1072
       ],
       "id": "547e9bee-7dda-403c-9e46-3018a61c4283",
       "name": "Embeddings OpenAI",
@@ -160,8 +160,8 @@
       "type": "@n8n/n8n-nodes-langchain.documentDefaultDataLoader",
       "typeVersion": 1.1,
       "position": [
-        1200,
-        1136
+        1152,
+        1072
       ],
       "id": "db88e065-bfbe-4612-828d-73ab32b694da",
       "name": "Default Data Loader"
@@ -175,8 +175,8 @@
       "type": "@n8n/n8n-nodes-langchain.textSplitterRecursiveCharacterTextSplitter",
       "typeVersion": 1,
       "position": [
-        1280,
-        1344
+        1232,
+        1280
       ],
       "id": "dc39c383-336f-40c3-9697-4a1f6bd4f1a3",
       "name": "Recursive Character Text Splitter"
@@ -187,13 +187,13 @@
         "text": "=Write a personalized cover letter and short professional summary for this job offer:\n\n{{ $json['Job Offer'] }}",
         "hasOutputParser": true,
         "options": {
-          "systemMessage": "=You are an intelligent assistant specialized in writing **concise, professional cover letters** and short profile summaries.\n\n## Core Rules\n\n1. **Always use ExperienceRetriever first** to fetch Ahmed's real experiences, skills, and projects from the vector database (\"Experience\" namespace)\n2. **Never invent or exaggerate** — use only retrieved facts\n3. **Detect language** from the job offer (French/English) and respond in the same language\n4. **Be concise** — follow strict word limits for each section\n\n---\n\n## Cover Letter Structure\n\n**[HEADER]**\n```\nAhmed HASSAYOUNE\n75010 Paris\n+33 6 98 09 03 69\nahmed.hassayoune@gmail.com\n\n[Company Name]\n[Department/HR]\n[City], [Current Date]\n\nSubject: Application for [Job Title] (ref: [Ref Number if available])\n\n[Greeting: \"Madame, Monsieur,\" (FR) / \"Dear Hiring Team,\" (EN)]\n```\n\n**[BODY (4 paragraphs max, ~200 words total)]**\n\n1. **Introduction** (30-40 words, 1-2 sentences)\n   - Concisely express motivation for the position\n   - Show alignment with company mission\n\n2. **Experience** (70-80 words, ~3 sentences)\n   - Highlight 1-2 most relevant experiences from ExperienceRetriever\n   - Include company names, concrete achievements, the impact, and relevance to the job.\n   - Connect directly to job requirements\n   - Keep this short and readable\n\n3. **Skills & Fit** (25-35 words, 2-3 sentences)\n   - List key technical/soft skills matching the role\n   - Show practical value to the company\n   - Keep natural, concise, and authentic\n\n4. **Closing** (15-20 words, 1 sentence)\n   - Express interest in an interview\n   - Thank them for consideration\n\n**Sign-off:**\n- FR: \"Veuillez agréer, Madame, Monsieur, mes salutations distinguées.\"\n- EN: \"Kind regards,\"\n- Ahmed HASSAYOUNE\n\n> **Important:** Keep the cover letter short (maximum ~4 paragraphs, 10–12 sentences, 210 words), professional, confident, and natural. Avoid repetition or flowery language.\n\n---\n\n## CV Profile Summary (\"Phrase d'accroche\")\n\n- **Same language** as job offer\n- **30-35 words, 2-3 sentences**\n- Include 2-3 keywords from the job description\n- Professional, confident, and actionable tone\n- Connect Ahmed's background to the specific role\n\nExample (for inspiration only):\n> OBJECTIF PROFESSIONNEL : Ingénieur en IA spécialisé en modélisation 3D et deep learning, je maîtrise PyTorch, TensorFlow et les Vision-Language Models. Je souhaite rejoindre l’équipe AI World Twin pour concevoir des solutions innovantes pour les environnements industriels.\n\n---\n\n## Style Guidelines\n\n- **Natural and confident** — avoid flowery or overly formal language\n- **Pragmatic engineer voice** — emphasize real R&D experience and applied innovation\n- **No repetition or filler**\n\n---\n\n## Output Format\n\nReturn as JSON:\n```json\n{\n  \"language\": \"FR\" | \"EN\",\n  \"cover_letter\": \"<complete formatted letter>\",\n  \"phrase_d_accroche\": \"<profile summary>\"\n}\n```"
+          "systemMessage": "=You are an intelligent assistant specialized in writing **concise, professional cover letters** and short profile summaries.\n\n## Core Rules\n\n1. **Always use ExperienceRetriever first** to fetch Ahmed's real experiences, skills, and projects from the vector database (\"Experience\" namespace)\n2. **Never invent or exaggerate** — use only retrieved facts\n3. **Detect language** from the job offer (French/English) and respond in the same language\n4. **Be concise** — follow strict word limits for each section\n\n---\n\n## Cover Letter Structure\n\n**[HEADER]**\n```\nAhmed HASSAYOUNE\n75010 Paris\n+33 6 98 09 03 69\nahmed.hassayoune@gmail.com\n\n[Company Name]\n[Department/HR]\n[City], [Current Date]\n\nSubject: Application for [Job Title] (ref: [Ref Number if available])\n\n[Greeting: \"Madame, Monsieur,\" (FR) / \"Dear Hiring Team,\" (EN)]\n```\n\n**[BODY (4 paragraphs max, ~200 words total)]**\n\n1. **Introduction** (30-40 words, 1-2 sentences)\n   - Concisely express motivation for the position\n   - Show alignment with company mission\n\n2. **Experience** (70-80 words, ~3 sentences)\n   - Highlight 1-2 most relevant experiences from ExperienceRetriever\n   - Include company names, concrete achievements, the impact, and relevance to the job.\n   - Connect directly to job requirements\n   - Keep this short and readable\n\n3. **Skills & Fit** (25-35 words, 2-3 sentences)\n   - List key technical/soft skills matching the role\n   - Show practical value to the company\n   - Highlight Ahmed's work style: proactive, autonomous, \"get it done\" attitude with a drive to exceed objectives\n   - Keep natural, concise, and authentic\n\n4. **Closing** (15-20 words, 1 sentence)\n   - Express interest in an interview\n   - Thank them for consideration\n\n**Sign-off:**\n- FR: \"Veuillez agréer, Madame, Monsieur, mes salutations distinguées.\"\n- EN: \"Kind regards,\"\n- Ahmed HASSAYOUNE\n\n> **Important:** Keep the cover letter short (maximum ~4 paragraphs, 10–12 sentences, 210 words), professional, confident, and natural. Avoid repetition or flowery language.\n\n---\n\n## CV Profile Summary (\"Phrase d'accroche\")\n\n- **Same language** as job offer\n- **30-35 words, 2-3 sentences**\n- Include 2-3 keywords from the job description\n- Professional, confident, and actionable tone\n- Connect Ahmed's background to the specific role\n\nExample (for inspiration only):\n> OBJECTIF PROFESSIONNEL : Ingénieur en IA spécialisé en modélisation 3D et deep learning, je maîtrise PyTorch, TensorFlow et les Vision-Language Models. Je souhaite rejoindre l’équipe AI World Twin pour concevoir des solutions innovantes pour les environnements industriels.\n\n---\n\n## Style Guidelines\n\n- **Natural and confident** — avoid flowery or overly formal language\n- **Pragmatic engineer voice** — emphasize real R&D experience and applied innovation\n- **No repetition or filler**\n\n---\n\n## Output Format\n\nReturn as JSON:\n```json\n{\n  \"language\": \"FR\" | \"EN\",\n  \"cover_letter\": \"<complete formatted letter>\",\n  \"phrase_d_accroche\": \"<profile summary>\"\n}\n```"
         }
       },
       "type": "@n8n/n8n-nodes-langchain.agent",
       "typeVersion": 3,
       "position": [
-        192,
+        40,
         0
       ],
       "id": "30dcf0e6-8f5c-4543-b522-4be608466a6d",
@@ -215,8 +215,8 @@
       "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
       "typeVersion": 1.2,
       "position": [
-        64,
-        208
+        -96,
+        224
       ],
       "id": "61e3ee67-cfab-4b6a-bec1-4cdcdf1fe70d",
       "name": "OpenAI Chat Model",
@@ -236,8 +236,8 @@
       "type": "@n8n/n8n-nodes-langchain.embeddingsOpenAi",
       "typeVersion": 1.2,
       "position": [
-        208,
-        368
+        112,
+        432
       ],
       "id": "06a24fad-e58d-4d11-ad78-0b73a228a7f3",
       "name": "Embeddings OpenAI1",
@@ -332,8 +332,8 @@
       "type": "n8n-nodes-base.switch",
       "typeVersion": 3.3,
       "position": [
-        16,
-        896
+        128,
+        832
       ],
       "id": "2f576eae-e085-4b5b-87c4-5918db144ea9",
       "name": "Switch"
@@ -346,8 +346,8 @@
       "type": "n8n-nodes-base.extractFromFile",
       "typeVersion": 1,
       "position": [
-        352,
-        912
+        576,
+        848
       ],
       "id": "fd547353-486b-4e85-a919-c6c2dac70082",
       "name": "Extract from File"
@@ -365,8 +365,8 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.1,
       "position": [
-        304,
-        1168
+        352,
+        1040
       ],
       "credentials": {
         "googleDriveOAuth2Api": {
@@ -383,8 +383,8 @@
       "type": "n8n-nodes-base.googleDocs",
       "typeVersion": 2,
       "position": [
-        496,
-        1168
+        576,
+        1040
       ],
       "id": "1b179192-b108-412a-aba1-05c351de819f",
       "name": "Read Google Docs",
@@ -422,7 +422,7 @@
       "typeVersion": 1,
       "position": [
         800,
-        912
+        848
       ],
       "id": "c3954de7-01bf-473e-b17b-82787124c139",
       "name": "Aggregate"
@@ -439,7 +439,7 @@
       "typeVersion": 1,
       "position": [
         528,
-        0
+        208
       ]
     },
     {
@@ -449,8 +449,8 @@
       "type": "@n8n/n8n-nodes-langchain.outputParserStructured",
       "typeVersion": 1.3,
       "position": [
-        496,
-        208
+        320,
+        224
       ],
       "id": "f2cfe986-4532-4fda-b42e-f370f809b65a",
       "name": "Structured Output Parser"
@@ -478,8 +478,8 @@
       "type": "n8n-nodes-base.formTrigger",
       "typeVersion": 2,
       "position": [
-        0,
-        0
+        -320,
+        208
       ],
       "webhookId": "bfa72daa-98a5-41f5-b6f6-f4013838ba58"
     },
@@ -500,8 +500,8 @@
       "type": "@n8n/n8n-nodes-langchain.vectorStorePinecone",
       "typeVersion": 1.3,
       "position": [
-        208,
-        208
+        32,
+        224
       ],
       "id": "3372d962-c1fc-41de-bad1-a5e586b59538",
       "name": "Experience Retriever",
@@ -732,7 +732,7 @@
   "settings": {
     "executionOrder": "v1"
   },
-  "versionId": "5652ec9c-4842-4565-b3db-21274ad344de",
+  "versionId": "1baaedc4-14cb-4e0e-af4e-a083ee4ddf61",
   "meta": {
     "templateCredsSetupCompleted": true,
     "instanceId": "b87ba4d1e29db53fa7e2e59cf2c63f059ab024634f7886ba268fdfa300de1550"
