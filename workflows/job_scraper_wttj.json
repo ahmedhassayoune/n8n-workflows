@@ -542,7 +542,7 @@
       ],
       "id": "def9459f-0ae6-4b41-87ff-1d37b2664772",
       "name": "Filter Out Duplicates",
-      "executeOnce": true,
+      "executeOnce": false,
       "alwaysOutputData": true
     },
     {
@@ -1346,7 +1346,7 @@
   "settings": {
     "executionOrder": "v1"
   },
-  "versionId": "bd6e7ca9-9585-44bd-b1b4-067fac7ca741",
+  "versionId": "a8a02672-1e88-4891-beac-5e82f26bb9e0",
   "meta": {
     "templateCredsSetupCompleted": true,
     "instanceId": "b87ba4d1e29db53fa7e2e59cf2c63f059ab024634f7886ba268fdfa300de1550"
