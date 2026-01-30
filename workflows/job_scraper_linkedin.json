@@ -125,7 +125,7 @@
     },
     {
       "parameters": {
-        "jsCode": "var urls = [];\n\nfor (const keyword of $input.first().json.keywords) {\n  var url = 'https://www.linkedin.com/jobs/search/?' \n    + 'keywords=' + encodeURIComponent(keyword)\n    + '&geoId=' + encodeURIComponent($input.first().json.geoId)\n    + '&f_TPR=' + encodeURIComponent($input.first().json.f_TPR)\n    + '&f_JT=' + encodeURIComponent($input.first().json.f_JT)\n    + '&f_E=' + encodeURIComponent($input.first().json.f_E);\n\n  urls.push(url);\n}\n\nreturn urls.map(url => ({\n  url: url,\n  jobs: [],\n}));\n\n"
+        "jsCode": "var urls = [];\n\nfor (const keyword of $input.first().json.keywords) {\n  var url = 'https://www.linkedin.com/jobs/search/?' \n    + 'keywords=' + encodeURIComponent(keyword)\n    + '&geoId=' + encodeURIComponent($input.first().json.geoId)\n    + '&f_TPR=' + encodeURIComponent($input.first().json.f_TPR)\n    + '&f_JT=' + encodeURIComponent($input.first().json.f_JT);\n\n  urls.push(url);\n}\n\nreturn urls.map(url => ({\n  url: url,\n  jobs: [],\n}));\n\n"
       },
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
@@ -212,7 +212,7 @@
             {
               "id": "995dd304-e1b0-4f75-bf81-26c709da6e87",
               "name": "keywords",
-              "value": "[ \"Deep Learning\", \"Machine Learning\", \"Computer Vision\", \"\\\"Data Science\\\"\", \"\\\"Data Scientist\\\"\", \"PyTorch\", \"Foundation Model\", \"TensorFlow\", \"OpenCV\", \"\\\"AI Engineer\\\"\" ]",
+              "value": "[ \"Deep Learning\", \"Machine Learning\", \"\\\"Computer Vision\\\"\", \"\\\"Vision par ordinateur\\\"\", \"\\\"Data Science\\\"\", \"\\\"Data Scientist\\\"\", \"PyTorch\", \"Foundation Model\", \"TensorFlow\", \"OpenCV\", \"\\\"AI Engineer\\\"\" ]",
               "type": "array"
             },
             {
@@ -225,12 +225,6 @@
               "id": "5eddc000-ba49-4b9e-886c-d2617a377884",
               "name": "f_JT",
               "value": "F",
-              "type": "string"
-            },
-            {
-              "id": "3729463f-bbe7-4663-b315-935e94ab48a1",
-              "name": "f_E",
-              "value": "2,4",
               "type": "string"
             }
           ]
@@ -1758,7 +1752,7 @@
   "settings": {
     "executionOrder": "v1"
   },
-  "versionId": "f988ab8c-5a8d-44ba-932f-9ecc8eb4bf2b",
+  "versionId": "87681050-92b2-48ca-a7da-61f51660bd5c",
   "meta": {
     "templateCredsSetupCompleted": true,
     "instanceId": "b87ba4d1e29db53fa7e2e59cf2c63f059ab024634f7886ba268fdfa300de1550"
