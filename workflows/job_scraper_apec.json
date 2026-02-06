@@ -1,0 +1,1491 @@
+{
+  "name": "Job Scraper APEC",
+  "nodes": [
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "weeks",
+              "triggerAtDay": [
+                1,
+                2,
+                3,
+                4,
+                5,
+                6
+              ],
+              "triggerAtHour": 10
+            },
+            {
+              "field": "weeks",
+              "triggerAtDay": [
+                1,
+                2,
+                3,
+                4,
+                5,
+                6,
+                0
+              ],
+              "triggerAtHour": 15,
+              "triggerAtMinute": 30
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        -576,
+        240
+      ],
+      "id": "e54c8f8e-dd8f-4660-805a-9cee6d457e0b",
+      "name": "Schedule Trigger"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "995dd304-e1b0-4f75-bf81-26c709da6e87",
+              "name": "keywords",
+              "value": "[ \"Deep Learning\", \"Machine Learning\", \"Computer Vision\", \"\\\"Data Scientist\\\"\", \"\\\"Data Science\\\"\", \"PyTorch\", \"Foundation Model\", \"TensorFlow\", \"OpenCV\", \"\\\"AI Engineer\\\"\", \"\\\"Vision par Ordinateur\\\"\" ]",
+              "type": "array"
+            },
+            {
+              "id": "171f1833-162c-484b-8d7f-66d39f607906",
+              "name": "lieux",
+              "value": "[ \"711\" ]",
+              "type": "array"
+            },
+            {
+              "id": "f557d877-c30b-4dda-8a74-83a305229c47",
+              "name": "anciennetePublication",
+              "value": "101850",
+              "type": "string"
+            },
+            {
+              "id": "b5c21d86-8dcf-4369-bae8-69024b5859ef",
+              "name": "paginationRange",
+              "value": 50,
+              "type": "number"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -352,
+        240
+      ],
+      "id": "e444efcb-1726-445c-8736-27e10179a499",
+      "name": "Set Query Params"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://www.apec.fr/cms/webservices/rechercheOffre",
+        "sendHeaders": true,
+        "specifyHeaders": "json",
+        "jsonHeaders": "{\n  \"Content-Type\": \"application/json\",\n  \"Accept\": \"application/json\",\n  \"Origin\": \"https://www.apec.fr\",\n  \"Referer\": \"https://www.apec.fr/\",\n  \"User-Agent\": \"Mozilla/5.0\"\n}\n",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify($json.payload) }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.3,
+      "position": [
+        544,
+        48
+      ],
+      "id": "adf76e48-073d-4137-86df-10a25cd82b02",
+      "name": "Initial request"
+    },
+    {
+      "parameters": {
+        "max": 4
+      },
+      "type": "n8n-nodes-random-wait.randomWait",
+      "typeVersion": 1,
+      "position": [
+        320,
+        48
+      ],
+      "id": "c1c2d687-8d0e-4948-8892-d2ea8226aa45",
+      "name": "Random Wait #1"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "24132f12-e83d-4acd-830e-1a4e2104269d",
+              "name": "totalCount",
+              "value": "={{ $json.totalCount ?? $json.resultats.length }}",
+              "type": "number"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        768,
+        48
+      ],
+      "id": "ab31345e-8784-4d99-93c8-304aa3b6cdda",
+      "name": "Extract NB Pages"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "a0ea3d33-4cdd-44a8-affa-6e018196c6a1",
+              "name": "request",
+              "value": "={{ $('Loop Over Payloads').item.json.payload }}",
+              "type": "object"
+            },
+            {
+              "id": "bf06b175-0f25-45d1-82f5-9514d861c92d",
+              "name": "jobs",
+              "value": "={{ $('Loop Over Payloads').item.json.jobs }}",
+              "type": "array"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1216,
+        48
+      ],
+      "id": "56ba4b5b-3388-45ec-bb46-4da9a27fb9f1",
+      "name": "Edit Fields"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "f3b3455c-35a0-4357-9ebe-c7a659c70e4c",
+              "leftValue": "={{ $json.totalCount }}",
+              "rightValue": 0,
+              "operator": {
+                "type": "number",
+                "operation": "notEquals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        992,
+        48
+      ],
+      "id": "8775049a-7fe3-4c4f-b386-855b8bef8182",
+      "name": "Quit if no hits"
+    },
+    {
+      "parameters": {
+        "jsCode": "const input = $input.first().json;\n\nconst keywords = input.keywords;\nconst lieux = input.lieux;\nconst anciennetePublication = input.anciennetePublication;\nconst paginationRange = input.paginationRange;\n\nconst basePayload = {\n  lieux: lieux,\n  pagination: {\n    range: paginationRange,\n    startIndex: 0\n  },\n  sorts: [\n    { type: \"SCORE\", direction: \"DESCENDING\" }\n  ],\n  activeFiltre: true,\n  anciennetePublication: anciennetePublication\n};\n\nlet payloads = [];\n\nfor (const keyword of keywords) {\n  const payload = {\n    ...basePayload,\n    motsCles: keyword\n  };\n\n  payloads.push({\n    payload,\n    jobs: []\n  });\n}\n\nreturn payloads;\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -128,
+        240
+      ],
+      "id": "7f33741e-70ac-48ee-b9e7-59d8318bd797",
+      "name": "Prepare Payloads"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "n8n-nodes-base.splitInBatches",
+      "typeVersion": 3,
+      "position": [
+        96,
+        240
+      ],
+      "id": "e8916f60-d0e2-46b3-a981-e9b9cb6c01be",
+      "name": "Loop Over Payloads"
+    },
+    {
+      "parameters": {
+        "jsCode": "const baseItem = $('Loop Over Payloads').last().json;\nconst totalCount = $input.first().json.totalCount;\n\nconst range = $('Set Query Params').first().json.paginationRange;\nconst nbPages = Math.ceil(totalCount / range);\n\nconst output = [];\n\nfor (let page = 0; page < nbPages; page++) {\n\n  const payload = JSON.parse(JSON.stringify(baseItem.payload));\n\n  payload.pagination.startIndex = page * range;\n\n  output.push({\n    json: {\n      payload,\n      jobs: [],\n      keyword: payload.motsCles,\n      page\n    }\n  });\n}\n\nreturn output;\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1216,
+        -144
+      ],
+      "id": "66bce5e8-8d75-4bc1-8faa-7573ea7a7c95",
+      "name": "Prepare Payload Pages"
+    },
+    {
+      "parameters": {
+        "options": {
+          "reset": false
+        }
+      },
+      "type": "n8n-nodes-base.splitInBatches",
+      "typeVersion": 3,
+      "position": [
+        1440,
+        -144
+      ],
+      "id": "61cbe264-a9ff-44f9-904c-c66438bc5def",
+      "name": "Loop Over Pages"
+    },
+    {
+      "parameters": {
+        "jsCode": "const payload = $('Loop Over Pages').last().json.payload;\nconst results = $input.first().json.resultats\n\nconst jobs = results.map(result => ({\n  jobId: result.id,\n  jobTitle: result.intitule,\n  companyName: result.nomCommercial,\n  hitResult: result\n}));\n\nreturn [{ json: { payload, jobs } }];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        2464,
+        -32
+      ],
+      "id": "e39115b1-850f-4365-999d-ebc5c709a374",
+      "name": "Extract Job Info"
+    },
+    {
+      "parameters": {
+        "fieldsToAggregate": {
+          "fieldToAggregate": [
+            {
+              "fieldToAggregate": "jobs"
+            }
+          ]
+        },
+        "options": {
+          "mergeLists": true
+        }
+      },
+      "type": "n8n-nodes-base.aggregate",
+      "typeVersion": 1,
+      "position": [
+        1664,
+        -288
+      ],
+      "id": "e4648653-1a1f-4717-9457-a8c3163e695a",
+      "name": "Aggregate Jobs"
+    },
+    {
+      "parameters": {
+        "jsCode": "$('Loop Over Pages').params.options.reset = false;\nreturn $input.all();"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1664,
+        -96
+      ],
+      "id": "e80e6cc5-275d-43a9-ba6e-309ad62f2cdd",
+      "name": "Set Reset to False"
+    },
+    {
+      "parameters": {
+        "jsCode": "$('Loop Over Pages').params.options.reset = true;\nreturn $input.all();"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        2176,
+        -288
+      ],
+      "id": "c1da0d31-da70-4e74-9ad1-415f544cd1a7",
+      "name": "Set Reset to True"
+    },
+    {
+      "parameters": {
+        "max": 4
+      },
+      "type": "n8n-nodes-random-wait.randomWait",
+      "typeVersion": 1,
+      "position": [
+        1888,
+        -96
+      ],
+      "id": "6f0ac271-9e12-4495-8d54-81195858f7e2",
+      "name": "Random Wait #2"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "1bc22d8f-7532-4a24-8446-77a256296e0d",
+              "name": "request",
+              "value": "={{ $('Loop Over Pages').first().json.payload }}",
+              "type": "object"
+            },
+            {
+              "id": "5b90ed41-df0e-45b8-8974-f0024430ed16",
+              "name": "jobs",
+              "value": "={{ $json.jobs }}",
+              "type": "array"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1888,
+        -288
+      ],
+      "id": "4e127898-dc35-416e-9efb-03947c47f38c",
+      "name": "Add Original Payload"
+    },
+    {
+      "parameters": {
+        "fieldToSplitOut": "jobs",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.splitOut",
+      "typeVersion": 1,
+      "position": [
+        320,
+        -704
+      ],
+      "id": "8c056747-95f1-4b80-a98c-013d3ce4285f",
+      "name": "Transform as List of Jobs"
+    },
+    {
+      "parameters": {
+        "type": "SHA256",
+        "value": "=apec-{{ $json.jobId }}",
+        "dataPropertyName": "id"
+      },
+      "type": "n8n-nodes-base.crypto",
+      "typeVersion": 1,
+      "position": [
+        544,
+        -704
+      ],
+      "id": "1a9ba29d-61b8-4953-88fe-633dd3b9b5ef",
+      "name": "Compute UID"
+    },
+    {
+      "parameters": {
+        "compare": "selectedFields",
+        "fieldsToCompare": "id",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.removeDuplicates",
+      "typeVersion": 2,
+      "position": [
+        768,
+        -704
+      ],
+      "id": "6cdd36f0-b9b2-431f-b524-76e219d6335f",
+      "name": "Remove Duplicates"
+    },
+    {
+      "parameters": {
+        "resource": "databasePage",
+        "operation": "getAll",
+        "databaseId": {
+          "__rl": true,
+          "value": "27df3836-d045-800b-8837-df75fbebe01f",
+          "mode": "list",
+          "cachedResultName": "Job Apply Tracker",
+          "cachedResultUrl": "https://www.notion.so/27df3836d045800b8837df75fbebe01f"
+        },
+        "returnAll": true,
+        "filterType": "manual",
+        "filters": {
+          "conditions": [
+            {
+              "key": "Source|select",
+              "condition": "equals",
+              "selectValue": "apec"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.notion",
+      "typeVersion": 2.2,
+      "position": [
+        992,
+        -704
+      ],
+      "id": "15b3ff07-4e27-480c-a753-88078ce5b367",
+      "name": "Fetch Database Jobs",
+      "executeOnce": true,
+      "alwaysOutputData": true,
+      "credentials": {
+        "notionApi": {
+          "id": "srAX2Tl74sFUy1TX",
+          "name": "Notion account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "let ids = $input.all().map(item => item.json.property_id);\nreturn $('Remove Duplicates').all().filter(item => !ids.includes(item.json.id));"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1216,
+        -704
+      ],
+      "id": "fe653cfd-8f23-4dfe-bcd0-1c89c6969121",
+      "name": "Filter Out Duplicates",
+      "executeOnce": false,
+      "alwaysOutputData": true
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "37e86371-4480-4b67-95c6-b63c434e7334",
+              "name": "id",
+              "value": "={{ $json.id }}",
+              "type": "string"
+            },
+            {
+              "id": "4a26bda2-02c2-48df-b612-da34e24dc46b",
+              "name": "jobTitle",
+              "value": "={{ $json.jobTitle }}",
+              "type": "string"
+            },
+            {
+              "id": "dfe75297-82e1-479a-80d5-b47b9a80664e",
+              "name": "companyName",
+              "value": "={{ $json.companyName }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1440,
+        -704
+      ],
+      "id": "b242c9dd-fa2f-435f-9fea-4f2729233260",
+      "name": "Keep Important Fields"
+    },
+    {
+      "parameters": {
+        "batchSize": 40,
+        "options": {}
+      },
+      "type": "n8n-nodes-base.splitInBatches",
+      "typeVersion": 3,
+      "position": [
+        1664,
+        -704
+      ],
+      "id": "c7c2b7dc-f844-46e7-8e52-e558a95967da",
+      "name": "Loop Over Jobs"
+    },
+    {
+      "parameters": {
+        "jsCode": "let ids = $input.first().json.ids\n\n// Remove duplicates\nids = [...new Set(ids)];\n\nreturn $('Filter Out Duplicates').all().filter(item => ids.includes(item.json.id));\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        2176,
+        -976
+      ],
+      "id": "ff20d9d7-2041-455b-bf44-457577e59b5c",
+      "name": "Extract Jobs from UIDs"
+    },
+    {
+      "parameters": {
+        "jsCode": "// Required libraries\nconst TurndownService = require('turndown');\nconst turndown = new TurndownService();\n\n// Experience lookup table\nconst experienceMap = {\n  200269: \"Tous niveaux d'expérience acceptés\",\n  597150: \"Aucune expérience exigée\",\n  597151: \"Minimum 1 an\",\n  597152: \"Minimum 2 ans\",\n  597153: \"Minimum 3 ans\",\n  597154: \"Minimum 4 ans\",\n  597155: \"Minimum 5 ans\",\n  597156: \"Minimum 6 ans\",\n  597157: \"Minimum 7 ans\",\n  597158: \"Minimum 8 ans\",\n  597159: \"Minimum 9 ans\",\n  597160: \"Minimum 10 ans\"\n};\n\nfunction formatDate(date) {\n  if (!date) return null;\n  const d = new Date(date);\n  const pad = (n) => String(n).padStart(2, '0');\n\n  const year = d.getFullYear();\n  const month = pad(d.getMonth() + 1); // Months are 0-indexed\n  const day = pad(d.getDate());\n\n  const hours = pad(d.getHours());\n  const minutes = pad(d.getMinutes());\n  const seconds = pad(d.getSeconds());\n\n  return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;\n}\n\nconst hits = $input.all().map(item => item.json);\n\nconst mappedJobs = hits.map(job => {\n  // Decode HTML profile/description\n  const realHtml = job.jobDescription ?? '';\n  const descriptionMarkdown = turndown.turndown(realHtml);\n\n  // Construct job URL if possible\n  const baseUrl = 'https://www.apec.fr/candidat/recherche-emploi.html/emploi/detail-offre/';\n  const jobUrl = `${baseUrl}${job.hitResult.numeroOffre}`;\n\n  // Map experience using idNomenclature\n  const experienceId = job.experience;\n  const experience = experienceMap[experienceId] || null;\n\n  return {\n    id: job.id,\n    source: 'apec',\n    title: job.jobTitle,\n    company: job.companyName,\n    location: job.hitResult.lieuTexte,\n    salary: job.hitResult.salaireTexte || null,\n    descriptionSummary: job.hitResult.texteOffre || '',\n    description: descriptionMarkdown || '',\n    profileSkills: job.profileSkills || [],\n    url: jobUrl,\n    scrapedAt: $now.toFormat('yyyy-MM-dd HH:mm:ss'),\n    jobId: job.jobId,\n    postedAt: formatDate(job.hitResult.datePublication) || null,\n    experience: experience\n  };\n});\n\nreturn mappedJobs;\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        2688,
+        -1072
+      ],
+      "id": "3a70a285-dc7b-4071-873f-9a0d848d6cb6",
+      "name": "Extract and Format Fields"
+    },
+    {
+      "parameters": {
+        "aggregate": "aggregateAllItemData",
+        "destinationFieldName": "jobs",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.aggregate",
+      "typeVersion": 1,
+      "position": [
+        1888,
+        -688
+      ],
+      "id": "b2d463c4-e5a4-4d24-8c7a-548bfab12fe7",
+      "name": "Aggregate Batch Items"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=Analyze the following job offers and filter them according to the candidate profile.\n\nTASK:\n1. Review each job's title and company\n2. Determine if it matches the candidate's experience level and technical fields\n3. When in doubt, INCLUDE the job (better to over-include than miss opportunities)\n4. Return ONLY the array of matching job IDs as valid JSON\n\nINPUT JOBS:\n{{ $json[\"jobs\"].map((job, index) => `\nJob #${index + 1}\nID: ${job.id}\nTitle: ${job.jobTitle}\nCompany: ${job.companyName}\n`).join('\\n') }}\n\nOUTPUT (JSON array only):",
+        "messages": {
+          "messageValues": [
+            {
+              "message": "=You are a job filter assistant. Your role is to analyze job offers and return only those matching the candidate's profile.\n\nCANDIDATE PROFILE:\nExperience Level: Junior (0-2 years) or recent graduate positions\nCore Fields: Computer Vision, Image Processing, AI, Machine Learning, Deep Learning, Medical Imaging, Pathology Imaging, R&D\nPreferred Sectors: Healthcare, Medical/Pathology (but open to all sectors if fields match)\nAlso Consider: Data Scientist, AI/ML Consultant roles\nExample Target Companies: Gleamer, Bioptimus, Sonio, Owkin, Whitelab, Raidium, GE Healthcare, Idemia, HuggingFace, GoPro, Thales, Dassault, SocgenAI, AWS, Datadog, IBM Consulting\n\nFILTERING CRITERIA:\n✓ INCLUDE if:\n- Job is junior-level OR experience requirement ≤2 years OR explicitly mentions graduates/entry-level\n- Role involves any core fields (CV, image processing, AI/ML, deep learning, medical imaging, pathology)\n- Data Scientist or AI/ML Consultant positions matching the technical profile\n- R&D roles in relevant technical domains\n\n✗ EXCLUDE if:\n- Requires 5+ years of experience (unless clearly junior-friendly)\n- Completely unrelated fields (e.g., pure finance, HR, sales, marketing without AI component)\n- Senior/Lead/Principal positions explicitly requiring extensive experience\n\nOUTPUT FORMAT:\nReturn ONLY a valid JSON array of matching job IDs.\nFormat: [\"id1\", \"id2\", \"id3\"] or [] if no matching ids.\nNo markdown formatting, no explanations, no code blocks, no extra text."
+            }
+          ]
+        },
+        "batching": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.chainLlm",
+      "typeVersion": 1.7,
+      "position": [
+        2112,
+        -784
+      ],
+      "id": "9fdfdd3e-5c77-4099-877e-f65ff849fd5b",
+      "name": "LLM Mass Job Filterer"
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "mode": "list",
+          "value": "gpt-4.1-mini"
+        },
+        "builtInTools": {},
+        "options": {
+          "temperature": 0.1,
+          "topP": 0.9
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.3,
+      "position": [
+        2192,
+        -560
+      ],
+      "id": "acb73e7f-2e56-4781-b04a-61c7eb4cf325",
+      "name": "OpenAI Chat Model",
+      "credentials": {
+        "openAiApi": {
+          "id": "Gei4rHdr8BlDkSEk",
+          "name": "OpenAi account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "const llmResult = $input.first().json.text\n\n// Parse the JSON string\nlet ids;\ntry {\n    ids = JSON.parse(llmResult);\n} catch (error) {\n    throw new Error(\"Failed to parse LLM output: \" + error.message);\n}\n\nreturn [{ ids }]"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        2464,
+        -560
+      ],
+      "id": "181b2ba2-a566-4e43-8d7b-d82d61c8aabe",
+      "name": "Parse LLM Filterer output"
+    },
+    {
+      "parameters": {
+        "fieldsToAggregate": {
+          "fieldToAggregate": [
+            {
+              "fieldToAggregate": "ids"
+            }
+          ]
+        },
+        "options": {
+          "mergeLists": true
+        }
+      },
+      "type": "n8n-nodes-base.aggregate",
+      "typeVersion": 1,
+      "position": [
+        1888,
+        -976
+      ],
+      "id": "0bdfc2ba-509b-456f-8ec0-5a3bed2f086a",
+      "name": "Aggregate Job IDs"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "d8c94090-736c-41b2-ac66-137114e81562",
+              "name": "url",
+              "value": "={{ $json.url }}",
+              "type": "string"
+            },
+            {
+              "id": "16d4e6b1-aae4-4e85-bf52-8e02c7b4ab19",
+              "name": "id",
+              "value": "={{ $json.id }}",
+              "type": "string"
+            },
+            {
+              "id": "1f8e31d8-012d-4ec0-9ca2-65437326ef97",
+              "name": "description",
+              "value": "={{ $json.description }}",
+              "type": "string"
+            },
+            {
+              "id": "c9a5fdb4-dedb-4b6d-b50a-929e68d4bc3f",
+              "name": "descriptionSummary",
+              "value": "={{ $json.descriptionSummary }}",
+              "type": "string"
+            },
+            {
+              "id": "6ddc65f2-19a4-4233-8f61-14741e19864b",
+              "name": "jobId",
+              "value": "={{ $json.jobId }}",
+              "type": "string"
+            },
+            {
+              "id": "ed6f62b1-30a6-41fa-b462-bfe0b5ba3af9",
+              "name": "title",
+              "value": "={{ $json.title }}",
+              "type": "string"
+            },
+            {
+              "id": "7a069c93-7939-49ec-aa94-206805d7b1bd",
+              "name": "location",
+              "value": "={{ $json.location }}",
+              "type": "string"
+            },
+            {
+              "id": "56c5959a-c85f-4d57-8e2f-0de98b92f1ee",
+              "name": "profileSkills",
+              "value": "={{ $json.profileSkills }}",
+              "type": "array"
+            },
+            {
+              "id": "426cc134-922e-4683-afe8-e8d9fdd9537a",
+              "name": "salary",
+              "value": "={{ $json.salary }}",
+              "type": "string"
+            },
+            {
+              "id": "6df41451-3509-4659-af65-8d495c4f6507",
+              "name": "source",
+              "value": "={{ $json.source }}",
+              "type": "string"
+            },
+            {
+              "id": "ca6fc683-4240-4729-ae58-560e031c505c",
+              "name": "company",
+              "value": "={{ $json.company }}",
+              "type": "string"
+            },
+            {
+              "id": "b2878580-f766-4b3a-b9de-4de1e197d4b6",
+              "name": "scrapedAt",
+              "value": "={{ $json.scrapedAt }}",
+              "type": "string"
+            },
+            {
+              "id": "6936d973-44ec-4802-af4b-368cb84d9e9a",
+              "name": "postedAt",
+              "value": "={{ $json.postedAt }}",
+              "type": "string"
+            },
+            {
+              "id": "d65bfbe6-7363-4cbf-a27f-ff9842f5160a",
+              "name": "experience",
+              "value": "={{ $json.experience }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        2912,
+        -1072
+      ],
+      "id": "fccd07b5-3f2c-49f8-839e-ec0a9e9b7c23",
+      "name": "Prepare Fields for Notion"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "n8n-nodes-base.splitInBatches",
+      "typeVersion": 3,
+      "position": [
+        2464,
+        -976
+      ],
+      "id": "03dd060f-ac9d-4a60-9033-85653cafa93c",
+      "name": "Loop Over Items"
+    },
+    {
+      "parameters": {
+        "max": 4
+      },
+      "type": "n8n-nodes-random-wait.randomWait",
+      "typeVersion": 1,
+      "position": [
+        2688,
+        -784
+      ],
+      "id": "e0ca82d2-6801-4ba7-b53c-e13fd63d8abf",
+      "name": "Random Wait #3"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://www.apec.fr/cms/webservices/rechercheOffre",
+        "sendHeaders": true,
+        "specifyHeaders": "json",
+        "jsonHeaders": "{\n  \"Content-Type\": \"application/json\",\n  \"Accept\": \"application/json\",\n  \"Origin\": \"https://www.apec.fr\",\n  \"Referer\": \"https://www.apec.fr/\",\n  \"User-Agent\": \"Mozilla/5.0\"\n}\n",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify($json.payload) }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.3,
+      "position": [
+        2176,
+        -96
+      ],
+      "id": "9d519765-e364-4286-a5bb-88992310d5ac",
+      "name": "APEC POST"
+    },
+    {
+      "parameters": {
+        "url": "=https://www.apec.fr/cms/webservices/offre/public?numeroOffre={{ $json.hitResult.numeroOffre }}",
+        "sendHeaders": true,
+        "specifyHeaders": "json",
+        "jsonHeaders": "{\n  \"Content-Type\": \"application/json\",\n  \"Accept\": \"application/json\",\n  \"Origin\": \"https://www.apec.fr\",\n  \"Referer\": \"https://www.apec.fr/\",\n  \"User-Agent\": \"Mozilla/5.0\"\n}\n",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.3,
+      "position": [
+        2912,
+        -784
+      ],
+      "id": "2e17083c-00e2-4e78-8a6a-f96fa39aeeec",
+      "name": "APEC GET"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "8a1247b1-e293-4c1e-b519-5e61b96d87d5",
+              "name": "jobDescription",
+              "value": "={{ ($json.texteHtml || '') + \"\\n\" + ($json.texteHtmlProfil || '') + \"\\n\" + ($json.texteHtmlEntreprise || '') + \"\\n\" + ($json.texteProcessRecrutement || '') }}",
+              "type": "string"
+            },
+            {
+              "id": "71b8534c-d540-432d-a0b8-38d4a58f8ee8",
+              "name": "profileSkills",
+              "value": "={{ $json.competences.map(item => item.libelle) || [] }}",
+              "type": "array"
+            },
+            {
+              "id": "155255ea-a69d-48bc-a683-47f4cf0059fb",
+              "name": "experience",
+              "value": "={{ $json.idNomNiveauExperience || '' }}",
+              "type": "string"
+            },
+            {
+              "id": "891ae152-c040-4a90-8661-7c75d9269e41",
+              "name": "jobId",
+              "value": "={{ $('Loop Over Items').item.json.jobId }}",
+              "type": "number"
+            },
+            {
+              "id": "5f0df3fb-8395-4e72-a04d-2c5d5c40c94e",
+              "name": "jobTitle",
+              "value": "={{ $('Loop Over Items').item.json.jobTitle }}",
+              "type": "string"
+            },
+            {
+              "id": "7a4c65c2-55ca-4ab3-a16d-8a83790278f4",
+              "name": "companyName",
+              "value": "={{ $('Loop Over Items').item.json.companyName }}",
+              "type": "string"
+            },
+            {
+              "id": "1aea75db-36f8-4a9a-a33a-37ec896fb90b",
+              "name": "hitResult",
+              "value": "={{ $('Loop Over Items').item.json.hitResult }}",
+              "type": "object"
+            },
+            {
+              "id": "c2524f0c-0a47-4978-acf7-b7f77a2292c3",
+              "name": "id",
+              "value": "={{ $('Loop Over Items').item.json.id }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        3136,
+        -720
+      ],
+      "id": "e8728689-dee4-4601-8aeb-5021f4ff7320",
+      "name": "Extract Missing Fields"
+    },
+    {
+      "parameters": {
+        "jsCode": "let jobs = $input.all().map(item => item.json);\n\nlet emailBody = 'Hello,\\n\\nHere are the new job opportunities today:\\n\\n';\n\njobs.forEach((job, index) => {\n  emailBody += `${index+1}) ${job.title} — ${job.company} — ${job.location}\\n`;\n  emailBody += `    Skills: ${job['profileSkills'].join(', ')}\\n`;\n  emailBody += `    Apply here: ${job['url']}\\n\\n`;\n});\n\nemailBody += `Total new positions: ${jobs.length}\\n`;\n\nreturn [{ json: { body: emailBody, nb_positions: jobs.length } }];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        3136,
+        -976
+      ],
+      "id": "85fae6a3-3739-482d-b13e-afecf2198153",
+      "name": "Format Email Body"
+    },
+    {
+      "parameters": {
+        "sendTo": "ahmed.hassayoune@hotmail.fr",
+        "subject": "=[LINKEDIN] New Jobs Alert — {{ $json.nb_positions }} positions — {{ $now.format('dd/MM/yyyy') }}",
+        "emailType": "text",
+        "message": "={{ $json.body }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.1,
+      "position": [
+        3360,
+        -976
+      ],
+      "id": "bc118a93-7ad0-485b-970b-e46caa627b90",
+      "name": "Send Mail",
+      "webhookId": "aacb2fc6-6c1c-4fad-b693-f2f22c40dec4",
+      "executeOnce": true,
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "JpZlrCbgOly9sBXq",
+          "name": "Gmail account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "databasePage",
+        "databaseId": {
+          "__rl": true,
+          "value": "27df3836-d045-800b-8837-df75fbebe01f",
+          "mode": "list",
+          "cachedResultName": "Job Apply Tracker",
+          "cachedResultUrl": "https://www.notion.so/27df3836d045800b8837df75fbebe01f"
+        },
+        "title": "={{ $json.company }}",
+        "propertiesUi": {
+          "propertyValues": [
+            {
+              "key": "ID|rich_text",
+              "textContent": "={{ $json.id }}"
+            },
+            {
+              "key": "Job ID|rich_text",
+              "textContent": "={{ $json.jobId }}"
+            },
+            {
+              "key": "Source|select",
+              "selectValue": "={{ $json.source }}"
+            },
+            {
+              "key": "Job Title|rich_text",
+              "textContent": "={{ $json.title }}"
+            },
+            {
+              "key": "Location|rich_text",
+              "textContent": "={{ $json.location }}"
+            },
+            {
+              "key": "Salary|rich_text",
+              "textContent": "={{ $json.salary }}"
+            },
+            {
+              "key": "Job Description Summary|rich_text",
+              "textContent": "={{ $json.descriptionSummary }}"
+            },
+            {
+              "key": "Job Description|rich_text",
+              "richText": true,
+              "text": {
+                "text": [
+                  {
+                    "text": "={{ $json.description.slice(0, 2000) }}",
+                    "annotationUi": {}
+                  },
+                  {
+                    "text": "={{ $json.description.slice(2000, 4000) }}",
+                    "annotationUi": {}
+                  },
+                  {
+                    "text": "={{ $json.description.slice(4000, 6000) }}",
+                    "annotationUi": {}
+                  },
+                  {
+                    "text": "={{ $json.description.slice(6000, 8000) }}",
+                    "annotationUi": {}
+                  }
+                ]
+              }
+            },
+            {
+              "key": "Profile Skills|multi_select",
+              "multiSelectValue": "={{ $json.profileSkills.join(', ') }}"
+            },
+            {
+              "key": "Application URL|url",
+              "urlValue": "={{ $json.url }}"
+            },
+            {
+              "key": "Scraped At|date",
+              "date": "={{ $json.scrapedAt }}"
+            },
+            {
+              "key": "Application Status|status",
+              "statusValue": "=Not applied"
+            },
+            {
+              "key": "Decision Status|status",
+              "statusValue": "=Not applied"
+            },
+            {
+              "key": "Posted At|date",
+              "date": "={{ $json.postedAt }}"
+            },
+            {
+              "key": "Experience|rich_text",
+              "textContent": "={{ $json.experience }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.notion",
+      "typeVersion": 2.2,
+      "position": [
+        3136,
+        -1168
+      ],
+      "id": "2b94f3c8-5a87-4b24-b7b3-9eaecdab5f9c",
+      "name": "Insert Job Pages",
+      "credentials": {
+        "notionApi": {
+          "id": "srAX2Tl74sFUy1TX",
+          "name": "Notion account"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Schedule Trigger": {
+      "main": [
+        [
+          {
+            "node": "Set Query Params",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Set Query Params": {
+      "main": [
+        [
+          {
+            "node": "Prepare Payloads",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Random Wait #1": {
+      "main": [
+        [
+          {
+            "node": "Initial request",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Initial request": {
+      "main": [
+        [
+          {
+            "node": "Extract NB Pages",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Extract NB Pages": {
+      "main": [
+        [
+          {
+            "node": "Quit if no hits",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Quit if no hits": {
+      "main": [
+        [
+          {
+            "node": "Prepare Payload Pages",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Prepare Payloads": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Payloads",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Loop Over Payloads": {
+      "main": [
+        [
+          {
+            "node": "Transform as List of Jobs",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Random Wait #1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Payloads",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Loop Over Pages": {
+      "main": [
+        [
+          {
+            "node": "Aggregate Jobs",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Set Reset to False",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Extract Job Info": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Pages",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Aggregate Jobs": {
+      "main": [
+        [
+          {
+            "node": "Add Original Payload",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Set Reset to False": {
+      "main": [
+        [
+          {
+            "node": "Random Wait #2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Random Wait #2": {
+      "main": [
+        [
+          {
+            "node": "APEC POST",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Prepare Payload Pages": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Pages",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Add Original Payload": {
+      "main": [
+        [
+          {
+            "node": "Set Reset to True",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Set Reset to True": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Payloads",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Transform as List of Jobs": {
+      "main": [
+        [
+          {
+            "node": "Compute UID",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Compute UID": {
+      "main": [
+        [
+          {
+            "node": "Remove Duplicates",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Fetch Database Jobs": {
+      "main": [
+        [
+          {
+            "node": "Filter Out Duplicates",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Filter Out Duplicates": {
+      "main": [
+        [
+          {
+            "node": "Keep Important Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Remove Duplicates": {
+      "main": [
+        [
+          {
+            "node": "Fetch Database Jobs",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Loop Over Jobs": {
+      "main": [
+        [
+          {
+            "node": "Aggregate Job IDs",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Aggregate Batch Items",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Extract Jobs from UIDs": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Extract and Format Fields": {
+      "main": [
+        [
+          {
+            "node": "Prepare Fields for Notion",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Aggregate Batch Items": {
+      "main": [
+        [
+          {
+            "node": "LLM Mass Job Filterer",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "LLM Mass Job Filterer": {
+      "main": [
+        [
+          {
+            "node": "Parse LLM Filterer output",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "LLM Mass Job Filterer",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Parse LLM Filterer output": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Jobs",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Aggregate Job IDs": {
+      "main": [
+        [
+          {
+            "node": "Extract Jobs from UIDs",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Keep Important Fields": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Jobs",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Loop Over Items": {
+      "main": [
+        [
+          {
+            "node": "Extract and Format Fields",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Random Wait #3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Random Wait #3": {
+      "main": [
+        [
+          {
+            "node": "APEC GET",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "APEC POST": {
+      "main": [
+        [
+          {
+            "node": "Extract Job Info",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "APEC GET": {
+      "main": [
+        [
+          {
+            "node": "Extract Missing Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Extract Missing Fields": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Prepare Fields for Notion": {
+      "main": [
+        [
+          {
+            "node": "Insert Job Pages",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Format Email Body",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Format Email Body": {
+      "main": [
+        [
+          {
+            "node": "Send Mail",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1",
+    "availableInMCP": false
+  },
+  "versionId": "ffd7fa2b-06ab-4dde-a243-3f40fb3d60f7",
+  "meta": {
+    "instanceId": "b87ba4d1e29db53fa7e2e59cf2c63f059ab024634f7886ba268fdfa300de1550"
+  },
+  "id": "y6GnYM_W-dhHhpljiONek",
+  "tags": []
+}
