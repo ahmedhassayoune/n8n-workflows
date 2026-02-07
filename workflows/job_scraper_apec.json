@@ -881,7 +881,7 @@
     {
       "parameters": {
         "sendTo": "ahmed.hassayoune@hotmail.fr",
-        "subject": "=[LINKEDIN] New Jobs Alert — {{ $json.nb_positions }} positions — {{ $now.format('dd/MM/yyyy') }}",
+        "subject": "=[APEC] New Jobs Alert — {{ $json.nb_positions }} positions — {{ $now.format('dd/MM/yyyy') }}",
         "emailType": "text",
         "message": "={{ $json.body }}",
         "options": {}
@@ -1482,7 +1482,7 @@
     "executionOrder": "v1",
     "availableInMCP": false
   },
-  "versionId": "ffd7fa2b-06ab-4dde-a243-3f40fb3d60f7",
+  "versionId": "de01d514-a9e9-464d-b020-399416ef1554",
   "meta": {
     "instanceId": "b87ba4d1e29db53fa7e2e59cf2c63f059ab024634f7886ba268fdfa300de1550"
   },
