@@ -38,20 +38,20 @@
       "typeVersion": 1.2,
       "position": [
         -3920,
-        2568
+        2576
       ],
       "id": "5d554346-c466-4630-aa7c-7e9342a673d6",
       "name": "Schedule Trigger"
     },
     {
       "parameters": {
-        "jsCode": "var requests = [];\nconst hitsPerPage = 50;\n\nconst input = $input.first().json;\n\n// build experience filter\nconst experienceFilters = input.experience_lvl\n  .map(lvl => {\n    const [min, max] = lvl.split('-');\n    return `experience_level_minimum:${min} TO ${max}`;\n  })\n  .join(' OR ');\n\n// build contract filter\nconst contractFilters = input.contract_type\n  .map(ct => `contract_type:\"${ct}\"`)\n  .join(' OR ');\n\n// base filters (not URL-encoded yet)\nconst filters = `(offices.country_code:\"${input.country}\" AND offices.state:\"${input.state}\") AND (${contractFilters}) AND (${experienceFilters})`;\n\nconst minTimestamp = Math.floor(Date.now() / 1000) - input.last_timestamp\nconst numericFilters = `published_at_timestamp>=${minTimestamp}`\n\nfor (const keyword of input.keywords) {\n\n  const params =\n    'query=' + encodeURIComponent(keyword) +\n    '&page=0' +\n    '&hitsPerPage=' + hitsPerPage +\n    '&filters=' + encodeURIComponent(filters) +\n    '&numericFilters=' + encodeURIComponent(numericFilters);\n\n  let request = { \n    indexName: \"wttj_jobs_production_fr\",\n    params: params\n  };\n\n  requests.push(request);\n}\n\nreturn requests.map(request => ({\n  request,\n  jobs: [],\n}));\n"
+        "jsCode": "var requests = [];\nconst hitsPerPage = 50;\n\nconst input = $input.first().json;\n\n// base filters (not URL-encoded yet)\nconst filters = `(offices.country_code:\"${input.country}\" AND offices.state:\"${input.state}\")`;\n\nconst minTimestamp = Math.floor(Date.now() / 1000) - input.last_timestamp\nconst numericFilters = `published_at_timestamp>=${minTimestamp}`\n\nfor (const keyword of input.keywords) {\n\n  const params =\n    'query=' + encodeURIComponent(keyword) +\n    '&page=0' +\n    '&hitsPerPage=' + hitsPerPage +\n    '&filters=' + encodeURIComponent(filters) +\n    '&numericFilters=' + encodeURIComponent(numericFilters);\n\n  let request = { \n    indexName: \"wttj_jobs_production_fr\",\n    params: params\n  };\n\n  requests.push(request);\n}\n\nreturn requests.map(request => ({\n  request,\n  jobs: [],\n}));\n"
       },
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
         -3472,
-        2568
+        2576
       ],
       "id": "9366d558-603c-4d1c-b5a9-b91742c66326",
       "name": "Prepare Requests"
@@ -64,7 +64,7 @@
       "typeVersion": 3,
       "position": [
         -3248,
-        2568
+        2576
       ],
       "id": "84e7634b-e080-4a8b-bc2a-c61b9d7a6993",
       "name": "Loop Over Requests"
@@ -228,7 +228,7 @@
       "typeVersion": 1,
       "position": [
         -3024,
-        1796
+        1808
       ],
       "id": "59edb4cf-15cc-4201-bb4d-5bc5fc2bd6ac",
       "name": "Transform as List of Jobs"
@@ -243,7 +243,7 @@
       "typeVersion": 1,
       "position": [
         -2800,
-        1796
+        1808
       ],
       "id": "b652187e-5041-42d2-85d0-a7d9e54aeb86",
       "name": "Compute UID"
@@ -257,7 +257,7 @@
       "typeVersion": 3,
       "position": [
         -1680,
-        1796
+        1808
       ],
       "id": "63d4af27-424f-4db7-a27a-770b96802676",
       "name": "Loop Over Jobs"
@@ -277,7 +277,7 @@
     },
     {
       "parameters": {
-        "jsCode": "// Required libraries\nconst TurndownService = require('turndown');\nconst turndown = new TurndownService();\n\nfunction formatDate(date) {\n  if (!date)\n    return null\n  const d = new Date(date);\n  const pad = (n) => String(n).padStart(2, '0');\n  \n  const year = d.getFullYear();\n  const month = pad(d.getMonth() + 1); // Months are 0-indexed\n  const day = pad(d.getDate());\n  \n  const hours = pad(d.getHours());\n  const minutes = pad(d.getMinutes());\n  const seconds = pad(d.getSeconds());\n  \n  return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;\n}\n\nconst hits = $input.all().map(item => item.json); // or $input.first().json.hits if single node\n\nconst mappedJobs = hits.map(job => {\n  // Decode HTML profile/description\n  const realHtml = job.hitResult.profile ?? '';\n  const descriptionMarkdown = turndown.turndown(realHtml);\n\n  // Construct job URL if possible\n  const baseUrl = 'https://www.welcometothejungle.com/fr/companies/';\n  const companySlug = job.hitResult.organization?.slug || '';\n  const jobSlug = job.hitResult.slug || '';\n  const jobUrl = companySlug && jobSlug ? `${baseUrl}${companySlug}/jobs/${jobSlug}` : '';\n\n  const location = job.hitResult.offices?.[0] ? `${job.hitResult.offices[0].city}, ${job.hitResult.offices[0].state}` : ''\n\n  return {\n    id: job.id,\n    source: 'wttj',\n    title: job.jobTitle,\n    company: job.companyName,\n    location: location,\n    salary: job.hitResult.salary_minimum || job.hitResult.salary_maximum || null,\n    descriptionSummary: job.hitResult.summary || '',\n    description: descriptionMarkdown,\n    profileSkills: [],\n    url: jobUrl,\n    scrapedAt: $now.toFormat('yyyy-MM-dd HH:mm:ss'),\n    jobId: job.jobId,\n    postedAt: formatDate(job.hitResult.published_at) || job.hitResult.published_at_date || null,\n    experience: job.hitResult.has_experience_level_minimum ? `+${job.hitResult.experience_level_minimum} years` : null\n  };\n});\n\nreturn mappedJobs;\n"
+        "jsCode": "// Required libraries\nconst TurndownService = require('turndown');\nconst turndown = new TurndownService();\n\nfunction formatDate(date) {\n  if (!date)\n    return null\n  const d = new Date(date);\n  const pad = (n) => String(n).padStart(2, '0');\n  \n  const year = d.getFullYear();\n  const month = pad(d.getMonth() + 1); // Months are 0-indexed\n  const day = pad(d.getDate());\n  \n  const hours = pad(d.getHours());\n  const minutes = pad(d.getMinutes());\n  const seconds = pad(d.getSeconds());\n  \n  return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;\n}\n\nconst hits = $input.all().map(item => item.json); // or $input.first().json.hits if single node\n\nconst mappedJobs = hits.map(job => {\n  // Decode HTML profile/description\n  const realHtml = job.hitResult.profile ?? '';\n  const descriptionMarkdown = turndown.turndown(realHtml);\n\n  // Construct job URL if possible\n  const baseUrl = 'https://www.welcometothejungle.com/fr/companies/';\n  const companySlug = job.hitResult.organization?.slug || '';\n  const jobSlug = job.hitResult.slug || '';\n  const jobUrl = companySlug && jobSlug ? `${baseUrl}${companySlug}/jobs/${jobSlug}` : '';\n\n  const location = job.hitResult.offices?.[0] ? `${job.hitResult.offices[0].city}, ${job.hitResult.offices[0].state}` : ''\n\n  return {\n    id: job.id,\n    source: 'wttj',\n    title: job.jobTitle,\n    company: job.companyName,\n    location: location,\n    salary: job.hitResult.salary_minimum || job.hitResult.salary_maximum || '',\n    descriptionSummary: job.hitResult.summary || '',\n    description: descriptionMarkdown,\n    profileSkills: [],\n    url: jobUrl,\n    scrapedAt: $now.toFormat('yyyy-MM-dd HH:mm:ss'),\n    jobId: job.jobId,\n    postedAt: formatDate(job.hitResult.published_at) || job.hitResult.published_at_date || '',\n    experience: job.hitResult.has_experience_level_minimum ? `+${job.hitResult.experience_level_minimum} years` : ''\n  };\n});\n\nreturn mappedJobs;\n"
       },
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
@@ -311,24 +311,6 @@
               "type": "string"
             },
             {
-              "id": "e2a32342-c2e7-4b79-ba22-62a1da3f0df9",
-              "name": "contract_type",
-              "value": "[ \"full_time\" ]",
-              "type": "array"
-            },
-            {
-              "id": "0e74a91d-804e-4a6f-8fe4-2fb1c61a4987",
-              "name": "around_query",
-              "value": "Île-de-France, France",
-              "type": "string"
-            },
-            {
-              "id": "64c21437-9b30-4714-a795-38276128ac7e",
-              "name": "experience_lvl",
-              "value": "[ \"0-1\", \"1-3\" ]",
-              "type": "array"
-            },
-            {
               "id": "f557d877-c30b-4dda-8a74-83a305229c47",
               "name": "last_timestamp",
               "value": 86400,
@@ -342,7 +324,7 @@
       "typeVersion": 3.4,
       "position": [
         -3696,
-        2568
+        2576
       ],
       "id": "c44a516b-30e0-44c1-9476-6cd2aacd59ff",
       "name": "Set Query Params"
@@ -484,7 +466,7 @@
       "typeVersion": 2,
       "position": [
         -2576,
-        1796
+        1808
       ],
       "id": "8d7958bf-a6cd-4a1f-a50b-8c8bd237105e",
       "name": "Remove Duplicates"
@@ -517,7 +499,7 @@
       "typeVersion": 2.2,
       "position": [
         -2352,
-        1796
+        1808
       ],
       "id": "131946b0-e278-4362-9cb5-e0d81999a6f9",
       "name": "Fetch Database Jobs",
@@ -538,7 +520,7 @@
       "typeVersion": 2,
       "position": [
         -2128,
-        1796
+        1808
       ],
       "id": "def9459f-0ae6-4b41-87ff-1d37b2664772",
       "name": "Filter Out Duplicates",
@@ -575,7 +557,7 @@
       "typeVersion": 3.4,
       "position": [
         -1904,
-        1796
+        1808
       ],
       "id": "7ae9a66c-8266-4fed-90f4-729eca684dc5",
       "name": "Keep Important Fields"
@@ -590,7 +572,7 @@
       "typeVersion": 1,
       "position": [
         -1456,
-        1816
+        1824
       ],
       "id": "b6cee336-69c7-4d2a-89ce-406385defd9d",
       "name": "Aggregate Batch Items"
@@ -633,7 +615,7 @@
       "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
       "typeVersion": 1.3,
       "position": [
-        -1160,
+        -1168,
         1936
       ],
       "id": "eab116ce-dff8-40df-b6b1-a077189cb34d",
@@ -653,7 +635,7 @@
       "typeVersion": 2,
       "position": [
         -880,
-        1864
+        1872
       ],
       "id": "a2445f17-a34a-4115-8287-d77972590d15",
       "name": "Parse LLM Filterer output"
@@ -848,7 +830,7 @@
             },
             {
               "key": "Profile Skills|multi_select",
-              "multiSelectValue": "={{ $json.profileSkills.join(', ') }}"
+              "multiSelectValue": "={{ [] }}"
             },
             {
               "key": "Application URL|url",
@@ -1346,7 +1328,7 @@
   "settings": {
     "executionOrder": "v1"
   },
-  "versionId": "37a024ba-14b9-48bd-a778-bc1f1affbd40",
+  "versionId": "4fdd5c16-d62a-4441-81de-ead9c3d153d8",
   "meta": {
     "templateCredsSetupCompleted": true,
     "instanceId": "b87ba4d1e29db53fa7e2e59cf2c63f059ab024634f7886ba268fdfa300de1550"
