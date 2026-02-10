@@ -798,7 +798,7 @@
             },
             {
               "key": "Salary|rich_text",
-              "textContent": "={{ $json.salary || \"\" }}"
+              "textContent": "={{ $json.salary }}"
             },
             {
               "key": "Job Description Summary|rich_text",
@@ -830,7 +830,7 @@
             },
             {
               "key": "Profile Skills|multi_select",
-              "multiSelectValue": "={{ [] }}"
+              "multiSelectValue": "={{ $json.profileSkills.join(', ') }}"
             },
             {
               "key": "Application URL|url",
@@ -1328,7 +1328,7 @@
   "settings": {
     "executionOrder": "v1"
   },
-  "versionId": "4fdd5c16-d62a-4441-81de-ead9c3d153d8",
+  "versionId": "8951cc97-100c-41f6-89e8-032ff09274e8",
   "meta": {
     "templateCredsSetupCompleted": true,
     "instanceId": "b87ba4d1e29db53fa7e2e59cf2c63f059ab024634f7886ba268fdfa300de1550"
