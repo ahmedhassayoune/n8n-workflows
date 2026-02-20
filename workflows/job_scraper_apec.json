@@ -38,7 +38,7 @@
       "typeVersion": 1.2,
       "position": [
         -576,
-        240
+        44
       ],
       "id": "e54c8f8e-dd8f-4660-805a-9cee6d457e0b",
       "name": "Schedule Trigger"
@@ -50,7 +50,7 @@
             {
               "id": "995dd304-e1b0-4f75-bf81-26c709da6e87",
               "name": "keywords",
-              "value": "[ \"Deep Learning\", \"Machine Learning\", \"Computer Vision\", \"\\\"Data Scientist\\\"\", \"\\\"Data Science\\\"\", \"PyTorch\", \"Foundation Model\", \"TensorFlow\", \"OpenCV\", \"\\\"AI Engineer\\\"\", \"\\\"Vision par Ordinateur\\\"\" ]",
+              "value": "[ \"\\\"Computer Vision\\\"\", \"\\\"Vision par ordinateur\\\"\", \"Machine Learning\", \"\\\"Deep Learning\\\"\", \"\\\"Data Scientist\\\"\", \"\\\"Data Science\\\"\", \"AI Engineer\", \"Ingénieur IA\",  \"\\\"Ingénieur Machine Learning\\\"\", \"\\\"ML Engineer\\\"\", \"\\\"Research Scientist\\\"\", \"\\\"Applied Scientist\\\"\", \"\\\"Foundation Model\\\"\", \"\\\"Image Segmentation\\\"\", \"\\\"Object Detection\\\"\", \"\\\"Diffusion Model\\\"\", \"PyTorch\", \"TensorFlow\", \"OpenCV\", \"\\\"Vision Transformer\\\"\" ]",
               "type": "array"
             },
             {
@@ -79,7 +79,7 @@
       "typeVersion": 3.4,
       "position": [
         -352,
-        240
+        44
       ],
       "id": "e444efcb-1726-445c-8736-27e10179a499",
       "name": "Set Query Params"
@@ -100,7 +100,7 @@
       "typeVersion": 4.3,
       "position": [
         544,
-        48
+        -148
       ],
       "id": "adf76e48-073d-4137-86df-10a25cd82b02",
       "name": "Initial request"
@@ -113,7 +113,7 @@
       "typeVersion": 1,
       "position": [
         320,
-        48
+        -148
       ],
       "id": "c1c2d687-8d0e-4948-8892-d2ea8226aa45",
       "name": "Random Wait #1"
@@ -136,7 +136,7 @@
       "typeVersion": 3.4,
       "position": [
         768,
-        48
+        -148
       ],
       "id": "ab31345e-8784-4d99-93c8-304aa3b6cdda",
       "name": "Extract NB Pages"
@@ -165,7 +165,7 @@
       "typeVersion": 3.4,
       "position": [
         1216,
-        48
+        -148
       ],
       "id": "56ba4b5b-3388-45ec-bb46-4da9a27fb9f1",
       "name": "Edit Fields"
@@ -198,7 +198,7 @@
       "typeVersion": 2.3,
       "position": [
         992,
-        48
+        -148
       ],
       "id": "8775049a-7fe3-4c4f-b386-855b8bef8182",
       "name": "Quit if no hits"
@@ -211,7 +211,7 @@
       "typeVersion": 2,
       "position": [
         -128,
-        240
+        44
       ],
       "id": "7f33741e-70ac-48ee-b9e7-59d8318bd797",
       "name": "Prepare Payloads"
@@ -224,7 +224,7 @@
       "typeVersion": 3,
       "position": [
         96,
-        240
+        44
       ],
       "id": "e8916f60-d0e2-46b3-a981-e9b9cb6c01be",
       "name": "Loop Over Payloads"
@@ -237,7 +237,7 @@
       "typeVersion": 2,
       "position": [
         1216,
-        -144
+        -340
       ],
       "id": "66bce5e8-8d75-4bc1-8faa-7573ea7a7c95",
       "name": "Prepare Payload Pages"
@@ -245,14 +245,14 @@
     {
       "parameters": {
         "options": {
-          "reset": false
+          "reset": "={{ $prevNode.name === \"Prepare Payload Pages\" }}"
         }
       },
       "type": "n8n-nodes-base.splitInBatches",
       "typeVersion": 3,
       "position": [
         1440,
-        -144
+        -340
       ],
       "id": "61cbe264-a9ff-44f9-904c-c66438bc5def",
       "name": "Loop Over Pages"
@@ -264,8 +264,8 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        2464,
-        -32
+        2112,
+        -220
       ],
       "id": "e39115b1-850f-4365-999d-ebc5c709a374",
       "name": "Extract Job Info"
@@ -287,36 +287,10 @@
       "typeVersion": 1,
       "position": [
         1664,
-        -288
+        -484
       ],
       "id": "e4648653-1a1f-4717-9457-a8c3163e695a",
       "name": "Aggregate Jobs"
-    },
-    {
-      "parameters": {
-        "jsCode": "$('Loop Over Pages').params.options.reset = false;\nreturn $input.all();"
-      },
-      "type": "n8n-nodes-base.code",
-      "typeVersion": 2,
-      "position": [
-        1664,
-        -96
-      ],
-      "id": "e80e6cc5-275d-43a9-ba6e-309ad62f2cdd",
-      "name": "Set Reset to False"
-    },
-    {
-      "parameters": {
-        "jsCode": "$('Loop Over Pages').params.options.reset = true;\nreturn $input.all();"
-      },
-      "type": "n8n-nodes-base.code",
-      "typeVersion": 2,
-      "position": [
-        2176,
-        -288
-      ],
-      "id": "c1da0d31-da70-4e74-9ad1-415f544cd1a7",
-      "name": "Set Reset to True"
     },
     {
       "parameters": {
@@ -325,8 +299,8 @@
       "type": "n8n-nodes-random-wait.randomWait",
       "typeVersion": 1,
       "position": [
-        1888,
-        -96
+        1664,
+        -292
       ],
       "id": "6f0ac271-9e12-4495-8d54-81195858f7e2",
       "name": "Random Wait #2"
@@ -355,7 +329,7 @@
       "typeVersion": 3.4,
       "position": [
         1888,
-        -288
+        -484
       ],
       "id": "4e127898-dc35-416e-9efb-03947c47f38c",
       "name": "Add Original Payload"
@@ -369,7 +343,7 @@
       "typeVersion": 1,
       "position": [
         320,
-        -704
+        -796
       ],
       "id": "8c056747-95f1-4b80-a98c-013d3ce4285f",
       "name": "Transform as List of Jobs"
@@ -383,8 +357,8 @@
       "type": "n8n-nodes-base.crypto",
       "typeVersion": 1,
       "position": [
-        544,
-        -704
+        992,
+        -796
       ],
       "id": "1a9ba29d-61b8-4953-88fe-633dd3b9b5ef",
       "name": "Compute UID"
@@ -392,14 +366,14 @@
     {
       "parameters": {
         "compare": "selectedFields",
-        "fieldsToCompare": "id",
+        "fieldsToCompare": "jobId",
         "options": {}
       },
       "type": "n8n-nodes-base.removeDuplicates",
       "typeVersion": 2,
       "position": [
         768,
-        -704
+        -796
       ],
       "id": "6cdd36f0-b9b2-431f-b524-76e219d6335f",
       "name": "Remove Duplicates"
@@ -431,8 +405,8 @@
       "type": "n8n-nodes-base.notion",
       "typeVersion": 2.2,
       "position": [
-        992,
-        -704
+        1216,
+        -796
       ],
       "id": "15b3ff07-4e27-480c-a753-88078ce5b367",
       "name": "Fetch Database Jobs",
@@ -447,13 +421,13 @@
     },
     {
       "parameters": {
-        "jsCode": "let ids = $input.all().map(item => item.json.property_id);\nreturn $('Remove Duplicates').all().filter(item => !ids.includes(item.json.id));"
+        "jsCode": "let ids = $input.all().map(item => item.json.property_id);\nreturn $('Compute UID').all().filter(item => !ids.includes(item.json.id));"
       },
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        1216,
-        -704
+        1440,
+        -796
       ],
       "id": "fe653cfd-8f23-4dfe-bcd0-1c89c6969121",
       "name": "Filter Out Duplicates",
@@ -489,8 +463,8 @@
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.4,
       "position": [
-        1440,
-        -704
+        1664,
+        -796
       ],
       "id": "b242c9dd-fa2f-435f-9fea-4f2729233260",
       "name": "Keep Important Fields"
@@ -503,8 +477,8 @@
       "type": "n8n-nodes-base.splitInBatches",
       "typeVersion": 3,
       "position": [
-        1664,
-        -704
+        1888,
+        -796
       ],
       "id": "c7c2b7dc-f844-46e7-8e52-e558a95967da",
       "name": "Loop Over Jobs"
@@ -516,7 +490,7 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        2176,
+        2400,
         -976
       ],
       "id": "ff20d9d7-2041-455b-bf44-457577e59b5c",
@@ -529,7 +503,7 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        2688,
+        2912,
         -1072
       ],
       "id": "3a70a285-dc7b-4071-873f-9a0d848d6cb6",
@@ -544,8 +518,8 @@
       "type": "n8n-nodes-base.aggregate",
       "typeVersion": 1,
       "position": [
-        1888,
-        -688
+        2112,
+        -680
       ],
       "id": "b2d463c4-e5a4-4d24-8c7a-548bfab12fe7",
       "name": "Aggregate Batch Items"
@@ -566,8 +540,8 @@
       "type": "@n8n/n8n-nodes-langchain.chainLlm",
       "typeVersion": 1.7,
       "position": [
-        2112,
-        -784
+        2336,
+        -680
       ],
       "id": "9fdfdd3e-5c77-4099-877e-f65ff849fd5b",
       "name": "LLM Mass Job Filterer"
@@ -588,8 +562,8 @@
       "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
       "typeVersion": 1.3,
       "position": [
-        2192,
-        -560
+        2408,
+        -456
       ],
       "id": "acb73e7f-2e56-4781-b04a-61c7eb4cf325",
       "name": "OpenAI Chat Model",
@@ -607,8 +581,8 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        2464,
-        -560
+        2688,
+        -556
       ],
       "id": "181b2ba2-a566-4e43-8d7b-d82d61c8aabe",
       "name": "Parse LLM Filterer output"
@@ -629,7 +603,7 @@
       "type": "n8n-nodes-base.aggregate",
       "typeVersion": 1,
       "position": [
-        1888,
+        2112,
         -976
       ],
       "id": "0bdfc2ba-509b-456f-8ec0-5a3bed2f086a",
@@ -730,7 +704,7 @@
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.4,
       "position": [
-        2912,
+        3136,
         -1072
       ],
       "id": "fccd07b5-3f2c-49f8-839e-ec0a9e9b7c23",
@@ -743,7 +717,7 @@
       "type": "n8n-nodes-base.splitInBatches",
       "typeVersion": 3,
       "position": [
-        2464,
+        2688,
         -976
       ],
       "id": "03dd060f-ac9d-4a60-9033-85653cafa93c",
@@ -756,7 +730,7 @@
       "type": "n8n-nodes-random-wait.randomWait",
       "typeVersion": 1,
       "position": [
-        2688,
+        2912,
         -784
       ],
       "id": "e0ca82d2-6801-4ba7-b53c-e13fd63d8abf",
@@ -777,8 +751,8 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.3,
       "position": [
-        2176,
-        -96
+        1888,
+        -292
       ],
       "id": "9d519765-e364-4286-a5bb-88992310d5ac",
       "name": "APEC POST"
@@ -794,7 +768,7 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.3,
       "position": [
-        2912,
+        3136,
         -784
       ],
       "id": "2e17083c-00e2-4e78-8a6a-f96fa39aeeec",
@@ -859,8 +833,8 @@
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.4,
       "position": [
-        3136,
-        -720
+        3360,
+        -712
       ],
       "id": "e8728689-dee4-4601-8aeb-5021f4ff7320",
       "name": "Extract Missing Fields"
@@ -872,7 +846,7 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        3136,
+        3360,
         -976
       ],
       "id": "85fae6a3-3739-482d-b13e-afecf2198153",
@@ -889,7 +863,7 @@
       "type": "n8n-nodes-base.gmail",
       "typeVersion": 2.1,
       "position": [
-        3360,
+        3584,
         -976
       ],
       "id": "bc118a93-7ad0-485b-970b-e46caa627b90",
@@ -1003,7 +977,7 @@
       "type": "n8n-nodes-base.notion",
       "typeVersion": 2.2,
       "position": [
-        3136,
+        3360,
         -1168
       ],
       "id": "2b94f3c8-5a87-4b24-b7b3-9eaecdab5f9c",
@@ -1014,6 +988,40 @@
           "name": "Notion account"
         }
       }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "3698e745-c92f-4db1-8d30-325620a09233",
+              "leftValue": "={{ $json.jobId }}",
+              "rightValue": "",
+              "operator": {
+                "type": "number",
+                "operation": "exists",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.filter",
+      "typeVersion": 2.3,
+      "position": [
+        544,
+        -796
+      ],
+      "id": "5862db53-32dd-447f-ab88-09d2210b88fb",
+      "name": "Filter Out Missing JobIds"
     }
   ],
   "pinData": {},
@@ -1142,7 +1150,7 @@
         ],
         [
           {
-            "node": "Set Reset to False",
+            "node": "Random Wait #2",
             "type": "main",
             "index": 0
           }
@@ -1165,17 +1173,6 @@
         [
           {
             "node": "Add Original Payload",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Set Reset to False": {
-      "main": [
-        [
-          {
-            "node": "Random Wait #2",
             "type": "main",
             "index": 0
           }
@@ -1208,17 +1205,6 @@
       "main": [
         [
           {
-            "node": "Set Reset to True",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Set Reset to True": {
-      "main": [
-        [
-          {
             "node": "Loop Over Payloads",
             "type": "main",
             "index": 0
@@ -1230,7 +1216,7 @@
       "main": [
         [
           {
-            "node": "Compute UID",
+            "node": "Filter Out Missing JobIds",
             "type": "main",
             "index": 0
           }
@@ -1241,7 +1227,7 @@
       "main": [
         [
           {
-            "node": "Remove Duplicates",
+            "node": "Fetch Database Jobs",
             "type": "main",
             "index": 0
           }
@@ -1274,7 +1260,7 @@
       "main": [
         [
           {
-            "node": "Fetch Database Jobs",
+            "node": "Compute UID",
             "type": "main",
             "index": 0
           }
@@ -1475,6 +1461,17 @@
           }
         ]
       ]
+    },
+    "Filter Out Missing JobIds": {
+      "main": [
+        [
+          {
+            "node": "Remove Duplicates",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
     }
   },
   "active": true,
@@ -1482,7 +1479,7 @@
     "executionOrder": "v1",
     "availableInMCP": false
   },
-  "versionId": "e55b302a-0167-48e5-9ad3-4fa7e97429c1",
+  "versionId": "cad6e134-b8b1-4d6e-a5ae-d7dcf61a72f5",
   "meta": {
     "instanceId": "b87ba4d1e29db53fa7e2e59cf2c63f059ab024634f7886ba268fdfa300de1550"
   },
