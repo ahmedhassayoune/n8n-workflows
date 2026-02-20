@@ -212,7 +212,7 @@
             {
               "id": "995dd304-e1b0-4f75-bf81-26c709da6e87",
               "name": "keywords",
-              "value": "[ \"Deep Learning\", \"Machine Learning\", \"\\\"Computer Vision\\\"\", \"\\\"Vision par ordinateur\\\"\", \"\\\"Data Science\\\"\", \"\\\"Data Scientist\\\"\", \"PyTorch\", \"Foundation Model\", \"TensorFlow\", \"OpenCV\", \"\\\"AI Engineer\\\"\" ]",
+              "value": "[ \"Deep Learning\", \"Machine Learning\", \"\\\"Computer Vision\\\"\", \"\\\"Vision par ordinateur\\\"\", \"\\\"Data Science\\\"\", \"\\\"Data Scientist\\\"\", \"PyTorch\", \"\\\"Foundation Model\\\"\", \"TensorFlow\", \"OpenCV\", \"AI Engineer\", \"Ingénieur IA\" ]",
               "type": "array"
             },
             {
@@ -1752,7 +1752,7 @@
   "settings": {
     "executionOrder": "v1"
   },
-  "versionId": "b7c95f6c-e3ca-4cf0-b648-997d2047f808",
+  "versionId": "1aaebceb-976b-49b5-9b50-ab0a26639852",
   "meta": {
     "templateCredsSetupCompleted": true,
     "instanceId": "b87ba4d1e29db53fa7e2e59cf2c63f059ab024634f7886ba268fdfa300de1550"
