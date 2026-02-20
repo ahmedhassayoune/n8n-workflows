@@ -38,7 +38,7 @@
       "typeVersion": 1.2,
       "position": [
         -480,
-        1472
+        1460
       ],
       "id": "fe7e928e-12e6-49cf-b0cb-3e7fbc4278ec",
       "name": "Schedule Trigger"
@@ -52,7 +52,7 @@
       "typeVersion": 4.3,
       "position": [
         416,
-        1392
+        1388
       ],
       "id": "e4780d92-bd6e-42b1-ab93-4c1c7ffc7634",
       "name": "Initial request"
@@ -65,7 +65,7 @@
       "typeVersion": 2,
       "position": [
         640,
-        1392
+        1388
       ],
       "id": "b17e147c-0325-42cc-8911-b67345bd9384",
       "name": "Extract Offers Count"
@@ -78,7 +78,7 @@
       "typeVersion": 2,
       "position": [
         864,
-        1392
+        1388
       ],
       "id": "ac701b78-1883-438f-9181-f468069e8900",
       "name": "Prepare Scroll URLs"
@@ -91,8 +91,8 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.3,
       "position": [
-        1760,
-        1344
+        1536,
+        1340
       ],
       "id": "2b720079-626e-429c-ba34-93b4387e65b2",
       "name": "Linkedin GET"
@@ -104,24 +104,11 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        1984,
-        1472
+        1760,
+        1460
       ],
       "id": "f00ccb0c-4b11-4670-b8b0-d91125c9e49d",
       "name": "Parse HTML"
-    },
-    {
-      "parameters": {
-        "jsCode": "console.log(\"Set Reset\", $('Loop Over Scrolls').params)\n$('Loop Over Scrolls').params.options.reset = true;\nreturn $input.all();"
-      },
-      "type": "n8n-nodes-base.code",
-      "typeVersion": 2,
-      "position": [
-        1760,
-        1152
-      ],
-      "id": "e3ec90ca-5d5b-4b29-87e9-e3883a85128b",
-      "name": "Set Reset to True"
     },
     {
       "parameters": {
@@ -131,7 +118,7 @@
       "typeVersion": 2,
       "position": [
         -32,
-        1472
+        1460
       ],
       "id": "62c951eb-d45d-4f24-84ff-f30cac7faabe",
       "name": "Prepare URLs"
@@ -144,7 +131,7 @@
       "typeVersion": 3,
       "position": [
         192,
-        1472
+        1460
       ],
       "id": "2893bbbd-8950-4254-b3a2-903535b614c1",
       "name": "Loop Over URLs"
@@ -152,30 +139,17 @@
     {
       "parameters": {
         "options": {
-          "reset": false
+          "reset": "={{ $prevNode.name === \"Prepare Scroll URLs\" }}"
         }
       },
       "type": "n8n-nodes-base.splitInBatches",
       "typeVersion": 3,
       "position": [
         1088,
-        1392
+        1388
       ],
       "id": "f3449b67-e568-4e44-8eda-4b2e3217f441",
       "name": "Loop Over Scrolls"
-    },
-    {
-      "parameters": {
-        "jsCode": "console.log(\"Set Reset\", $('Loop Over Scrolls'))\n$('Loop Over Scrolls').params.options.reset = false;\nreturn $input.all();"
-      },
-      "type": "n8n-nodes-base.code",
-      "typeVersion": 2,
-      "position": [
-        1312,
-        1344
-      ],
-      "id": "66a68306-d161-4910-b67f-6407b64f27bc",
-      "name": "Set Reset to False"
     },
     {
       "parameters": {
@@ -194,7 +168,7 @@
       "typeVersion": 1,
       "position": [
         1312,
-        1152
+        1148
       ],
       "id": "cc3407da-9e1c-45be-a032-2cf030bb383d",
       "name": "Aggregate Scroll Jobs"
@@ -212,7 +186,7 @@
             {
               "id": "995dd304-e1b0-4f75-bf81-26c709da6e87",
               "name": "keywords",
-              "value": "[ \"Deep Learning\", \"Machine Learning\", \"\\\"Computer Vision\\\"\", \"\\\"Vision par ordinateur\\\"\", \"\\\"Data Science\\\"\", \"\\\"Data Scientist\\\"\", \"PyTorch\", \"Foundation Model\", \"TensorFlow\", \"OpenCV\", \"\\\"AI Engineer\\\"\" ]",
+              "value": "[ \"\\\"Computer Vision\\\"\", \"\\\"Vision par ordinateur\\\"\", \"Machine Learning\", \"\\\"Deep Learning\\\"\", \"\\\"Data Scientist\\\"\", \"\\\"Data Science\\\"\", \"AI Engineer\", \"Ingénieur IA\",  \"\\\"Ingénieur Machine Learning\\\"\", \"\\\"ML Engineer\\\"\", \"\\\"Research Scientist\\\"\", \"\\\"Applied Scientist\\\"\", \"\\\"Foundation Model\\\"\", \"\\\"Image Segmentation\\\"\", \"\\\"Object Detection\\\"\", \"\\\"Diffusion Model\\\"\", \"PyTorch\", \"TensorFlow\", \"OpenCV\", \"\\\"Vision Transformer\\\"\" ]",
               "type": "array"
             },
             {
@@ -235,7 +209,7 @@
       "typeVersion": 3.4,
       "position": [
         -256,
-        1472
+        1460
       ],
       "id": "32080647-0131-46fa-abc5-7c17a49e1358",
       "name": "Set Query Params"
@@ -249,7 +223,7 @@
       "typeVersion": 1,
       "position": [
         416,
-        960
+        956
       ],
       "id": "3047eb98-7308-4185-b697-50e3bd223a6b",
       "name": "Split Out"
@@ -264,20 +238,20 @@
       "typeVersion": 1,
       "position": [
         1312,
-        960
+        956
       ],
       "id": "3043e920-7842-4f17-8a82-39883a9427c2",
       "name": "Compute ID"
     },
     {
       "parameters": {
-        "jsCode": "let ids = $input.all().map(item => item.json.property_id);\nreturn $('Remove Duplicates').all().filter(item => !ids.includes(item.json.id));"
+        "jsCode": "let ids = $input.all().map(item => item.json.property_id);\nreturn $('Compute ID').all().filter(item => !ids.includes(item.json.id));"
       },
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
         1760,
-        960
+        956
       ],
       "id": "7c03a69a-ef0f-4abc-ab0d-50d6168b0e9d",
       "name": "Filter Out Duplicates",
@@ -300,7 +274,7 @@
       "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
       "typeVersion": 1.3,
       "position": [
-        2736,
+        2728,
         1328
       ],
       "id": "f6b291fe-cc5b-47d6-8997-b4d740a76f79",
@@ -401,7 +375,7 @@
       "typeVersion": 3.4,
       "position": [
         1088,
-        960
+        956
       ],
       "id": "5f4774eb-9683-42ad-b318-7025a957f255",
       "name": "Add Source + ID Fields"
@@ -441,7 +415,7 @@
       "typeVersion": 2,
       "position": [
         4128,
-        1104
+        1092
       ],
       "id": "2d9d4be9-d0f1-4df0-a1b8-4d376f6fed47",
       "name": "Decode and Convert HTML"
@@ -461,8 +435,8 @@
       "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
       "typeVersion": 1.3,
       "position": [
-        4656,
-        1328
+        4648,
+        1316
       ],
       "id": "d18cdd53-cf3f-48b7-8619-a5bf01356e5c",
       "name": "OpenAI Chat Model1",
@@ -481,7 +455,7 @@
       "typeVersion": 2,
       "position": [
         4928,
-        1104
+        1092
       ],
       "id": "ced0e9a5-d38b-40c4-b441-0b47ba2aea40",
       "name": "Parse JSON"
@@ -633,7 +607,7 @@
       "typeVersion": 3,
       "position": [
         3008,
-        816
+        808
       ],
       "id": "77a20908-d3ec-40b1-9cf7-25618bb1e9c0",
       "name": "Loop Over Selected Offers"
@@ -648,7 +622,7 @@
       "typeVersion": 2,
       "position": [
         864,
-        960
+        956
       ],
       "id": "33a4170b-e852-419c-837a-eab9eda686d1",
       "name": "Remove Duplicates"
@@ -681,7 +655,7 @@
       "typeVersion": 2.2,
       "position": [
         1536,
-        960
+        956
       ],
       "id": "127518d6-1e37-4ffd-8a7f-b79cfc883382",
       "name": "Fetch Database Jobs",
@@ -718,7 +692,7 @@
       "typeVersion": 3.4,
       "position": [
         1536,
-        1152
+        1148
       ],
       "id": "e13a5705-59ae-4ad0-b77a-373d9e8c68a9",
       "name": "Add Origin URL"
@@ -831,8 +805,8 @@
       "type": "n8n-nodes-random-wait.randomWait",
       "typeVersion": 1,
       "position": [
-        1536,
-        1344
+        1312,
+        1340
       ],
       "id": "9073a04b-3135-4b2b-a256-c2caefcf8c25",
       "name": "Random Wait #1"
@@ -1016,7 +990,7 @@
       "typeVersion": 3.4,
       "position": [
         4352,
-        1104
+        1092
       ],
       "id": "0cac9146-aaee-42f2-8c2b-fee45d9dbc43",
       "name": "Prepare Fields for LLM"
@@ -1031,7 +1005,7 @@
       "typeVersion": 1.7,
       "position": [
         4576,
-        1104
+        1092
       ],
       "id": "50e22b0c-88ae-4f24-bb31-7c02d17e10c2",
       "name": "LLM Job Data Extractor"
@@ -1138,7 +1112,7 @@
       "typeVersion": 3.4,
       "position": [
         4128,
-        816
+        808
       ],
       "id": "83e9ce46-4e99-4061-b357-cd74df4f745f",
       "name": "Empty Object"
@@ -1152,7 +1126,7 @@
       "typeVersion": 3,
       "position": [
         2208,
-        960
+        956
       ],
       "id": "70a15a32-2bb2-48a8-8267-1c8a3b98d8f6",
       "name": "Loop Over Items"
@@ -1174,7 +1148,7 @@
       "typeVersion": 1,
       "position": [
         2432,
-        816
+        808
       ],
       "id": "1252b4f8-ee83-4b73-bea7-803990aef291",
       "name": "Aggregate Job IDs"
@@ -1187,7 +1161,7 @@
       "typeVersion": 2,
       "position": [
         2720,
-        816
+        808
       ],
       "id": "64a498a0-f392-4d36-8391-40aace2c3cda",
       "name": "Extract Jobs from IDs"
@@ -1200,7 +1174,7 @@
       "typeVersion": 2,
       "position": [
         3008,
-        1232
+        1228
       ],
       "id": "9a76c2d2-e823-4c05-9192-e2550ca513db",
       "name": "Parse LLM Filterer output"
@@ -1249,7 +1223,7 @@
       "typeVersion": 2.3,
       "position": [
         640,
-        960
+        956
       ],
       "id": "f8adddc8-3d9b-4230-b9b2-f9ffb3a64f71",
       "name": "Filter Out Missing JobIds"
@@ -1323,17 +1297,6 @@
         ]
       ]
     },
-    "Set Reset to True": {
-      "main": [
-        [
-          {
-            "node": "Loop Over URLs",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
     "Prepare URLs": {
       "main": [
         [
@@ -1372,17 +1335,6 @@
             "index": 0
           }
         ],
-        [
-          {
-            "node": "Set Reset to False",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Set Reset to False": {
-      "main": [
         [
           {
             "node": "Random Wait #1",
@@ -1601,7 +1553,7 @@
       "main": [
         [
           {
-            "node": "Set Reset to True",
+            "node": "Loop Over URLs",
             "type": "main",
             "index": 0
           }
@@ -1797,7 +1749,7 @@
   "settings": {
     "executionOrder": "v1"
   },
-  "versionId": "1c11b29e-762f-47a8-bcb7-7b0b687d60e7",
+  "versionId": "f4ae0223-4d2d-4ec4-8f69-9d632f547f87",
   "meta": {
     "templateCredsSetupCompleted": true,
     "instanceId": "b87ba4d1e29db53fa7e2e59cf2c63f059ab024634f7886ba268fdfa300de1550"
