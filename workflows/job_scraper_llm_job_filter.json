@@ -1,0 +1,231 @@
+{
+  "name": "LLM Job Filter",
+  "nodes": [
+    {
+      "parameters": {
+        "batchSize": 40,
+        "options": {}
+      },
+      "type": "n8n-nodes-base.splitInBatches",
+      "typeVersion": 3,
+      "position": [
+        -544,
+        -64
+      ],
+      "id": "e8f05e89-5a46-455c-9f25-24303d52d483",
+      "name": "Loop Over Jobs"
+    },
+    {
+      "parameters": {
+        "aggregate": "aggregateAllItemData",
+        "destinationFieldName": "jobs",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.aggregate",
+      "typeVersion": 1,
+      "position": [
+        -320,
+        64
+      ],
+      "id": "7f291b3b-0d81-46e9-ad6b-a20ff91267e3",
+      "name": "Aggregate Batch Items"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=Filter the following job offers strictly according to the candidate profile.\n\nINPUT JOBS:\n{{ $json[\"jobs\"].map((job, index) => `\nJob #${index + 1}\nID: ${job.id}\nTitle: ${job.jobTitle}\nCompany: ${job.companyName}\n`).join('\\n') }}\n\nOUTPUT (JSON array only)",
+        "messages": {
+          "messageValues": [
+            {
+              "message": "=You are a strict job filter. You analyze job titles and return ONLY those matching the candidate profile below. You must be SELECTIVE — false positives waste the candidate's time.\n\nCANDIDATE PROFILE:\n- Experience: Junior (0-2 years), recent graduate, or entry-level\n- Core technical fields: Computer Vision, Image Processing, Deep Learning, Machine Learning, AI/ML Engineering, Medical Imaging, Pathology Imaging, R&D in these domains\n- Also acceptable: Data Scientist, AI/ML Consultant, GenAI Engineer, Research Scientist/Engineer — but ONLY if the role aligns with the technical fields above\n- Preferred sectors: Healthcare, Medical, Pathology (but open to all sectors if technical field matches)\n\nHARD EXCLUDE — reject immediately if ANY of these apply:\n1. Internships or apprenticeships (keywords: \"Stage\", \"Stagiaire\", \"Internship\", \"Intern\", \"Alternance\", \"Alternant\", \"Apprenti\", \"Apprenticeship\", \"Werkstudent\")\n2. Senior/Lead/Principal/Staff/Expert/Confirmed/Director/Manager/Architect roles (keywords: \"Senior\", \"Lead\", \"Principal\", \"Staff\", \"Expert\", \"Confirmé\", \"Director\", \"Directeur\", \"Manager\", \"Architecte\", \"Chef de projet\", \"Head of\", \"VP\")\n3. DevOps, MLOps, Platform Engineering, SRE, Infrastructure roles\n4. Full-stack, Frontend, Backend web development, Software Engineering roles that are NOT AI/ML focused\n5. Data Analytics, Business Intelligence, Power BI, Tableau, Looker roles\n6. Pure consulting or strategy roles without hands-on technical ML/AI work (e.g., \"Consultant en Stratégie\", \"Consultant Analytics\")\n7. Roles in unrelated fields: finance/accounting (\"Comptable\"), sales, marketing, HR, audio, network engineering, ASIC/hardware verification, cybersecurity/intrusion detection, C#/.NET development, ERP, project management\n8. Roles requiring 5+ years of experience\n\nINCLUDE — accept ONLY if ALL of these apply:\n1. The role clearly involves one or more core technical fields (CV, Deep Learning, ML, AI, image processing, medical imaging, NLP for LLM/RAG roles)\n2. The seniority is junior-compatible (junior, entry-level, no seniority mentioned, or ≤2 years experience)\n3. The role is NOT in any HARD EXCLUDE category\n\nDECISION RULE: When uncertain, EXCLUDE. It is better to miss a marginal offer than to include irrelevant ones.\n\nOUTPUT FORMAT:\nReturn ONLY a valid JSON array of matching job IDs: [\"id1\", \"id2\"] or [].\nNo markdown, no code blocks, no explanations, no extra text."
+            }
+          ]
+        },
+        "batching": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.chainLlm",
+      "typeVersion": 1.7,
+      "position": [
+        -96,
+        64
+      ],
+      "id": "37f123ce-e805-45e6-aa2f-a7400b19c02f",
+      "name": "LLM Mass Job Filterer"
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "mode": "list",
+          "value": "gpt-4.1-mini"
+        },
+        "builtInTools": {},
+        "options": {
+          "temperature": 0.1,
+          "topP": 0.9
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.3,
+      "position": [
+        -32,
+        288
+      ],
+      "id": "6e675a1b-a274-47a2-92a5-3d1abe44f943",
+      "name": "OpenAI Chat Model",
+      "credentials": {
+        "openAiApi": {
+          "id": "Gei4rHdr8BlDkSEk",
+          "name": "OpenAi account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "const llmResult = $input.first().json.text\n\n// Parse the JSON string\nlet ids;\ntry {\n    ids = JSON.parse(llmResult);\n} catch (error) {\n    throw new Error(\"Failed to parse LLM output: \" + error.message);\n}\n\nreturn [{ ids }]"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        256,
+        192
+      ],
+      "id": "ab32e1ae-e8fb-45de-b9f8-36ab8e0706af",
+      "name": "Parse LLM Filterer output"
+    },
+    {
+      "parameters": {
+        "fieldsToAggregate": {
+          "fieldToAggregate": [
+            {
+              "fieldToAggregate": "ids"
+            }
+          ]
+        },
+        "options": {
+          "mergeLists": true
+        }
+      },
+      "type": "n8n-nodes-base.aggregate",
+      "typeVersion": 1,
+      "position": [
+        -320,
+        -240
+      ],
+      "id": "8dcd8a39-1d22-4de9-96c2-4ffbead17b90",
+      "name": "Aggregate Job IDs"
+    },
+    {
+      "parameters": {
+        "workflowInputs": {
+          "values": [
+            {
+              "name": "id"
+            },
+            {
+              "name": "jobTitle"
+            },
+            {
+              "name": "companyName"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.executeWorkflowTrigger",
+      "typeVersion": 1.1,
+      "position": [
+        -816,
+        -64
+      ],
+      "id": "9a2afd6f-4f20-486f-9108-66539186f952",
+      "name": "When Executed by Another Workflow"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Loop Over Jobs": {
+      "main": [
+        [
+          {
+            "node": "Aggregate Job IDs",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Aggregate Batch Items",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Aggregate Batch Items": {
+      "main": [
+        [
+          {
+            "node": "LLM Mass Job Filterer",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "LLM Mass Job Filterer": {
+      "main": [
+        [
+          {
+            "node": "Parse LLM Filterer output",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "LLM Mass Job Filterer",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Parse LLM Filterer output": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Jobs",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "When Executed by Another Workflow": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Jobs",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1",
+    "availableInMCP": false
+  },
+  "versionId": "3152b43d-1f5a-4ae7-ab61-d8d6b64bdb97",
+  "meta": {
+    "instanceId": "b87ba4d1e29db53fa7e2e59cf2c63f059ab024634f7886ba268fdfa300de1550"
+  },
+  "id": "vgzq08gvQTqTbAT97Fihi",
+  "tags": []
+}
