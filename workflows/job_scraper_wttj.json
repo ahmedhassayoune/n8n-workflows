@@ -281,7 +281,7 @@
             {
               "id": "995dd304-e1b0-4f75-bf81-26c709da6e87",
               "name": "keywords",
-              "value": "[ \"\\\"Computer Vision\\\"\", \"\\\"Vision par ordinateur\\\"\", \"Machine Learning\", \"\\\"Deep Learning\\\"\", \"\\\"Data Scientist\\\"\", \"\\\"Data Science\\\"\", \"AI Engineer\", \"Ingénieur IA\",  \"\\\"Ingénieur Machine Learning\\\"\", \"\\\"ML Engineer\\\"\", \"\\\"Research Scientist\\\"\", \"\\\"Applied Scientist\\\"\", \"\\\"Foundation Model\\\"\", \"\\\"Image Segmentation\\\"\", \"\\\"Object Detection\\\"\", \"\\\"Diffusion Model\\\"\", \"PyTorch\", \"TensorFlow\", \"OpenCV\", \"\\\"Vision Transformer\\\"\" ]",
+              "value": "[\"Machine Learning Engineer\", \"Deep Learning Engineer\", \"AI Engineer\", \"ML Engineer\", \"Ingénieur Machine Learning\", \"Ingénieur Intelligence Artificielle\", \"Ingénieur IA\", \"Computer Vision\", \"Vision par Ordinateur\", \"Traitement d'images\", \"Image Processing\", \"Research Scientist\", \"AI Research Engineer\", \"Research Engineer\", \"Chercheur IA\", \"R&D Deep Learning\", \"R&D Computer Vision\", \"Data Scientist\", \"Data Scientist Junior\", \"Imagerie Médicale\", \"Healthcare AI\", \"AI Santé\", \"GenAI Engineer\", \"LLM Engineer\", \"NLP Engineer\", \"Deep Learning\"]",
               "type": "array"
             },
             {
@@ -1144,12 +1144,12 @@
       "main": [
         [
           {
-            "node": "Insert Job Pages",
+            "node": "Format Email Body",
             "type": "main",
             "index": 0
           },
           {
-            "node": "Format Email Body",
+            "node": "Insert Job Pages",
             "type": "main",
             "index": 0
           }
@@ -1212,7 +1212,7 @@
   "settings": {
     "executionOrder": "v1"
   },
-  "versionId": "29b8c42e-8b26-4482-b100-ad4f863b6ee5",
+  "versionId": "f3471c2c-b830-4649-aea8-9344a6778d1d",
   "meta": {
     "templateCredsSetupCompleted": true,
     "instanceId": "b87ba4d1e29db53fa7e2e59cf2c63f059ab024634f7886ba268fdfa300de1550"

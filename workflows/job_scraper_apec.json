@@ -50,7 +50,7 @@
             {
               "id": "995dd304-e1b0-4f75-bf81-26c709da6e87",
               "name": "keywords",
-              "value": "[ \"\\\"Computer Vision\\\"\", \"\\\"Vision par ordinateur\\\"\", \"Machine Learning\", \"\\\"Deep Learning\\\"\", \"\\\"Data Scientist\\\"\", \"\\\"Data Science\\\"\", \"AI Engineer\", \"Ingénieur IA\",  \"\\\"Ingénieur Machine Learning\\\"\", \"\\\"ML Engineer\\\"\", \"\\\"Research Scientist\\\"\", \"\\\"Applied Scientist\\\"\", \"\\\"Foundation Model\\\"\", \"\\\"Image Segmentation\\\"\", \"\\\"Object Detection\\\"\", \"\\\"Diffusion Model\\\"\", \"PyTorch\", \"TensorFlow\", \"OpenCV\", \"\\\"Vision Transformer\\\"\" ]",
+              "value": "[\"Machine Learning Engineer\", \"Deep Learning Engineer\", \"AI Engineer\", \"ML Engineer\", \"Ingénieur Machine Learning\", \"Ingénieur Intelligence Artificielle\", \"Ingénieur IA\", \"Computer Vision\", \"Vision par Ordinateur\", \"Traitement d'images\", \"Image Processing\", \"Research Scientist\", \"AI Research Engineer\", \"Research Engineer\", \"Chercheur IA\", \"R&D Deep Learning\", \"R&D Computer Vision\", \"Data Scientist\", \"Data Scientist Junior\", \"Imagerie Médicale\", \"Healthcare AI\", \"AI Santé\", \"GenAI Engineer\", \"LLM Engineer\", \"NLP Engineer\", \"Deep Learning\"]",
               "type": "array"
             },
             {
@@ -265,7 +265,7 @@
       "typeVersion": 2,
       "position": [
         2112,
-        -528
+        -520
       ],
       "id": "e39115b1-850f-4365-999d-ebc5c709a374",
       "name": "Extract Job Info"
@@ -720,7 +720,7 @@
       "typeVersion": 3.4,
       "position": [
         3008,
-        -720
+        -712
       ],
       "id": "e8728689-dee4-4601-8aeb-5021f4ff7320",
       "name": "Extract Missing Fields"
@@ -1315,12 +1315,12 @@
       "main": [
         [
           {
-            "node": "Insert Job Pages",
+            "node": "Format Email Body",
             "type": "main",
             "index": 0
           },
           {
-            "node": "Format Email Body",
+            "node": "Insert Job Pages",
             "type": "main",
             "index": 0
           }
@@ -1366,7 +1366,7 @@
     "executionOrder": "v1",
     "availableInMCP": false
   },
-  "versionId": "477affa3-c129-4c67-8d4b-9f4ef85c4ac8",
+  "versionId": "747d9c99-c6c0-4199-9df5-cf0f6497110a",
   "meta": {
     "instanceId": "b87ba4d1e29db53fa7e2e59cf2c63f059ab024634f7886ba268fdfa300de1550"
   },
