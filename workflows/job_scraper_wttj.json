@@ -940,6 +940,30 @@
               "name": "hitResult",
               "value": "={{ $('Loop Over Items').item.json.hitResult }}",
               "type": "object"
+            },
+            {
+              "id": "e5310306-6aa1-4281-ba1d-32a15aaccffd",
+              "name": "jobId",
+              "value": "={{ $('Loop Over Items').item.json.jobId }}",
+              "type": "string"
+            },
+            {
+              "id": "5ba4a320-0ffb-46d2-a07e-95fbac50fe1d",
+              "name": "jobTitle",
+              "value": "={{ $('Loop Over Items').item.json.jobTitle }}",
+              "type": "string"
+            },
+            {
+              "id": "c57858b6-c4c9-4693-9e14-c1b2b1c08fe5",
+              "name": "companyName",
+              "value": "={{ $('Loop Over Items').item.json.companyName }}",
+              "type": "string"
+            },
+            {
+              "id": "193757f1-7bd4-46e3-aacc-7fe77ac03548",
+              "name": "id",
+              "value": "={{ $('Loop Over Items').item.json.id }}",
+              "type": "string"
             }
           ]
         },
@@ -1347,7 +1371,7 @@
   "settings": {
     "executionOrder": "v1"
   },
-  "versionId": "2ad50dda-1307-49e0-a9ec-1a93ae64b0fa",
+  "versionId": "ee556112-a0c0-47c0-94a7-760527d0b167",
   "meta": {
     "templateCredsSetupCompleted": true,
     "instanceId": "b87ba4d1e29db53fa7e2e59cf2c63f059ab024634f7886ba268fdfa300de1550"
