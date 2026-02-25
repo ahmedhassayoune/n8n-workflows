@@ -186,7 +186,7 @@
             {
               "id": "995dd304-e1b0-4f75-bf81-26c709da6e87",
               "name": "keywords",
-              "value": "[\"\\\"Machine Learning Engineer\\\"\", \"\\\"Deep Learning Engineer\\\"\", \"\\\"AI Engineer\\\"\", \"\\\"ML Engineer\\\"\", \"\\\"Ingénieur Machine Learning\\\"\", \"\\\"Ingénieur Intelligence Artificielle\\\"\", \"\\\"Ingénieur IA\\\"\", \"\\\"Computer Vision Engineer\\\"\", \"\\\"Vision par Ordinateur\\\"\", \"\\\"Traitement d'images\\\"\", \"\\\"Image Processing Engineer\\\"\", \"\\\"Ingénieur Vision\\\"\", \"\\\"Research Scientist Machine Learning\\\"\", \"\\\"AI Research Engineer\\\"\", \"\\\"Research Engineer Deep Learning\\\"\", \"\\\"Chercheur Intelligence Artificielle\\\"\", \"\\\"R&D Deep Learning\\\"\", \"\\\"R&D Computer Vision\\\"\", \"\\\"Data Scientist Machine Learning\\\"\", \"\\\"Data Scientist Deep Learning\\\"\", \"\\\"Data Scientist Junior\\\"\", \"\\\"Data Scientist Computer Vision\\\"\", \"\\\"Medical Imaging Engineer\\\"\", \"\\\"Imagerie Médicale IA\\\"\", \"\\\"Healthcare AI\\\"\", \"\\\"AI Santé\\\"\", \"\\\"Deep Learning Médical\\\"\", \"\\\"GenAI Engineer\\\"\", \"\\\"LLM Engineer\\\"\", \"\\\"RAG Engineer\\\"\", \"\\\"NLP Engineer\\\"\", \"Computer Vision\", \"Deep Learning\", \"Data Scientist\", \"Ingénieur IA\"]",
+              "value": "[\"\\\"Computer Vision Engineer\\\"\", \"\\\"Deep Learning Engineer\\\"\", \"\\\"AI Engineer\\\"\", \"\\\"Machine Learning Engineer\\\"\", \"\\\"Ingénieur Intelligence Artificielle\\\"\", \"\\\"Ingénieur Machine Learning\\\"\", \"\\\"Vision par Ordinateur\\\"\", \"\\\"Traitement d'images\\\"\", \"\\\"AI Research Engineer\\\"\", \"\\\"Research Scientist\\\"\", \"\\\"Data Scientist Junior\\\"\", \"\\\"Imagerie Médicale\\\"\", \"\\\"GenAI Engineer\\\"\", \"\\\"NLP Engineer\\\"\", \"\\\"R&D Computer Vision\\\"\", \"\\\"R&D Deep Learning\\\"\", \"Computer Vision\", \"Deep Learning\", \"Data Scientist\", \"Ingénieur IA\"]",
               "type": "array"
             },
             {
@@ -1660,7 +1660,7 @@
   "settings": {
     "executionOrder": "v1"
   },
-  "versionId": "171b6736-f1af-402e-9404-511985e29555",
+  "versionId": "536f9014-2ad5-4026-839e-e3356547f1e1",
   "meta": {
     "templateCredsSetupCompleted": true,
     "instanceId": "b87ba4d1e29db53fa7e2e59cf2c63f059ab024634f7886ba268fdfa300de1550"
