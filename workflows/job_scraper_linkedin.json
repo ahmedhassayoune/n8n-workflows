@@ -39,7 +39,7 @@
       "typeVersion": 1.2,
       "position": [
         -480,
-        1088
+        1080
       ],
       "id": "fe7e928e-12e6-49cf-b0cb-3e7fbc4278ec",
       "name": "Schedule Trigger"
@@ -55,8 +55,8 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.3,
       "position": [
-        624,
-        1040
+        416,
+        1036
       ],
       "id": "e4780d92-bd6e-42b1-ab93-4c1c7ffc7634",
       "name": "Initial request",
@@ -71,8 +71,8 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        848,
-        1040
+        864,
+        1036
       ],
       "id": "b17e147c-0325-42cc-8911-b67345bd9384",
       "name": "Extract Offers Count"
@@ -84,8 +84,8 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        1072,
-        1040
+        1088,
+        1036
       ],
       "id": "ac701b78-1883-438f-9181-f468069e8900",
       "name": "Prepare Scroll URLs"
@@ -101,8 +101,8 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.3,
       "position": [
-        1744,
-        976
+        1536,
+        964
       ],
       "id": "2b720079-626e-429c-ba34-93b4387e65b2",
       "name": "Linkedin GET",
@@ -117,8 +117,8 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        1968,
-        1120
+        1984,
+        1108
       ],
       "id": "f00ccb0c-4b11-4670-b8b0-d91125c9e49d",
       "name": "Parse HTML"
@@ -131,7 +131,7 @@
       "typeVersion": 2,
       "position": [
         -32,
-        1088
+        1080
       ],
       "id": "62c951eb-d45d-4f24-84ff-f30cac7faabe",
       "name": "Prepare URLs"
@@ -144,7 +144,7 @@
       "typeVersion": 3,
       "position": [
         192,
-        1088
+        1080
       ],
       "id": "2893bbbd-8950-4254-b3a2-903535b614c1",
       "name": "Loop Over URLs"
@@ -158,8 +158,8 @@
       "type": "n8n-nodes-base.splitInBatches",
       "typeVersion": 3,
       "position": [
-        1296,
-        1040
+        1312,
+        1036
       ],
       "id": "f3449b67-e568-4e44-8eda-4b2e3217f441",
       "name": "Loop Over Scrolls"
@@ -180,8 +180,8 @@
       "type": "n8n-nodes-base.aggregate",
       "typeVersion": 1,
       "position": [
-        1520,
-        784
+        1536,
+        772
       ],
       "id": "cc3407da-9e1c-45be-a032-2cf030bb383d",
       "name": "Aggregate Scroll Jobs"
@@ -199,7 +199,7 @@
             {
               "id": "995dd304-e1b0-4f75-bf81-26c709da6e87",
               "name": "keywords",
-              "value": "[\"Data Scientist\"]",
+              "value": "[ \"Pytorch\", \"OpenCV\", \"Deep Learning\", \"\\\"Data Scientist\\\"\", \"Ingénieur IA\", \"Computer Vision\", \"\\\"AI Engineer\\\"\", \"\\\"Machine Learning\\\"\", \"\\\"Ingénieur Intelligence Artificielle\\\"\", \"\\\"Vision par Ordinateur\\\"\", \"\\\"Traitement d'images\\\"\", \"\\\"AI Research Engineer\\\"\", \"\\\"Research Scientist\\\"\", \"\\\"Data Scientist Junior\\\"\", \"\\\"Imagerie Médicale\\\"\", \"\\\"GenAI Engineer\\\"\" ]",
               "type": "array"
             },
             {
@@ -222,7 +222,7 @@
       "typeVersion": 3.4,
       "position": [
         -256,
-        1088
+        1080
       ],
       "id": "32080647-0131-46fa-abc5-7c17a49e1358",
       "name": "Set Query Params"
@@ -235,8 +235,8 @@
       "type": "n8n-nodes-base.splitOut",
       "typeVersion": 1,
       "position": [
-        624,
-        592
+        416,
+        580
       ],
       "id": "3047eb98-7308-4185-b697-50e3bd223a6b",
       "name": "Split Out"
@@ -250,8 +250,8 @@
       "type": "n8n-nodes-base.crypto",
       "typeVersion": 1,
       "position": [
-        1520,
-        592
+        1312,
+        580
       ],
       "id": "3043e920-7842-4f17-8a82-39883a9427c2",
       "name": "Compute ID"
@@ -263,8 +263,8 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        1968,
-        592
+        1760,
+        580
       ],
       "id": "7c03a69a-ef0f-4abc-ab0d-50d6168b0e9d",
       "name": "Filter Out Duplicates",
@@ -300,8 +300,8 @@
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.4,
       "position": [
-        2192,
-        592
+        1984,
+        580
       ],
       "id": "b22ece5c-51d8-4d06-8103-f32dde3dab88",
       "name": "Keep Important Fields"
@@ -359,8 +359,8 @@
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.4,
       "position": [
-        1296,
-        592
+        1088,
+        580
       ],
       "id": "5f4774eb-9683-42ad-b318-7025a957f255",
       "name": "Add Source + ID Fields"
@@ -376,7 +376,7 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.3,
       "position": [
-        3312,
+        2880,
         624
       ],
       "id": "aa11ceeb-f74a-42c5-8498-2f3a1ddc2fa1",
@@ -392,7 +392,7 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        3536,
+        3328,
         624
       ],
       "id": "9e79dcfd-c56a-4826-8575-34d37665c419",
@@ -405,8 +405,8 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        3984,
-        896
+        3776,
+        888
       ],
       "id": "2d9d4be9-d0f1-4df0-a1b8-4d376f6fed47",
       "name": "Decode and Convert HTML"
@@ -426,8 +426,8 @@
       "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
       "typeVersion": 1.3,
       "position": [
-        4512,
-        1120
+        4296,
+        1112
       ],
       "id": "d18cdd53-cf3f-48b7-8619-a5bf01356e5c",
       "name": "OpenAI Chat Model1",
@@ -445,8 +445,8 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        4784,
-        896
+        4576,
+        888
       ],
       "id": "ced0e9a5-d38b-40c4-b441-0b47ba2aea40",
       "name": "Parse JSON"
@@ -546,8 +546,8 @@
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.4,
       "position": [
-        5008,
-        992
+        4800,
+        980
       ],
       "id": "0c126893-0256-4cda-94cf-bb38e999f6c4",
       "name": "Complete Job Fields"
@@ -559,7 +559,7 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        3536,
+        3328,
         432
       ],
       "id": "0cf254cf-33c8-464a-9fe4-034a07da8691",
@@ -576,7 +576,7 @@
       "type": "n8n-nodes-base.gmail",
       "typeVersion": 2.1,
       "position": [
-        3760,
+        3552,
         432
       ],
       "id": "628e0ed6-d409-4d05-8503-b73794863e72",
@@ -597,8 +597,8 @@
       "type": "n8n-nodes-base.splitInBatches",
       "typeVersion": 3,
       "position": [
-        2864,
-        592
+        2656,
+        580
       ],
       "id": "77a20908-d3ec-40b1-9cf7-25618bb1e9c0",
       "name": "Loop Over Selected Offers"
@@ -612,8 +612,8 @@
       "type": "n8n-nodes-base.removeDuplicates",
       "typeVersion": 2,
       "position": [
-        1072,
-        592
+        864,
+        580
       ],
       "id": "33a4170b-e852-419c-837a-eab9eda686d1",
       "name": "Remove Duplicates"
@@ -645,8 +645,8 @@
       "type": "n8n-nodes-base.notion",
       "typeVersion": 2.2,
       "position": [
-        1744,
-        592
+        1536,
+        580
       ],
       "id": "127518d6-1e37-4ffd-8a7f-b79cfc883382",
       "name": "Fetch Database Jobs",
@@ -682,8 +682,8 @@
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.4,
       "position": [
-        1744,
-        784
+        1760,
+        772
       ],
       "id": "e13a5705-59ae-4ad0-b77a-373d9e8c68a9",
       "name": "Add Origin URL"
@@ -783,7 +783,7 @@
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.4,
       "position": [
-        3312,
+        3104,
         336
       ],
       "id": "059c0f0b-4994-4666-a125-09df52633e8b",
@@ -889,7 +889,7 @@
       "type": "n8n-nodes-base.notion",
       "typeVersion": 2.2,
       "position": [
-        3536,
+        3328,
         240
       ],
       "id": "17354661-6cb5-4ae0-af53-869740484a4e",
@@ -954,8 +954,8 @@
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.4,
       "position": [
-        4208,
-        896
+        4000,
+        888
       ],
       "id": "0cac9146-aaee-42f2-8c2b-fee45d9dbc43",
       "name": "Prepare Fields for LLM"
@@ -969,8 +969,8 @@
       "type": "@n8n/n8n-nodes-langchain.chainLlm",
       "typeVersion": 1.7,
       "position": [
-        4432,
-        896
+        4224,
+        888
       ],
       "id": "50e22b0c-88ae-4f24-bb31-7c02d17e10c2",
       "name": "LLM Job Data Extractor"
@@ -1003,7 +1003,7 @@
       "type": "n8n-nodes-base.filter",
       "typeVersion": 2.2,
       "position": [
-        3088,
+        2880,
         336
       ],
       "id": "cbb9037c-23c7-4a2f-923e-f6a2faa29c2f",
@@ -1037,7 +1037,7 @@
       "type": "n8n-nodes-base.if",
       "typeVersion": 2.2,
       "position": [
-        3760,
+        3552,
         624
       ],
       "id": "b3c85867-a4ea-44de-bc05-c25d5570b352",
@@ -1054,8 +1054,8 @@
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.4,
       "position": [
-        3984,
-        704
+        3776,
+        696
       ],
       "id": "83e9ce46-4e99-4061-b357-cd74df4f745f",
       "name": "Empty Object"
@@ -1067,8 +1067,8 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        2640,
-        592
+        2432,
+        580
       ],
       "id": "64a498a0-f392-4d36-8391-40aace2c3cda",
       "name": "Extract Jobs from IDs"
@@ -1101,8 +1101,8 @@
       "type": "n8n-nodes-base.filter",
       "typeVersion": 2.3,
       "position": [
-        848,
-        592
+        640,
+        580
       ],
       "id": "f8adddc8-3d9b-4230-b9b2-f9ffb3a64f71",
       "name": "Filter Out Missing JobIds"
@@ -1164,8 +1164,8 @@
       "type": "n8n-nodes-base.executeWorkflow",
       "typeVersion": 1.3,
       "position": [
-        2416,
-        592
+        2208,
+        580
       ],
       "id": "4efd20b3-d8c1-4053-8616-aecaf087f927",
       "name": "Call 'LLM Job Filter'"
@@ -1178,7 +1178,7 @@
       "type": "n8n-nodes-random-wait.randomWait",
       "typeVersion": 1,
       "position": [
-        3088,
+        3104,
         624
       ],
       "id": "515dc5ba-44c2-4f7f-9443-b18617fa51e2",
@@ -1192,8 +1192,8 @@
       "type": "n8n-nodes-random-wait.randomWait",
       "typeVersion": 1,
       "position": [
-        1520,
-        976
+        1760,
+        964
       ],
       "id": "9073a04b-3135-4b2b-a256-c2caefcf8c25",
       "name": "Random Wait #2"
@@ -1206,8 +1206,8 @@
       "type": "n8n-nodes-random-wait.randomWait",
       "typeVersion": 1,
       "position": [
-        400,
-        1088
+        640,
+        1036
       ],
       "id": "d400454d-9304-4d05-92b2-c04dffc58776",
       "name": "Random Wait #1"
@@ -1230,7 +1230,7 @@
       "main": [
         [
           {
-            "node": "Extract Offers Count",
+            "node": "Random Wait #1",
             "type": "main",
             "index": 0
           }
@@ -1263,7 +1263,7 @@
       "main": [
         [
           {
-            "node": "Parse HTML",
+            "node": "Random Wait #2",
             "type": "main",
             "index": 0
           }
@@ -1303,7 +1303,7 @@
         ],
         [
           {
-            "node": "Random Wait #1",
+            "node": "Initial request",
             "type": "main",
             "index": 0
           }
@@ -1321,7 +1321,7 @@
         ],
         [
           {
-            "node": "Random Wait #2",
+            "node": "Linkedin GET",
             "type": "main",
             "index": 0
           }
@@ -1409,7 +1409,7 @@
       "main": [
         [
           {
-            "node": "Parse Job Description",
+            "node": "Random Wait #3",
             "type": "main",
             "index": 0
           }
@@ -1493,7 +1493,7 @@
         ],
         [
           {
-            "node": "Random Wait #3",
+            "node": "Scrap Offer Description",
             "type": "main",
             "index": 0
           }
@@ -1648,7 +1648,7 @@
       "main": [
         [
           {
-            "node": "Scrap Offer Description",
+            "node": "Parse Job Description",
             "type": "main",
             "index": 0
           }
@@ -1659,7 +1659,7 @@
       "main": [
         [
           {
-            "node": "Linkedin GET",
+            "node": "Parse HTML",
             "type": "main",
             "index": 0
           }
@@ -1670,7 +1670,7 @@
       "main": [
         [
           {
-            "node": "Initial request",
+            "node": "Extract Offers Count",
             "type": "main",
             "index": 0
           }
@@ -1682,7 +1682,7 @@
   "settings": {
     "executionOrder": "v1"
   },
-  "versionId": "6b5e7748-9e68-4699-8d33-dc227961610d",
+  "versionId": "dec15ac4-e154-4ae6-b335-c12f97ed2495",
   "meta": {
     "templateCredsSetupCompleted": true,
     "instanceId": "b87ba4d1e29db53fa7e2e59cf2c63f059ab024634f7886ba268fdfa300de1550"
