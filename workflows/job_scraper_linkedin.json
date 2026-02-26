@@ -55,7 +55,10 @@
         1040
       ],
       "id": "e4780d92-bd6e-42b1-ab93-4c1c7ffc7634",
-      "name": "Initial request"
+      "name": "Initial request",
+      "retryOnFail": true,
+      "maxTries": 5,
+      "waitBetweenTries": 4000
     },
     {
       "parameters": {
@@ -95,7 +98,10 @@
         976
       ],
       "id": "2b720079-626e-429c-ba34-93b4387e65b2",
-      "name": "Linkedin GET"
+      "name": "Linkedin GET",
+      "retryOnFail": true,
+      "maxTries": 5,
+      "waitBetweenTries": 4000
     },
     {
       "parameters": {
@@ -364,7 +370,10 @@
         624
       ],
       "id": "aa11ceeb-f74a-42c5-8498-2f3a1ddc2fa1",
-      "name": "Scrap Offer Description"
+      "name": "Scrap Offer Description",
+      "retryOnFail": true,
+      "maxTries": 5,
+      "waitBetweenTries": 4000
     },
     {
       "parameters": {
@@ -1153,7 +1162,7 @@
     },
     {
       "parameters": {
-        "min": 2
+        "min": 3
       },
       "type": "n8n-nodes-random-wait.randomWait",
       "typeVersion": 1,
@@ -1166,7 +1175,7 @@
     },
     {
       "parameters": {
-        "min": 2
+        "min": 3
       },
       "type": "n8n-nodes-random-wait.randomWait",
       "typeVersion": 1,
@@ -1179,7 +1188,7 @@
     },
     {
       "parameters": {
-        "min": 2
+        "min": 3
       },
       "type": "n8n-nodes-random-wait.randomWait",
       "typeVersion": 1,
@@ -1660,7 +1669,7 @@
   "settings": {
     "executionOrder": "v1"
   },
-  "versionId": "80389065-5cb5-4d80-a5a2-b3b6a2add4c5",
+  "versionId": "3e4deb66-2401-4e2a-80aa-33bdf01a95e6",
   "meta": {
     "templateCredsSetupCompleted": true,
     "instanceId": "b87ba4d1e29db53fa7e2e59cf2c63f059ab024634f7886ba268fdfa300de1550"
