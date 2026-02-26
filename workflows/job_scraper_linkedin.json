@@ -47,6 +47,9 @@
     {
       "parameters": {
         "url": "={{ $json.url }}",
+        "sendHeaders": true,
+        "specifyHeaders": "json",
+        "jsonHeaders": "{\n  \"User-Agent\": \"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36\",\n  \"Accept\": \"text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8\",\n  \"Accept-Language\": \"en-US,en;q=0.9\",\n  \"Accept-Encoding\": \"gzip, deflate, br\",\n  \"Connection\": \"keep-alive\",\n  \"Upgrade-Insecure-Requests\": \"1\",\n  \"Sec-Fetch-Dest\": \"document\",\n  \"Sec-Fetch-Mode\": \"navigate\",\n  \"Sec-Fetch-Site\": \"none\",\n  \"Sec-Fetch-User\": \"?1\",\n  \"Cache-Control\": \"max-age=0\"\n}",
         "options": {}
       },
       "type": "n8n-nodes-base.httpRequest",
@@ -63,7 +66,7 @@
     },
     {
       "parameters": {
-        "jsCode": "const cheerio = require('cheerio');\n\nconst defaultCount = 100;\n\nfunction extract(input, cheerio) {\n  const $ = cheerio.load(input);\n\n  // Read the <title> text\n  const title = $('title').text().trim();\n\n  // Extract the first number in the title\n  const match = title.match(/\\d+/);\n  const count = match ? parseInt(match[0], 10) : defaultCount;\n\n  return {\n    offerCount: count\n  };\n}\n\nconst offerCount = extract($input.first().json.data, cheerio);\n\nreturn [{ json: offerCount }];\n"
+        "jsCode": "const cheerio = require('cheerio');\n\nconst defaultCount = 60;\n\nfunction extract(input, cheerio) {\n  const $ = cheerio.load(input);\n\n  // Read the <title> text\n  const title = $('title').text().trim();\n\n  // Extract the first number in the title\n  const match = title.match(/\\d+/);\n  const count = match ? parseInt(match[0], 10) : defaultCount;\n\n  return {\n    offerCount: count\n  };\n}\n\nconst offerCount = extract($input.first().json.data, cheerio);\n\nreturn [{ json: offerCount }];\n"
       },
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
@@ -76,7 +79,7 @@
     },
     {
       "parameters": {
-        "jsCode": "const initialURL = $('Loop Over URLs').last().json.url;\nconst scrollStep = 25;\nconst offerCount = Math.min($input.first().json.offerCount, 100);\n\nconst defaultScrollURL = initialURL.replace(\n  \"https://www.linkedin.com/jobs/search/?\",\n  \"https://www.linkedin.com/jobs-guest/jobs/api/seeMoreJobPostings/search?\"\n) + `&count=${scrollStep}&start=`;\n\nconst urls = [initialURL]\nfor (let i = 60; i < offerCount; i += scrollStep) {\n  let newURL = defaultScrollURL + i;\n  urls.push(newURL);\n}\n\nreturn urls.map(url => ({ json: { url, jobs: [] }}))"
+        "jsCode": "const initialURL = $('Loop Over URLs').last().json.url;\nconst scrollStep = 10;\nconst offerCount = Math.min($input.first().json.offerCount, 150);\n\nconst defaultScrollURL = initialURL.replace(\n  \"https://www.linkedin.com/jobs/search/?\",\n  \"https://www.linkedin.com/jobs-guest/jobs/api/seeMoreJobPostings/search?\"\n) + \"&start=\";\n\nconst urls = [initialURL]\nfor (let i = 60; i < offerCount; i += scrollStep) {\n  urls.push(defaultScrollURL + i);\n}\n\nreturn urls.map(url => ({ json: { url, jobs: [] }}))"
       },
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
@@ -90,6 +93,9 @@
     {
       "parameters": {
         "url": "={{ $json.url }}",
+        "sendHeaders": true,
+        "specifyHeaders": "json",
+        "jsonHeaders": "{\n  \"User-Agent\": \"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36\",\n  \"Accept\": \"text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8\",\n  \"Accept-Language\": \"en-US,en;q=0.9\",\n  \"Accept-Encoding\": \"gzip, deflate, br\",\n  \"Connection\": \"keep-alive\",\n  \"Upgrade-Insecure-Requests\": \"1\",\n  \"Sec-Fetch-Dest\": \"document\",\n  \"Sec-Fetch-Mode\": \"navigate\",\n  \"Sec-Fetch-Site\": \"none\",\n  \"Sec-Fetch-User\": \"?1\",\n  \"Cache-Control\": \"max-age=0\"\n}",
         "options": {}
       },
       "type": "n8n-nodes-base.httpRequest",
@@ -193,7 +199,7 @@
             {
               "id": "995dd304-e1b0-4f75-bf81-26c709da6e87",
               "name": "keywords",
-              "value": "[ \"Pytorch\", \"OpenCV\", \"Computer Vision\", \"Deep Learning\", \"Data Scientist\", \"Ingénieur IA\", \"\\\"Computer Vision\\\"\", \"\\\"Deep Learning\\\"\", \"\\\"AI Engineer\\\"\", \"\\\"Machine Learning\\\"\", \"\\\"Ingénieur Intelligence Artificielle\\\"\", \"\\\"Vision par Ordinateur\\\"\", \"\\\"Traitement d'images\\\"\", \"\\\"AI Research Engineer\\\"\", \"\\\"Research Scientist\\\"\", \"\\\"Data Scientist Junior\\\"\", \"\\\"Imagerie Médicale\\\"\", \"\\\"GenAI Engineer\\\"\" ]",
+              "value": "[\"Data Scientist\"]",
               "type": "array"
             },
             {
@@ -362,6 +368,9 @@
     {
       "parameters": {
         "url": "={{ $json.link }}",
+        "sendHeaders": true,
+        "specifyHeaders": "json",
+        "jsonHeaders": "{\n  \"User-Agent\": \"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36\",\n  \"Accept\": \"text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8\",\n  \"Accept-Language\": \"en-US,en;q=0.9\",\n  \"Accept-Encoding\": \"gzip, deflate, br\",\n  \"Connection\": \"keep-alive\",\n  \"Upgrade-Insecure-Requests\": \"1\",\n  \"Sec-Fetch-Dest\": \"document\",\n  \"Sec-Fetch-Mode\": \"navigate\",\n  \"Sec-Fetch-Site\": \"none\",\n  \"Sec-Fetch-User\": \"?1\",\n  \"Cache-Control\": \"max-age=0\"\n}",
         "options": {}
       },
       "type": "n8n-nodes-base.httpRequest",
@@ -1673,7 +1682,7 @@
   "settings": {
     "executionOrder": "v1"
   },
-  "versionId": "64177e57-a1e7-4c40-be5b-5932c2bb7515",
+  "versionId": "6b5e7748-9e68-4699-8d33-dc227961610d",
   "meta": {
     "templateCredsSetupCompleted": true,
     "instanceId": "b87ba4d1e29db53fa7e2e59cf2c63f059ab024634f7886ba268fdfa300de1550"
