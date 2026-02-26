@@ -15,7 +15,8 @@
                 5,
                 6
               ],
-              "triggerAtHour": 10
+              "triggerAtHour": 10,
+              "triggerAtMinute": 30
             },
             {
               "field": "weeks",
@@ -29,7 +30,7 @@
                 0
               ],
               "triggerAtHour": 15,
-              "triggerAtMinute": 30
+              "triggerAtMinute": 45
             }
           ]
         }
@@ -75,7 +76,7 @@
     },
     {
       "parameters": {
-        "jsCode": "const initialURL = $('Loop Over URLs').last().json.url;\nconst offerCount = Math.min($input.first().json.offerCount, 200);\n\nconst defaultScrollURL = initialURL.replace(\n  \"https://www.linkedin.com/jobs/search/?\",\n    \"https://www.linkedin.com/jobs-guest/jobs/api/seeMoreJobPostings/search?\"\n) + \"&start=\";\n\nconst urls = [initialURL]\nfor (let i = 60; i < offerCount; i += 10) {\n  let newURL = defaultScrollURL + i;\n  urls.push(newURL);\n}\n\nreturn urls.map(url => ({ json: { url, jobs: [] }}))"
+        "jsCode": "const initialURL = $('Loop Over URLs').last().json.url;\nconst scrollStep = 25;\nconst offerCount = Math.min($input.first().json.offerCount, 100);\n\nconst defaultScrollURL = initialURL.replace(\n  \"https://www.linkedin.com/jobs/search/?\",\n  \"https://www.linkedin.com/jobs-guest/jobs/api/seeMoreJobPostings/search?\"\n) + `&count=${scrollStep}&start=`;\n\nconst urls = [initialURL]\nfor (let i = 60; i < offerCount; i += scrollStep) {\n  let newURL = defaultScrollURL + i;\n  urls.push(newURL);\n}\n\nreturn urls.map(url => ({ json: { url, jobs: [] }}))"
       },
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
@@ -1162,7 +1163,8 @@
     },
     {
       "parameters": {
-        "min": 3
+        "min": 4,
+        "max": 7
       },
       "type": "n8n-nodes-random-wait.randomWait",
       "typeVersion": 1,
@@ -1175,7 +1177,8 @@
     },
     {
       "parameters": {
-        "min": 3
+        "min": 4,
+        "max": 7
       },
       "type": "n8n-nodes-random-wait.randomWait",
       "typeVersion": 1,
@@ -1188,7 +1191,8 @@
     },
     {
       "parameters": {
-        "min": 3
+        "min": 4,
+        "max": 7
       },
       "type": "n8n-nodes-random-wait.randomWait",
       "typeVersion": 1,
@@ -1669,7 +1673,7 @@
   "settings": {
     "executionOrder": "v1"
   },
-  "versionId": "3e4deb66-2401-4e2a-80aa-33bdf01a95e6",
+  "versionId": "6fbbefc0-77ec-47be-9a89-9d8f251e7efb",
   "meta": {
     "templateCredsSetupCompleted": true,
     "instanceId": "b87ba4d1e29db53fa7e2e59cf2c63f059ab024634f7886ba268fdfa300de1550"
