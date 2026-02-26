@@ -1153,7 +1153,7 @@
     },
     {
       "parameters": {
-        "max": 4
+        "min": 2
       },
       "type": "n8n-nodes-random-wait.randomWait",
       "typeVersion": 1,
@@ -1166,7 +1166,7 @@
     },
     {
       "parameters": {
-        "max": 4
+        "min": 2
       },
       "type": "n8n-nodes-random-wait.randomWait",
       "typeVersion": 1,
@@ -1179,7 +1179,7 @@
     },
     {
       "parameters": {
-        "max": 4
+        "min": 2
       },
       "type": "n8n-nodes-random-wait.randomWait",
       "typeVersion": 1,
@@ -1660,7 +1660,7 @@
   "settings": {
     "executionOrder": "v1"
   },
-  "versionId": "536f9014-2ad5-4026-839e-e3356547f1e1",
+  "versionId": "80389065-5cb5-4d80-a5a2-b3b6a2add4c5",
   "meta": {
     "templateCredsSetupCompleted": true,
     "instanceId": "b87ba4d1e29db53fa7e2e59cf2c63f059ab024634f7886ba268fdfa300de1550"
