@@ -193,7 +193,7 @@
             {
               "id": "995dd304-e1b0-4f75-bf81-26c709da6e87",
               "name": "keywords",
-              "value": "[\"\\\"Computer Vision Engineer\\\"\", \"\\\"Deep Learning Engineer\\\"\", \"\\\"AI Engineer\\\"\", \"\\\"Machine Learning Engineer\\\"\", \"\\\"Ingénieur Intelligence Artificielle\\\"\", \"\\\"Ingénieur Machine Learning\\\"\", \"\\\"Vision par Ordinateur\\\"\", \"\\\"Traitement d'images\\\"\", \"\\\"AI Research Engineer\\\"\", \"\\\"Research Scientist\\\"\", \"\\\"Data Scientist Junior\\\"\", \"\\\"Imagerie Médicale\\\"\", \"\\\"GenAI Engineer\\\"\", \"\\\"NLP Engineer\\\"\", \"\\\"R&D Computer Vision\\\"\", \"\\\"R&D Deep Learning\\\"\", \"Computer Vision\", \"Deep Learning\", \"Data Scientist\", \"Ingénieur IA\"]",
+              "value": "[ \"Pytorch\", \"OpenCV\", \"Computer Vision\", \"Deep Learning\", \"Data Scientist\", \"Ingénieur IA\", \"\\\"Computer Vision\\\"\", \"\\\"Deep Learning\\\"\", \"\\\"AI Engineer\\\"\", \"\\\"Machine Learning\\\"\", \"\\\"Ingénieur Intelligence Artificielle\\\"\", \"\\\"Vision par Ordinateur\\\"\", \"\\\"Traitement d'images\\\"\", \"\\\"AI Research Engineer\\\"\", \"\\\"Research Scientist\\\"\", \"\\\"Data Scientist Junior\\\"\", \"\\\"Imagerie Médicale\\\"\", \"\\\"GenAI Engineer\\\"\" ]",
               "type": "array"
             },
             {
@@ -1673,7 +1673,7 @@
   "settings": {
     "executionOrder": "v1"
   },
-  "versionId": "6fbbefc0-77ec-47be-9a89-9d8f251e7efb",
+  "versionId": "64177e57-a1e7-4c40-be5b-5932c2bb7515",
   "meta": {
     "templateCredsSetupCompleted": true,
     "instanceId": "b87ba4d1e29db53fa7e2e59cf2c63f059ab024634f7886ba268fdfa300de1550"
