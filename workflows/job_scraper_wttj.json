@@ -134,7 +134,7 @@
       "typeVersion": 2,
       "position": [
         -1232,
-        2096
+        2088
       ],
       "id": "eed1115a-5b27-4a91-9cc7-441063ebd3f1",
       "name": "Extract Job Info"
@@ -281,7 +281,7 @@
             {
               "id": "995dd304-e1b0-4f75-bf81-26c709da6e87",
               "name": "keywords",
-              "value": "[\"Machine Learning Engineer\", \"Deep Learning Engineer\", \"AI Engineer\", \"ML Engineer\", \"Ingénieur Machine Learning\", \"Ingénieur Intelligence Artificielle\", \"Ingénieur IA\", \"Computer Vision\", \"Vision par Ordinateur\", \"Traitement d'images\", \"Image Processing\", \"Research Scientist\", \"AI Research Engineer\", \"Research Engineer\", \"Chercheur IA\", \"R&D Deep Learning\", \"R&D Computer Vision\", \"Data Scientist\", \"Data Scientist Junior\", \"Imagerie Médicale\", \"Healthcare AI\", \"AI Santé\", \"GenAI Engineer\", \"LLM Engineer\", \"NLP Engineer\", \"Deep Learning\"]",
+              "value": "[ \"Pytorch\", \"OpenCV\", \"Deep Learning\", \"Data Scientist\", \"Ingénieur IA\", \"Computer Vision\", \"AI Engineer\", \"Machine Learning\", \"Ingénieur Intelligence Artificielle\", \"Vision par Ordinateur\", \"Traitement d'images\", \"AI Research Engineer\", \"Research Scientist\", \"Data Scientist Junior\", \"Imagerie Médicale\", \"GenAI Engineer\" ]",
               "type": "array"
             },
             {
@@ -926,7 +926,7 @@
             {
               "id": "71b8534c-d540-432d-a0b8-38d4a58f8ee8",
               "name": "profileSkills",
-              "value": "={{ $json.job.skills || [] }}",
+              "value": "={{ [] }}",
               "type": "array"
             },
             {
@@ -973,7 +973,7 @@
       "typeVersion": 3.4,
       "position": [
         -336,
-        1904
+        1896
       ],
       "id": "5bcc3486-13cd-4a6c-8c1e-72424d69a66b",
       "name": "Extract Missing Fields"
@@ -1371,7 +1371,7 @@
   "settings": {
     "executionOrder": "v1"
   },
-  "versionId": "ee556112-a0c0-47c0-94a7-760527d0b167",
+  "versionId": "d90e6545-8519-4305-9b9e-4147588efbf4",
   "meta": {
     "templateCredsSetupCompleted": true,
     "instanceId": "b87ba4d1e29db53fa7e2e59cf2c63f059ab024634f7886ba268fdfa300de1550"

@@ -33,7 +33,7 @@
     {
       "parameters": {
         "promptType": "define",
-        "text": "=Filter the following job offers strictly according to the candidate profile.\n\nINPUT JOBS:\n{{ $json[\"jobs\"].map((job, index) => `\nJob #${index + 1}\nID: ${job.id}\nTitle: ${job.jobTitle}\nCompany: ${job.companyName}\n`).join('\\n') }}\n\nOUTPUT (JSON array only)",
+        "text": "=INPUT JOBS:\n{{ $json[\"jobs\"].map((job, index) => `\nJob #${index + 1}\nID: ${job.id}\nTitle: ${job.jobTitle}\nCompany: ${job.companyName}`).join('\\n') }}",
         "messages": {
           "messageValues": [
             {
@@ -56,19 +56,17 @@
       "parameters": {
         "model": {
           "__rl": true,
+          "value": "gpt-5-mini",
           "mode": "list",
-          "value": "gpt-4.1-mini"
+          "cachedResultName": "gpt-5-mini"
         },
         "builtInTools": {},
-        "options": {
-          "temperature": 0.1,
-          "topP": 0.9
-        }
+        "options": {}
       },
       "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
       "typeVersion": 1.3,
       "position": [
-        -72,
+        -80,
         176
       ],
       "id": "6e675a1b-a274-47a2-92a5-3d1abe44f943",
@@ -88,7 +86,7 @@
       "typeVersion": 2,
       "position": [
         208,
-        76
+        80
       ],
       "id": "ab32e1ae-e8fb-45de-b9f8-36ab8e0706af",
       "name": "Parse LLM Filterer output"
@@ -222,7 +220,7 @@
     "executionOrder": "v1",
     "availableInMCP": false
   },
-  "versionId": "6e5186ff-fc6f-495f-9bef-3980c68cb7cb",
+  "versionId": "56dd08ff-6d06-4731-ad0e-bb5311b03226",
   "meta": {
     "instanceId": "b87ba4d1e29db53fa7e2e59cf2c63f059ab024634f7886ba268fdfa300de1550"
   },
