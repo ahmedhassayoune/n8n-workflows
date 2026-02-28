@@ -193,7 +193,7 @@
       "type": "@n8n/n8n-nodes-langchain.agent",
       "typeVersion": 3,
       "position": [
-        48,
+        40,
         0
       ],
       "id": "30dcf0e6-8f5c-4543-b522-4be608466a6d",
@@ -203,14 +203,11 @@
       "parameters": {
         "model": {
           "__rl": true,
-          "value": "gpt-4.1-mini",
+          "value": "gpt-5-mini",
           "mode": "list",
-          "cachedResultName": "gpt-4.1-mini"
+          "cachedResultName": "gpt-5-mini"
         },
-        "options": {
-          "temperature": 0.7,
-          "topP": 0.9
-        }
+        "options": {}
       },
       "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
       "typeVersion": 1.2,
@@ -732,7 +729,7 @@
   "settings": {
     "executionOrder": "v1"
   },
-  "versionId": "257cc125-96d3-47b5-8634-bbe43ced8d2e",
+  "versionId": "327b98b6-a939-432a-b645-0b39125e1b05",
   "meta": {
     "templateCredsSetupCompleted": true,
     "instanceId": "b87ba4d1e29db53fa7e2e59cf2c63f059ab024634f7886ba268fdfa300de1550"
